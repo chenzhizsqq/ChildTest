@@ -23,6 +23,9 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                     Intent(this@MenuActivity, TextToSpeechActivity::class.java)
                 startActivity(intent)
             }
+            R.id.japanese_test -> {
+
+            }
             R.id.setting -> {
                 val intent =
                     Intent(this@MenuActivity, SettingsActivity::class.java)

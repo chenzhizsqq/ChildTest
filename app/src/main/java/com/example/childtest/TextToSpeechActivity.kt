@@ -1,8 +1,11 @@
 package com.example.childtest
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
+import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
 
@@ -13,6 +16,10 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var randomInt = 0
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+    private val TAG = "TextToSpeechActivity"
+
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +28,7 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -42,6 +50,7 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
 
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,7 +65,10 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             // ロケールの指定
             val locale = Locale.CHINA
             if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                tts!!.language = Locale.CHINA
+                //tts!!.language = Locale.CHINA
+
+                val spSpeech = sharedPreferences.getString("speak", "")
+                tts!!.language = Locale("zh", spSpeech)
             }
 
             binding.number.text = "开始"
