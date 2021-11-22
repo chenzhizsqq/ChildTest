@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
@@ -67,7 +66,7 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 //tts!!.language = Locale.CHINA
 
-                val spSpeech = sharedPreferences.getString("speak", "")
+                val spSpeech = sharedPreferences.getString("chineseSpeak", "")
                 tts!!.language = Locale("zh", spSpeech)
             }
 
