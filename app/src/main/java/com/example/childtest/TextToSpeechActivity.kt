@@ -66,8 +66,8 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 //tts!!.language = Locale.CHINA
 
-                val spSpeech = sharedPreferences.getString("chineseSpeak", "")
-                tts!!.language = Locale("zh", spSpeech)
+                val chineseSpeak = sharedPreferences.getString("chineseSpeak", "")
+                tts!!.language = Locale("zh", chineseSpeak)
             }
 
             binding.number.text = "开始"
