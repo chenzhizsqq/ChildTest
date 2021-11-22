@@ -18,5 +18,10 @@
         app:title="点击后，马上读"
         app:defaultValue="false"/>
 
+    <CheckBoxPreference
+        app:key="random_select"
+        app:title="随机显示"
+        app:defaultValue="true"/>
+
 
 </PreferenceScreen>

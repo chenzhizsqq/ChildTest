@@ -16,6 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildTest">
         <activity
+            android:name=".EnglishActivity"
+            android:exported="true" />
+        <activity
             android:name=".JapaneseActivity"
             android:exported="true" />
         <activity
