@@ -1,9 +1,9 @@
 package com.example.childtest
 
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
@@ -17,7 +17,7 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var sharedPreferences: SharedPreferences
     private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read",false)
+        sharedPreferences.getBoolean("clicked_read", false)
     }
 
     private val TAG = "TextToSpeechActivity"
@@ -46,8 +46,13 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = randomInt.toString()
 
-            if (bClickedRead == true){
-                this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            if (bClickedRead == true) {
+                this.tts!!.speak(
+                    randomInt.toString(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "utteranceId"
+                )
             }
         }
 

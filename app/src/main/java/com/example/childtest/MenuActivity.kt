@@ -1,9 +1,9 @@
 package com.example.childtest
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.databinding.ActivityMenuBinding
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {

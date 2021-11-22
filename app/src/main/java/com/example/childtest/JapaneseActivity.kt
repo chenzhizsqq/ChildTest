@@ -1,10 +1,9 @@
 package com.example.childtest
 
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityJapaneseBinding
 import java.util.*
@@ -17,7 +16,7 @@ class JapaneseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var sharedPreferences: SharedPreferences
 
     private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read",false)
+        sharedPreferences.getBoolean("clicked_read", false)
     }
     private val bRandomSelect: Boolean? by lazy {
         sharedPreferences.getBoolean("random_select", true)
@@ -28,16 +27,17 @@ class JapaneseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     var numberText = ""
 
     val otherStrings = arrayOf(
-        "あ","い","う","え","お",
-        "か","き","く","け","こ",
-        "さ","し","す","せ","そ",
-        "た","ち","つ","て","と",
-        "な","に","ぬ","ね","の",
-        "は","ひ","ふ","へ","ほ",
-        "ま","み","む","め","も",
-        "や","ゆ","よ",
-        "ら","り","る","れ","ろ",
-        "わ","を","ん")
+        "あ", "い", "う", "え", "お",
+        "か", "き", "く", "け", "こ",
+        "さ", "し", "す", "せ", "そ",
+        "た", "ち", "つ", "て", "と",
+        "な", "に", "ぬ", "ね", "の",
+        "は", "ひ", "ふ", "へ", "ほ",
+        "ま", "み", "む", "め", "も",
+        "や", "ゆ", "よ",
+        "ら", "り", "る", "れ", "ろ",
+        "わ", "を", "ん"
+    )
     var arrayIndex = 0
 
     // 起動時に呼ばれる
@@ -76,11 +76,10 @@ class JapaneseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             binding.number.text = numberText
-            if (bClickedRead == true){
+            if (bClickedRead == true) {
                 this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
 
-            Log.e(TAG, "onCreate: binding.number" )
         }
 
 
