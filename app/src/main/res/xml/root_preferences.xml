@@ -4,13 +4,19 @@
 
         <ListPreference
             app:defaultValue=""
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
+            app:entries="@array/chinese_entries"
+            app:entryValues="@array/chinese_values"
             app:key="chineseSpeak"
+            app:dialogTitle="设定中文发音的发音"
             app:title="中文发音"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
+
+    <CheckBoxPreference
+        app:key="clicked_read"
+        app:title="点击后，马上读"
+        app:defaultValue="false"/>
 
 
 </PreferenceScreen>
