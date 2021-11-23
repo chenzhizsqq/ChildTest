@@ -107,8 +107,10 @@ class JapaneseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
 
-            // 音声合成の実行
-            this.tts!!.speak("開始します。", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            if (bClickedRead == true) {
+                // 音声合成の実行
+                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            }
 
         }
     }

@@ -104,9 +104,10 @@ class EnglishActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
 
-            // 音声合成の実行
-            this.tts!!.speak("It's time to begin!", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
-
+            if (bClickedRead == true) {
+                // 音声合成の実行
+                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            }
         }
     }
 }

@@ -19,6 +19,9 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private val bClickedRead: Boolean? by lazy {
         sharedPreferences.getBoolean("clicked_read", false)
     }
+    private val bRandomSelect: Boolean? by lazy {
+        sharedPreferences.getBoolean("random_select", true)
+    }
 
     private val TAG = "TextToSpeechActivity"
 
@@ -81,11 +84,17 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 tts!!.language = Locale("zh", chineseSpeak)
             }
 
-            binding.number.text = "开始"
+            binding.number.text = randomInt.toString()
 
-            // 音声合成の実行
-            this.tts!!.speak("开始", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
-
+            if (bClickedRead == true) {
+                // 音声合成の実行
+                this.tts!!.speak(
+                    randomInt.toString(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "utteranceId"
+                )
+            }
         }
     }
 }
