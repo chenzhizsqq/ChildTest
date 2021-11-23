@@ -22,6 +22,9 @@
             android:name=".JapaneseActivity"
             android:exported="true" />
         <activity
+            android:name=".JapaneseKaTaActivity"
+            android:exported="true" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="true"
             android:label="@string/title_activity_settings" />

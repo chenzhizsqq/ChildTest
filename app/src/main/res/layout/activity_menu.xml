@@ -26,7 +26,14 @@ tools:context=".MenuActivity">
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
-            android:text="日语测试" />
+            android:text="日语ひらがな测试" />
+        <TextView
+            android:id="@+id/japaneseKata_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:padding="20dp"
+            android:text="日语カタカナ测试" />
         <TextView
             android:id="@+id/english_test"
             android:layout_width="wrap_content"
