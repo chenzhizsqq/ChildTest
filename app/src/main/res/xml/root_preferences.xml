@@ -25,7 +25,7 @@
 
     <CheckBoxPreference
         app:key="welcome_password"
-        app:title="打开软件，需要登录密码"
+        app:title="打开软件，需要手机认证"
         app:defaultValue="false"/>
 
 
