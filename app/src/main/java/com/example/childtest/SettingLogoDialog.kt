@@ -36,8 +36,8 @@ class SettingLogoDialog : DialogFragment() {
         binding = DialogSettingLogoBinding.inflate(inflater, container, false)
 
         //random num setting
-        val randomNum1: String = "" + Tools.randomNum(1, 9)
-        val randomNum2: String = "" + Tools.randomNum(1, 9)
+        val randomNum1: String = "" + Tools.randomNum(2, 9)
+        val randomNum2: String = "" + Tools.randomNum(2, 9)
         binding.SUMNumber1.text = randomNum1
         binding.SUMNumber2.text = randomNum2
 

@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
@@ -76,6 +75,10 @@ class LoginActivity : AppCompatActivity() {
                 val cancellationSignal = CancellationSignal()
                 cancellationSignal.setOnCancelListener {
                     //キャンセルされた
+                    Toast.makeText(
+                        applicationContext,
+                        "認証 cancel: ", Toast.LENGTH_SHORT)
+                        .show();
                 }
 
                 val executors = ContextCompat.getMainExecutor(context)
@@ -90,6 +93,10 @@ class LoginActivity : AppCompatActivity() {
 
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
                         //認証失敗 or ダイアログを消す
+                        Toast.makeText(
+                            applicationContext,
+                            "認証失敗 $errString", Toast.LENGTH_SHORT)
+                            .show();
                     }
                 }
                 biometricPrompt.authenticate(cancellationSignal, executors, authCallBack)
