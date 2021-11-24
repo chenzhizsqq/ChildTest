@@ -3,8 +3,10 @@ package com.example.childtest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.databinding.ActivityMenuBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityMenuBinding
@@ -42,9 +44,25 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.setting -> {
-                val intent =
+                val mSettingLogoDialog = SettingLogoDialog()
+                mSettingLogoDialog.apply {
+                    show(supportFragmentManager, "SettingLogoDialog")
+                }
+                mSettingLogoDialog.setOnDialogListener(object : SettingLogoDialog.OnDialogListener {
+                    override fun onClick(bOpen: Boolean) {
+                        if (bOpen){
+                            val intent =
+                                Intent(this@MenuActivity, SettingsActivity::class.java)
+                            startActivity(intent)
+                        }else{
+                            Toast.makeText(applicationContext, "错了，请再输入一次", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                })
+
+/*                val intent =
                     Intent(this@MenuActivity, SettingsActivity::class.java)
-                startActivity(intent)
+                startActivity(intent)*/
             }
         }
     }
