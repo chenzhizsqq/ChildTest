@@ -16,26 +16,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChildTest">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".EnglishActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".JapaneseActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".JapaneseKaTaActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".SettingsActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".MenuActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="false">
         </activity>
         <activity
             android:name=".TextToSpeechActivity"

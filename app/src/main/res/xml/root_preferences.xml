@@ -23,5 +23,10 @@
         app:title="随机显示"
         app:defaultValue="true"/>
 
+    <CheckBoxPreference
+        app:key="welcome_password"
+        app:title="打开软件，需要登录密码"
+        app:defaultValue="false"/>
+
 
 </PreferenceScreen>

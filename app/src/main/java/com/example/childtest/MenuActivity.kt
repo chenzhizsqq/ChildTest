@@ -1,14 +1,20 @@
 package com.example.childtest
 
+import android.app.KeyguardManager
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.databinding.ActivityMenuBinding
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
+    val TAG="MenuActivity"
     private lateinit var binding: ActivityMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
