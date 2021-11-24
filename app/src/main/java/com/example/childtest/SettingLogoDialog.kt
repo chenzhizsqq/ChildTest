@@ -19,12 +19,15 @@ class SettingLogoDialog : DialogFragment() {
     }
 
     var listener: OnDialogListener? = null
+
     interface OnDialogListener {
         fun onClick(bOpen: Boolean)
     }
+
     fun setOnDialogListener(dialogListener: OnDialogListener) {
         this.listener = dialogListener
     }
+
     override fun onCreateView(
         @NonNull inflater: LayoutInflater,
         @Nullable container: ViewGroup?,
@@ -33,8 +36,8 @@ class SettingLogoDialog : DialogFragment() {
         binding = DialogSettingLogoBinding.inflate(inflater, container, false)
 
         //random num setting
-        val randomNum1:String = ""+Tools.randomNum(1,9)
-        val randomNum2:String = ""+Tools.randomNum(1,9)
+        val randomNum1: String = "" + Tools.randomNum(1, 9)
+        val randomNum2: String = "" + Tools.randomNum(1, 9)
         binding.SUMNumber1.text = randomNum1
         binding.SUMNumber2.text = randomNum2
 
@@ -45,59 +48,63 @@ class SettingLogoDialog : DialogFragment() {
 
             val SUM_number1 = binding.SUMNumber1.text as String
             val SUM_number2 = binding.SUMNumber2.text as String
-            if(dengyuS.toInt() == SUM_number1.toInt() * SUM_number2.toInt() ){
+            if (dengyuS.toInt() == SUM_number1.toInt() * SUM_number2.toInt()) {
                 listener?.onClick(true)
-            }else{
+            } else {
                 listener?.onClick(false)
             }
             dialog!!.dismiss()
         }
 
 
-        binding.number1.setOnClickListener{
+        binding.number1.setOnClickListener {
             binding.SUM.text = addTextFun("1")
         }
 
-        binding.number2.setOnClickListener{
+        binding.number2.setOnClickListener {
             binding.SUM.text = addTextFun("2")
         }
 
-        binding.number3.setOnClickListener{
+        binding.number3.setOnClickListener {
             binding.SUM.text = addTextFun("3")
         }
 
-        binding.number4.setOnClickListener{
+        binding.number4.setOnClickListener {
             binding.SUM.text = addTextFun("4")
         }
 
-        binding.number5.setOnClickListener{
+        binding.number5.setOnClickListener {
             binding.SUM.text = addTextFun("5")
         }
 
-        binding.number6.setOnClickListener{
+        binding.number6.setOnClickListener {
             binding.SUM.text = addTextFun("6")
         }
 
-        binding.number7.setOnClickListener{
+        binding.number7.setOnClickListener {
             binding.SUM.text = addTextFun("7")
         }
 
-        binding.number8.setOnClickListener{
+        binding.number8.setOnClickListener {
             binding.SUM.text = addTextFun("8")
         }
 
-        binding.number9.setOnClickListener{
+        binding.number9.setOnClickListener {
             binding.SUM.text = addTextFun("9")
+        }
+
+        binding.number0.setOnClickListener {
+            binding.SUM.text = addTextFun("0")
         }
 
         return binding.root
     }
 
-    private fun addTextFun(addText: String):String {
+    private fun addTextFun(addText: String): String {
         var sumText = ""
         sumText = binding.SUM.text as String
         if (sumText.toInt() < 10) {
-            if(sumText == "0")sumText = ""
+            if (sumText == "0") sumText = ""
             sumText += addText
         }
         return sumText

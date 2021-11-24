@@ -3,18 +3,14 @@ package com.example.childtest
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityLoginBinding
-import com.example.childtest.databinding.ActivityMenuBinding
 
 class LoginActivity : AppCompatActivity() {
-    val TAG="LoginActivity"
+    val TAG = "LoginActivity"
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var mKeyguardManager: KeyguardManager
@@ -25,19 +21,20 @@ class LoginActivity : AppCompatActivity() {
     private val bWelcomePassword: Boolean? by lazy {
         sharedPreferences?.getBoolean("welcome_password", true)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (bWelcomePassword == true){
-            mKeyguardManager  = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+        if (bWelcomePassword == true) {
+            mKeyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
             showScreenLockPwd()
 
-            binding.welcome.setOnClickListener {
+            binding.root.setOnClickListener {
                 showScreenLockPwd()
             }
-        }else{
+        } else {
             val intent =
                 Intent(this@LoginActivity, MenuActivity::class.java)
             startActivity(intent)
@@ -47,8 +44,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG, "onActivityResult: アプリ起動認証" )
-        Log.e(TAG, "onActivityResult: requestCode:$requestCode resultCode:$resultCode data:$data" )
+        Log.e(TAG, "onActivityResult: アプリ起動認証")
+        Log.e(TAG, "onActivityResult: requestCode:$requestCode resultCode:$resultCode data:$data")
         if (requestCode == 2) {
             // Challenge completed, proceed with using cipher
             if (resultCode == RESULT_OK) {

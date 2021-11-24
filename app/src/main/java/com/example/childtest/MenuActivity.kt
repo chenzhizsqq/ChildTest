@@ -1,20 +1,15 @@
 package com.example.childtest
 
-import android.app.KeyguardManager
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.databinding.ActivityMenuBinding
-import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
-    val TAG="MenuActivity"
+    val TAG = "MenuActivity"
     private lateinit var binding: ActivityMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +51,13 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 mSettingLogoDialog.setOnDialogListener(object : SettingLogoDialog.OnDialogListener {
                     override fun onClick(bOpen: Boolean) {
-                        if (bOpen){
+                        if (bOpen) {
                             val intent =
                                 Intent(this@MenuActivity, SettingsActivity::class.java)
                             startActivity(intent)
-                        }else{
-                            Toast.makeText(applicationContext, "错了，请再输入一次", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(applicationContext, "错了，请再输入一次", Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
                 })

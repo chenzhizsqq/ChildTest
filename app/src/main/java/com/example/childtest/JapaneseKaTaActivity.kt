@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.example.childtest.databinding.ActivityJapaneseBinding
 import com.example.childtest.databinding.ActivityJapaneseKataBinding
 import java.util.*
 
