@@ -8,13 +8,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.databinding.ActivityMenuBinding
 import java.util.*
 
-class MenuActivity : AppCompatActivity(), View.OnClickListener {
+class MenuActivity : BaseActivity(), View.OnClickListener {
     val TAG = "MenuActivity"
     private lateinit var binding: ActivityMenuBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         binding.numberTest.setOnClickListener(this)
         binding.japaneseTest.setOnClickListener(this)
         binding.japaneseKataTest.setOnClickListener(this)

@@ -45,8 +45,6 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding = ActivityEnglishBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
 
@@ -84,12 +82,6 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
 
     }
-
-/*    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        finish()
-        return true
-    }*/
 
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {

@@ -45,12 +45,9 @@ class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //this.supportActionBar?.hide()
 
         binding = ActivityJapaneseKataBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)

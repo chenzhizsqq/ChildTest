@@ -30,12 +30,9 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //this.supportActionBar?.hide()
 
         binding = ActivityTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
@@ -68,15 +65,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.numberSpeak.setOnClickListener {
             this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
-
-
     }
-
-/*    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        finish()
-        return true
-    }*/
 
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {
