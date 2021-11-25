@@ -8,14 +8,16 @@ import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
 
-class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityTextToSpeechBinding
 
     private var randomInt = 0
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
     private val bClickedRead: Boolean? by lazy {
         sharedPreferences.getBoolean("clicked_read", false)
     }
@@ -33,9 +35,7 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
@@ -43,9 +43,15 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.number.text = randomInt.toString()
 
         binding.number.setOnClickListener { // 执行朗读
-            val min = 0
-            val max = 100
-            randomInt = Random().nextInt(max - min + 1) + min
+
+            if (bRandomSelect == true) {
+                randomInt = Tools.randomNum(0, 100)
+            }else{
+                randomInt ++
+                if (randomInt>100){
+                    randomInt = 0
+                }
+            }
 
             binding.number.text = randomInt.toString()
 
@@ -66,11 +72,11 @@ class TextToSpeechActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+/*    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         finish()
         return true
-    }
+    }*/
 
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {

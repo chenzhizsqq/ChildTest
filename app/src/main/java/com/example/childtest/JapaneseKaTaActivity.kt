@@ -8,12 +8,14 @@ import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityJapaneseKataBinding
 import java.util.*
 
-class JapaneseKaTaActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
+class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityJapaneseKataBinding
 
-    private lateinit var sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
 
     private val bClickedRead: Boolean? by lazy {
         sharedPreferences.getBoolean("clicked_read", false)
@@ -26,7 +28,7 @@ class JapaneseKaTaActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     var numberText = ""
 
-    val otherStrings = arrayOf(
+    private val testStrArray = arrayOf(
         "ア", "イ", "ウ", "エ", "オ",
         "カ", "キ", "ク", "ケ", "コ",
         "サ", "シ", "ス", "セ", "ソ",
@@ -48,9 +50,7 @@ class JapaneseKaTaActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding = ActivityJapaneseKataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
@@ -59,20 +59,20 @@ class JapaneseKaTaActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 
         if (bRandomSelect == true) {
-            numberText = otherStrings.random()
+            numberText = testStrArray.random()
         } else {
-            numberText = otherStrings[0]
+            numberText = testStrArray[0]
         }
         binding.number.text = numberText
 
         binding.number.setOnClickListener { // 执行朗读
             if (bRandomSelect == true) {
-                numberText = otherStrings.random()
+                numberText = testStrArray.random()
             } else {
                 arrayIndex += 1
-                if (arrayIndex >= otherStrings.size) arrayIndex = 0
+                if (arrayIndex >= testStrArray.size) arrayIndex = 0
 
-                numberText = otherStrings[arrayIndex]
+                numberText = testStrArray[arrayIndex]
             }
 
             binding.number.text = numberText
@@ -90,11 +90,11 @@ class JapaneseKaTaActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+/*    override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         finish()
         return true
-    }
+    }*/
 
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {
