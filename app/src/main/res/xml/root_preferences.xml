@@ -15,18 +15,35 @@
 
     <CheckBoxPreference
         app:key="clicked_read"
-        app:title="点击后，马上读"
+        app:title="马上读"
+        app:summary="点击下一题后，马上读"
         app:defaultValue="false"/>
 
     <CheckBoxPreference
         app:key="random_select"
         app:title="随机显示"
+        app:summary="练习时，练习题时随机显示"
         app:defaultValue="true"/>
 
     <CheckBoxPreference
         app:key="welcome_password"
-        app:title="打开软件，需要手机认证"
+        app:title="手机认证"
+        app:summary="打开软件，需要手机认证"
         app:defaultValue="false"/>
 
+    <PreferenceCategory app:title="时间设定">
+        <SwitchPreferenceCompat
+            app:key="time_able"
+            app:title="时间限定"
+            app:summary="是否限定，孩子的练习时间"/>
+
+        <SeekBarPreference
+            app:key="time_setting"
+            app:title="练习时间"
+            app:defaultValue="20"
+            app:showSeekBarValue="true"
+            app:dependency="time_able"
+            />
+    </PreferenceCategory>
 
 </PreferenceScreen>
