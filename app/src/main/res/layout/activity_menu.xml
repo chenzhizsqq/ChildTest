@@ -19,13 +19,23 @@ tools:context=".MenuActivity">
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
+            app:fontFamily="@font/a"
             android:text="数字测试" />
+        <TextView
+            android:id="@+id/digital_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:padding="20dp"
+            app:fontFamily="@font/a"
+            android:text="数学测试" />
         <TextView
             android:id="@+id/japanese_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
+            app:fontFamily="@font/a"
             android:text="日语ひらがな测试" />
         <TextView
             android:id="@+id/japaneseKata_test"
@@ -33,6 +43,7 @@ tools:context=".MenuActivity">
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
+            app:fontFamily="@font/a"
             android:text="日语カタカナ测试" />
         <TextView
             android:id="@+id/english_test"
@@ -40,6 +51,7 @@ tools:context=".MenuActivity">
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
+            app:fontFamily="@font/a"
             android:text="英语测试" />
         <TextView
             android:id="@+id/setting"
@@ -47,6 +59,7 @@ tools:context=".MenuActivity">
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
+            app:fontFamily="@font/a"
             android:text="设定" />
     </LinearLayout>
 

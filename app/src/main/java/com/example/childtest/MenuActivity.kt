@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import com.example.childtest.databinding.ActivityMenuBinding
 import java.util.*
 
@@ -19,6 +20,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
         binding.numberTest.setOnClickListener(this)
+        binding.digitalTest.setOnClickListener(this)
         binding.japaneseTest.setOnClickListener(this)
         binding.japaneseKataTest.setOnClickListener(this)
         binding.englishTest.setOnClickListener(this)
@@ -30,6 +32,11 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
             R.id.number_test -> {
                 val intent =
                     Intent(this@MenuActivity, TextToSpeechActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.digital_test -> {
+                val intent =
+                    Intent(this@MenuActivity, DigitalActivity::class.java)
                 startActivity(intent)
             }
             R.id.japanese_test -> {

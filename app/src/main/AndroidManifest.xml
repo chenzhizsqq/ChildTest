@@ -9,6 +9,7 @@
     </queries>
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <application
         android:name=".ThisApp"
         android:allowBackup="true"
@@ -19,15 +20,22 @@
         android:theme="@style/Theme.ChildTest">
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".EnglishActivity"
             android:exported="false" />
+        <activity
+            android:name=".DigitalActivity"
+            android:exported="true" />
         <activity
             android:name=".JapaneseActivity"
             android:exported="false" />
@@ -38,10 +46,6 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".MenuActivity"
-            android:exported="false">
-        </activity>
         <activity
             android:name=".TextToSpeechActivity"
             android:exported="false" />
