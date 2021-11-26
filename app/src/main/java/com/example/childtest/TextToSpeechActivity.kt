@@ -42,9 +42,9 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             if (bRandomSelect == true) {
                 randomInt = Tools.randomNum(0, 100)
-            }else{
-                randomInt ++
-                if (randomInt>100){
+            } else {
+                randomInt++
+                if (randomInt > 100) {
                     randomInt = 0
                 }
             }

@@ -29,6 +29,19 @@ class LoginActivity : AppCompatActivity() {
     private val bWelcomePassword: Boolean? by lazy {
         sharedPreferences?.getBoolean("welcome_password", true)
     }
+    private val bTimeAble: Boolean by lazy {
+        Tools.sharedPreGetBoolean("time_limit")
+    }
+
+    //剩余解锁的时间 秒
+    private val remainingTime_ss: Int by lazy {
+        Tools.sharedPreGetInt(Config.remaining_time_ss)
+    }
+
+    //锁屏需要的时间
+    private val timeSetting_mm: Int by lazy {
+        Tools.sharedPreGetInt("lock_use_time")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +55,18 @@ class LoginActivity : AppCompatActivity() {
                 checkCredential(this@LoginActivity)
             }
         } else {
-            val intent =
-                Intent(this@LoginActivity, MenuActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (bTimeAble) {
+                Log.d(TAG, "onCreate: remainingTime秒:$remainingTime_ss")
+                if (remainingTime_ss > 0) {
+                    LoginSuccess()
+                } else {
+                    binding.root.setOnClickListener {
+                        checkCredential(this@LoginActivity)
+                    }
+                }
+            } else {
+                LoginSuccess()
+            }
         }
     }
 
@@ -77,26 +98,25 @@ class LoginActivity : AppCompatActivity() {
                     //キャンセルされた
                     Toast.makeText(
                         applicationContext,
-                        "認証 cancel: ", Toast.LENGTH_SHORT)
-                        .show();
+                        "認証 cancel: ", Toast.LENGTH_SHORT
+                    )
+                        .show()
                 }
 
                 val executors = ContextCompat.getMainExecutor(context)
                 val authCallBack = object : BiometricPrompt.AuthenticationCallback() {
                     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
                         //認証成功
-                        val intent =
-                            Intent(this@LoginActivity, MenuActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        LoginSuccess()
                     }
 
                     override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
                         //認証失敗 or ダイアログを消す
                         Toast.makeText(
                             applicationContext,
-                            "認証失敗 $errString", Toast.LENGTH_SHORT)
-                            .show();
+                            "認証失敗 $errString", Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
                 }
                 biometricPrompt.authenticate(cancellationSignal, executors, authCallBack)
@@ -108,29 +128,34 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun LoginSuccess() {
+        Tools.sharedPrePut(Config.remaining_time_ss, timeSetting_mm * 60)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Log.e(TAG, "onActivityResult: アプリ起動認証")
-        Log.e(TAG, "onActivityResult: requestCode:$requestCode resultCode:$resultCode data:$data")
-        if (requestCode == 2) {
-            // Challenge completed, proceed with using cipher
-            if (resultCode == RESULT_OK) {
-                //認証成功
-                val intent =
-                    Intent(this@LoginActivity, MenuActivity::class.java)
-                startActivity(intent)
-                finish()
-            } else {
-                //認証失敗
-                Log.e(TAG, "onActivityResult: 認証失敗")
-            }
-        }
+        val intent =
+            Intent(this@LoginActivity, MenuActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     //手机密码验证
     private fun showScreenLockPwd() {
         val intent: Intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null)
         startActivityForResult(intent, 2)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "onActivityResult: アプリ起動認証")
+        Log.d(TAG, "onActivityResult: requestCode:$requestCode resultCode:$resultCode data:$data")
+        if (requestCode == 2) {
+            // Challenge completed, proceed with using cipher
+            if (resultCode == RESULT_OK) {
+                //認証成功
+                LoginSuccess()
+            } else {
+                //認証失敗
+                Log.d(TAG, "onActivityResult: 認証失敗")
+            }
+        }
     }
 }

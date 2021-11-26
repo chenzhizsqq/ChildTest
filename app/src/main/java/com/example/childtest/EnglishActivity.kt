@@ -8,7 +8,7 @@ import com.example.childtest.databinding.ActivityEnglishBinding
 import java.util.*
 
 class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
-    private val TAG = "JapaneseActivity"
+    val TAG = "JapaneseActivity"
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityEnglishBinding
@@ -18,7 +18,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
     }
 
     private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read", false)
+        Tools.sharedPreGetBoolean("clicked_read")
     }
     private val bRandomSelect: Boolean? by lazy {
         sharedPreferences.getBoolean("random_select", true)

@@ -12,7 +12,7 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var binding: ActivityJapaneseBinding
 
-    private  val sharedPreferences: SharedPreferences by lazy{
+    private val sharedPreferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
 

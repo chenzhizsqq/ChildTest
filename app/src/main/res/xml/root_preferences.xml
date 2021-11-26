@@ -33,16 +33,16 @@
 
     <PreferenceCategory app:title="时间设定">
         <SwitchPreferenceCompat
-            app:key="time_able"
+            app:key="time_limit"
             app:title="时间限定"
             app:summary="是否限定，孩子的练习时间"/>
 
         <SeekBarPreference
-            app:key="time_setting"
+            app:key="lock_use_time"
             app:title="练习时间"
             app:defaultValue="20"
             app:showSeekBarValue="true"
-            app:dependency="time_able"
+            app:dependency="time_limit"
             />
     </PreferenceCategory>
 
