@@ -1,28 +1,27 @@
 package com.example.childtest
 
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Size
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityDigitalBinding
 import java.util.*
+import android.widget.TextView
+
+
+
 
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityDigitalBinding
 
-    private var randomInt = 0
-
     private val sharedPreferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
     private val bClickedRead: Boolean? by lazy {
         sharedPreferences.getBoolean("clicked_read", false)
-    }
-    private val bRandomSelect: Boolean? by lazy {
-        sharedPreferences.getBoolean("random_select", true)
     }
 
     private val TAG = "TextToSpeechActivity"
@@ -37,34 +36,60 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
 
-        binding.number.text = randomInt.toString()
 
-        binding.number.setOnClickListener { // 执行朗读
+        binding.llText.setOnClickListener { // 执行朗读
 
-            if (bRandomSelect == true) {
-                randomInt = Tools.randomNum(0, 100)
-            } else {
-                randomInt++
-                if (randomInt > 100) {
-                    randomInt = 0
-                }
-            }
-
-            binding.number.text = randomInt.toString()
-
-            if (bClickedRead == true) {
-                this.tts!!.speak(
-                    randomInt.toString(),
-                    TextToSpeech.QUEUE_FLUSH,
-                    null,
-                    "utteranceId"
-                )
-            }
+            this.tts!!.speak(
+                addTestFun(),
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                "utteranceId"
+            )
         }
 
-        binding.numberSpeak.setOnClickListener {
-            this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        binding.nextTest.setOnClickListener {
+            initNumber()
         }
+    }
+
+    private fun initNumber() {
+        val randomNum1 = Tools.randomNum(1, 3)
+        val randomNum2 = Tools.randomNum(1, 3)
+        binding.number1.text = randomNum1.toString()
+        binding.number2.text = randomNum2.toString()
+
+        //ll_image_1    ll_image_2
+        binding.llImage1.removeAllViews()
+        binding.llImage2.removeAllViews()
+
+        for (i in 0 until randomNum1) {
+            binding.llImage1.addView(createText())
+        }
+        for (i in 0 until randomNum2) {
+            binding.llImage2.addView(createText())
+        }
+
+        if (bClickedRead == true) {
+            this.tts!!.speak(
+                addTestFun(),
+                TextToSpeech.QUEUE_FLUSH,
+                null,
+                "utteranceId"
+            )
+        }
+    }
+
+    private fun createText():TextView {
+        val textView1 = TextView(this)
+        textView1.text = "〇"
+        textView1.textSize = 40F
+        return textView1
+    }
+
+    private fun addTestFun(): String {
+        val number1Text: String = binding.number1.text.toString()
+        val number2Text: String = binding.number2.text.toString()
+        return number1Text +"加$number2Text=多少"
     }
 
     // TextToSpeechの初期化完了時に呼ばれる
@@ -79,16 +104,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
                 tts!!.language = Locale("zh", chineseSpeak)
             }
 
-            binding.number.text = randomInt.toString()
 
             if (bClickedRead == true) {
-                // 音声合成の実行
-                this.tts!!.speak(
-                    randomInt.toString(),
-                    TextToSpeech.QUEUE_FLUSH,
-                    null,
-                    "utteranceId"
-                )
+                initNumber()
             }
         }
     }
