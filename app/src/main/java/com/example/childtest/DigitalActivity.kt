@@ -1,6 +1,7 @@
 package com.example.childtest
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Size
@@ -25,6 +26,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
     }
 
     private val TAG = "TextToSpeechActivity"
+    private var how_much = "多少"
 
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.nextTest.setOnClickListener {
             initNumber()
         }
+
+        initNumber()
     }
 
     private fun initNumber() {
@@ -63,10 +67,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.llImage2.removeAllViews()
 
         for (i in 0 until randomNum1) {
-            binding.llImage1.addView(createText())
+            binding.llImage1.addView(createText(Color.RED))
         }
         for (i in 0 until randomNum2) {
-            binding.llImage2.addView(createText())
+            binding.llImage2.addView(createText(Color.BLUE))
         }
 
         if (bClickedRead == true) {
@@ -79,17 +83,18 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun createText():TextView {
+    private fun createText(color:Int):TextView {
         val textView1 = TextView(this)
         textView1.text = "〇"
         textView1.textSize = 40F
+        textView1.setTextColor(color)
         return textView1
     }
 
     private fun addTestFun(): String {
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
-        return number1Text +"加$number2Text=多少"
+        return number1Text +"加$number2Text=" + how_much
     }
 
     // TextToSpeechの初期化完了時に呼ばれる
@@ -102,6 +107,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
                 val chineseSpeak = sharedPreferences.getString("chineseSpeak", "")
                 tts!!.language = Locale("zh", chineseSpeak)
+
+                if (chineseSpeak == "HK"){
+                    how_much = "几多"
+                }
             }
 
 
