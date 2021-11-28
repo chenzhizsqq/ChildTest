@@ -57,8 +57,15 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun initNumber() {
-        val randomNum1 = Tools.randomNum(1, 3)
-        val randomNum2 = Tools.randomNum(1, 3)
+        var randomNum1 = Tools.randomNum(1, 3)
+        var randomNum2 = Tools.randomNum(1, 3)
+        while (
+            binding.number1.text == randomNum1.toString() ||
+            binding.number2.text == randomNum2.toString()
+        ){
+            randomNum1 = Tools.randomNum(1, 3)
+            randomNum2 = Tools.randomNum(1, 3)
+        }
         binding.number1.text = randomNum1.toString()
         binding.number2.text = randomNum2.toString()
 
