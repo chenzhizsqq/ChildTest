@@ -3,14 +3,17 @@ package com.example.childtest
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
+import android.view.View
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityDigitalBinding
 import java.util.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.preference.PreferenceFragmentCompat
 
 
-class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
+class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener,View.OnClickListener {
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityDigitalBinding
@@ -24,6 +27,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
     private val TAG = "TextToSpeechActivity"
     private var how_much = "多少"
+    private var currentAnswer = 0
 
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,21 +48,59 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         this.tts = TextToSpeech(this, this)
 
 
-        binding.llText.setOnClickListener { // 执行朗读
+        binding.llText.setOnClickListener (this)
+        binding.nextTest.setOnClickListener (this)
 
-            this.tts!!.speak(
-                addTestFun(),
-                TextToSpeech.QUEUE_FLUSH,
-                null,
-                "utteranceId"
-            )
-        }
-
-        binding.nextTest.setOnClickListener {
-            initNumber()
-        }
+        binding.answer1.setOnClickListener (this)
+        binding.answer2.setOnClickListener (this)
+        binding.answer3.setOnClickListener (this)
 
         initNumber()
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.nextTest -> {
+                initNumber()
+            }
+            R.id.ll_text -> {
+                this.tts!!.speak(
+                    addTestFun(),
+                    TextToSpeech.QUEUE_FLUSH,
+                    null,
+                    "utteranceId"
+                )
+            }
+            R.id.answer_1 -> {
+                if (binding.answer1.text.toString() == currentAnswer.toString()){
+                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答对了")
+                }else{
+                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答错了")
+                }
+            }
+            R.id.answer_2 -> {
+
+                if (binding.answer2.text.toString() == currentAnswer.toString()){
+                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答对了")
+                }else{
+                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答错了")
+                }
+            }
+            R.id.answer_3 -> {
+
+                if (binding.answer3.text.toString() == currentAnswer.toString()){
+                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答对了")
+                }else{
+                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    speakMsg("答错了")
+                }
+            }
+        }
     }
 
     private fun initNumber() {
@@ -90,20 +132,20 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.tvNum1.text = addViewText(randomNum1)
         binding.tvNum2.text = addViewText(randomNum2)
 
-        val answer = randomNum1 + randomNum2
+        currentAnswer = randomNum1 + randomNum2
 
-        var answer2 = answer + Tools.randomNum(-2, 2)
-        while (answer == answer2){
-            answer2 = answer + Tools.randomNum(-2, 2)
+        var answer2 = currentAnswer + Tools.randomNum(-2, 2)
+        while (currentAnswer == answer2){
+            answer2 = currentAnswer + Tools.randomNum(-2, 2)
         }
 
-        var answer3 = answer + Tools.randomNum(1, 3)
-        while (answer == answer3
+        var answer3 = currentAnswer + Tools.randomNum(1, 3)
+        while (currentAnswer == answer3
             || answer2 == answer3){
-            answer3 = answer + Tools.randomNum(1, 3)
+            answer3 = currentAnswer + Tools.randomNum(1, 3)
         }
 
-        val answerList = listOf(answer2 , answer ,answer3)
+        val answerList = listOf(answer2 , currentAnswer ,answer3)
 
         val startInt = Tools.randomNum(0,2)
 
@@ -123,6 +165,15 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener {
                 "utteranceId"
             )
         }
+    }
+
+    private fun speakMsg(s:String) {
+        this.tts!!.speak(
+            s,
+            TextToSpeech.QUEUE_FLUSH,
+            null,
+            "utteranceId"
+        )
     }
 
     private fun addViewText(randomNum: Int):String {
