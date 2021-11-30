@@ -32,7 +32,7 @@ open class BaseActivity : AppCompatActivity() {
 
         // use the application extension function
         this.apply {
-            setGravity(Gravity.BOTTOM, 0, 100)
+            setGravity(Gravity.BOTTOM, 0, 150)
             duration = Toast.LENGTH_SHORT
             view = layout
             show()
