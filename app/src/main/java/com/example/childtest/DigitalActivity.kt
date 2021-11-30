@@ -71,30 +71,30 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_1 -> {
                 if (binding.answer1.text.toString() == currentAnswer.toString()) {
-                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
                 } else {
-                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
                 }
             }
             R.id.answer_2 -> {
 
                 if (binding.answer2.text.toString() == currentAnswer.toString()) {
-                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
                 } else {
-                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
                 }
             }
             R.id.answer_3 -> {
 
                 if (binding.answer3.text.toString() == currentAnswer.toString()) {
-                    Toast.makeText(this, "答对了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
                 } else {
-                    Toast.makeText(this, "答错了", Toast.LENGTH_SHORT).show()
+                    Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
                 }
             }

@@ -1,9 +1,13 @@
 package com.example.childtest
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.Gravity
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity : AppCompatActivity() {
@@ -12,6 +16,27 @@ open class BaseActivity : AppCompatActivity() {
 
     private val bTimeAble: Boolean by lazy {
         Tools.sharedPreGetBoolean("time_limit")
+    }
+
+    //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
+    fun Toast.showCustomToast(message: String, activity: Activity)
+    {
+        val layout = activity.layoutInflater.inflate (
+            R.layout.custom_toast_layout,
+            activity.findViewById(R.id.toast_container)
+        )
+
+        // set the text of the TextView of the message
+        val textView = layout.findViewById<TextView>(R.id.toast_text)
+        textView.text = message
+
+        // use the application extension function
+        this.apply {
+            setGravity(Gravity.BOTTOM, 0, 100)
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
