@@ -73,6 +73,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 if (binding.answer1.text.toString() == currentAnswer.toString()) {
                     Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
+                    binding.nextTest.visibility = View.VISIBLE
                 } else {
                     Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
@@ -83,6 +84,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 if (binding.answer2.text.toString() == currentAnswer.toString()) {
                     Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
+                    binding.nextTest.visibility = View.VISIBLE
                 } else {
                     Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
@@ -93,6 +95,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 if (binding.answer3.text.toString() == currentAnswer.toString()) {
                     Toast(this).showCustomToast ("✔", this)
                     speakMsg("答对了")
+                    binding.nextTest.visibility = View.VISIBLE
                 } else {
                     Toast(this).showCustomToast ("✖", this)
                     speakMsg("答错了")
@@ -153,6 +156,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 "utteranceId"
             )
         }
+
+        binding.nextTest.visibility = View.GONE
     }
 
     private fun speakMsg(s: String) {
