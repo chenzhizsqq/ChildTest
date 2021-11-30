@@ -3,11 +3,16 @@ package com.example.childtest
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
+import android.widget.Toast
+import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
 
 class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
+    private val TAG = "TextToSpeechActivity"
+
     private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityTextToSpeechBinding
@@ -24,7 +29,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         sharedPreferences.getBoolean("random_select", true)
     }
 
-    private val TAG = "TextToSpeechActivity"
+    private var intMax = 100
 
     // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +37,23 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
         binding = ActivityTextToSpeechBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.speech_settings, SpeechFragment())
+                .commit()
+        }
+
+        intMax = sharedPreferences.getString("speech_preferences_max_num", "100")?.toInt() ?: 100
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            when (key){
+                "speech_preferences_max_num" -> {
+                    intMax = sharedPreferences.getString(key, "100")?.toInt() ?: 100
+                }
+            }
+        }
 
         // TextToSpeechの生成
         this.tts = TextToSpeech(this, this)
@@ -41,10 +63,10 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.number.setOnClickListener { // 执行朗读
 
             if (bRandomSelect == true) {
-                randomInt = Tools.randomNum(0, 100)
+                randomInt = Tools.randomNum(0, intMax)
             } else {
                 randomInt++
-                if (randomInt > 100) {
+                if (randomInt > intMax) {
                     randomInt = 0
                 }
             }
@@ -89,6 +111,12 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
                     "utteranceId"
                 )
             }
+        }
+    }
+
+    class SpeechFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.speech_preferences, rootKey)
         }
     }
 }
