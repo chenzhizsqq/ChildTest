@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        app:defaultValue="100"
+        app:entries="@array/speech_reply_entries"
+        app:entryValues="@array/speech_reply_values"
+        app:key="speech_preferences_max_num"
+        app:title="最大数"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>

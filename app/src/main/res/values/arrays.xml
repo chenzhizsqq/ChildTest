@@ -9,4 +9,16 @@
         <item>""</item>
         <item>"HK"</item>
     </string-array>
+
+    <string-array name="speech_reply_entries">
+        <item>十</item>
+        <item>百</item>
+        <item>千</item>
+    </string-array>
+
+    <string-array name="speech_reply_values">
+        <item>10</item>
+        <item>100</item>
+        <item>1000</item>
+    </string-array>
 </resources>
