@@ -42,6 +42,19 @@ class ThisApp : Application() {
             }.apply()
         }
 
+        /**
+         * 提交共享key的Boolean
+         *
+         * @param key:String
+         * @param value:Boolean
+         */
+        fun sharedPrePut(key: String, value: Boolean) {
+            val editor = sharedPreferences.edit()
+            editor.apply {
+                putBoolean(key, value)
+            }.apply()
+        }
+
 
         /**
          * 提交共享key的Long

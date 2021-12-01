@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +20,11 @@ open class BaseActivity : AppCompatActivity() {
         ThisApp.sharedPreferences.getBoolean("time_limit", false)
     }
 
-    open val bClickedRead: Boolean? by lazy {
-        ThisApp.sharedPreferences.getBoolean("clicked_read", false)
-    }
+    //点击后，马上读
+    open var bClickedRead: Boolean = false
 
-    open val bRandomSelect: Boolean? by lazy {
-        ThisApp.sharedPreferences.getBoolean("random_select", true)
-    }
+    //随机
+    open var bRandomSelect: Boolean = false
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
     fun Toast.showCustomToast(message: String, activity: Activity) {
@@ -50,6 +50,9 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        bClickedRead = ThisApp.sharedPreferences.getBoolean("clicked_read", false)
+        bRandomSelect = ThisApp.sharedPreferences.getBoolean("random_select", true)
+
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
 
@@ -66,6 +69,32 @@ open class BaseActivity : AppCompatActivity() {
                 countDownTimerMM(remainingTime_ss.toLong())
             }
         }
+    }
+
+    //引用右上角的功能选择器
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_scrolling, menu)
+        menu.findItem(R.id.clicked_read).isChecked = ThisApp.sharedPreGetBoolean("clicked_read")
+        menu.findItem(R.id.random_select).isChecked = ThisApp.sharedPreGetBoolean("random_select")
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.clicked_read ->{
+                item.isChecked = !item.isChecked
+                ThisApp.sharedPrePut("clicked_read", item.isChecked)
+                bClickedRead = item.isChecked
+                return true
+            }
+            R.id.random_select ->{
+                item.isChecked = !item.isChecked
+                ThisApp.sharedPrePut("random_select", item.isChecked)
+                bRandomSelect = item.isChecked
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private lateinit var countDownTimer: CountDownTimer

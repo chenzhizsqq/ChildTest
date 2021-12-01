@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.childtest.ScrollingActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/clicked_read"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="点击后阅读"
+        android:checkable="true"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/random_select"
+        android:orderInCategory="100"
+        android:title="随机显示"
+        android:checkable="true"
         app:showAsAction="never" />
 </menu>
