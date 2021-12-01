@@ -2,6 +2,7 @@ package com.example.childtest
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -9,13 +10,22 @@ import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 
 open class BaseActivity : AppCompatActivity() {
     val TAG_BaseActivity = "BaseActivity"
 
 
     private val bTimeAble: Boolean by lazy {
-        Tools.sharedPreGetBoolean("time_limit")
+        ThisApp.sharedPreferences.getBoolean("time_limit",false)
+    }
+
+    open val bClickedRead: Boolean? by lazy {
+        ThisApp.sharedPreferences.getBoolean("clicked_read", false)
+    }
+
+    open val bRandomSelect: Boolean? by lazy {
+        ThisApp.sharedPreferences.getBoolean("random_select", true)
     }
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
@@ -46,10 +56,10 @@ open class BaseActivity : AppCompatActivity() {
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
 
-            val timeSetting_ss = Tools.sharedPreGetInt("lock_use_time") * 60
+            val timeSetting_ss = ThisApp.sharedPreferences.getInt("lock_use_time",30) * 60
             //Log.e(TAG_BaseActivity, "onCreate: timeSetting_ss:$timeSetting_ss")
 
-            val remainingTime_ss = Tools.sharedPreGetInt(Config.remaining_time_ss)
+            val remainingTime_ss = ThisApp.sharedPreferences.getInt(Config.remaining_time_ss,30 * 60)
             //Log.e(TAG_BaseActivity, "onCreate: remainingTime_ss:$remainingTime_ss")
 
             if (timeSetting_ss < remainingTime_ss) {
@@ -71,7 +81,7 @@ open class BaseActivity : AppCompatActivity() {
                 if (bTimeAble) {
                     Log.e(TAG_BaseActivity, "countDownTimerSS onFinish(): ")
 
-                    Tools.sharedPrePut(Config.remaining_time_ss, 0)
+                    ThisApp.sharedPrePut(Config.remaining_time_ss, 0)
 
                     //倒数时间完了，退到LoginActivity页上。
                     val intent =
@@ -101,10 +111,10 @@ open class BaseActivity : AppCompatActivity() {
 
         if (bTimeAble) {
             countDownTimer.cancel()
-            Tools.sharedPrePut(Config.remaining_time_ss, lastRemainingTime_ss)
+            ThisApp.sharedPrePut(Config.remaining_time_ss, lastRemainingTime_ss)
             Log.d(
                 TAG_BaseActivity,
-                "onDestroy: remaining_time" + Tools.sharedPreGetInt(Config.remaining_time_ss)
+                "onDestroy: remaining_time" + ThisApp.sharedPreGetInt(Config.remaining_time_ss)
             )
         }
     }

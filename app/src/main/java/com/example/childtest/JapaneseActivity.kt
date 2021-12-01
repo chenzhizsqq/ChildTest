@@ -12,17 +12,6 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var binding: ActivityJapaneseBinding
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
-
-    private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read", false)
-    }
-    private val bRandomSelect: Boolean? by lazy {
-        sharedPreferences.getBoolean("random_select", true)
-    }
-
     private val TAG = "JapaneseActivity"
 
     var numberText = ""

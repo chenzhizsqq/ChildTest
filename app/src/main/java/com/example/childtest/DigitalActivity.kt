@@ -16,13 +16,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private lateinit var binding: ActivityDigitalBinding
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
-    private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read", false)
-    }
-
     private val TAG = "TextToSpeechActivity"
     private var how_much = "多少"
     private var currentAnswer = 0
@@ -105,7 +98,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun initNumber() {
-        val randomMax = sharedPreferences.getInt("digital_preferences_max_num", 3)
+        val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
         var randomNum1 = Tools.randomNum(1, randomMax)
         var randomNum2 = Tools.randomNum(1, randomMax)
         while (
@@ -191,7 +184,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 //tts!!.language = Locale.CHINA
 
-                val chineseSpeak = sharedPreferences.getString("chineseSpeak", "")
+                val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
                 tts!!.language = Locale("zh", chineseSpeak)
 
                 if (chineseSpeak == "HK") {

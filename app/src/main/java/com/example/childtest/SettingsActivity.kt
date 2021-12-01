@@ -28,10 +28,10 @@ class SettingsActivity : AppCompatActivity() {
         super.onDestroy()
 
 
-        if (Tools.sharedPreGetBoolean("time_limit")) {
-            Tools.sharedPrePut(
+        if (ThisApp.sharedPreGetBoolean("time_limit")) {
+            ThisApp.sharedPrePut(
                 Config.remaining_time_ss,
-                Tools.sharedPreGetInt("lock_use_time") * 60
+                ThisApp.sharedPreGetInt("lock_use_time") * 60
             )
         }
 

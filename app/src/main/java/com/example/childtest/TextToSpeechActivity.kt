@@ -19,16 +19,6 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
     private var randomInt = 0
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
-    private val bClickedRead: Boolean? by lazy {
-        sharedPreferences.getBoolean("clicked_read", false)
-    }
-    private val bRandomSelect: Boolean? by lazy {
-        sharedPreferences.getBoolean("random_select", true)
-    }
-
     private var intMax = 100
 
     // 起動時に呼ばれる
@@ -45,9 +35,9 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
                 .commit()
         }
 
-        intMax = sharedPreferences.getString("speech_preferences_max_num", "100")?.toInt() ?: 100
+        intMax = ThisApp.sharedPreferences.getString("speech_preferences_max_num", "100")?.toInt() ?: 100
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+        ThisApp.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
             when (key){
                 "speech_preferences_max_num" -> {
                     intMax = sharedPreferences.getString(key, "100")?.toInt() ?: 100
@@ -96,7 +86,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
             if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 //tts!!.language = Locale.CHINA
 
-                val chineseSpeak = sharedPreferences.getString("chineseSpeak", "")
+                val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
                 tts!!.language = Locale("zh", chineseSpeak)
             }
 

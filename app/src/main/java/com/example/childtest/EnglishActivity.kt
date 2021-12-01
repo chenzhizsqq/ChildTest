@@ -13,17 +13,6 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
     private lateinit var binding: ActivityEnglishBinding
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
-
-    private val bClickedRead: Boolean? by lazy {
-        Tools.sharedPreGetBoolean("clicked_read")
-    }
-    private val bRandomSelect: Boolean? by lazy {
-        sharedPreferences.getBoolean("random_select", true)
-    }
-
     var numberText = ""
 
     private val testStrArray = arrayOf(

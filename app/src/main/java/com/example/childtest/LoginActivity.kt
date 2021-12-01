@@ -30,17 +30,17 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences?.getBoolean("welcome_password", true)
     }
     private val bTimeAble: Boolean by lazy {
-        Tools.sharedPreGetBoolean("time_limit")
+        ThisApp.sharedPreGetBoolean("time_limit")
     }
 
     //剩余解锁的时间 秒
     private val remainingTime_ss: Int by lazy {
-        Tools.sharedPreGetInt(Config.remaining_time_ss)
+        ThisApp.sharedPreGetInt(Config.remaining_time_ss)
     }
 
     //锁屏需要的时间
     private val timeSetting_mm: Int by lazy {
-        Tools.sharedPreGetInt("lock_use_time")
+        ThisApp.sharedPreGetInt("lock_use_time")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun LoginSuccess() {
-        Tools.sharedPrePut(Config.remaining_time_ss, timeSetting_mm * 60)
+        ThisApp.sharedPrePut(Config.remaining_time_ss, timeSetting_mm * 60)
 
         val intent =
             Intent(this@LoginActivity, MenuActivity::class.java)
