@@ -1,12 +1,8 @@
 package com.example.childtest
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.util.Log
-import android.widget.Toast
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
 
@@ -35,10 +31,11 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
                 .commit()
         }
 
-        intMax = ThisApp.sharedPreferences.getString("speech_preferences_max_num", "100")?.toInt() ?: 100
+        intMax =
+            ThisApp.sharedPreferences.getString("speech_preferences_max_num", "100")?.toInt() ?: 100
 
         ThisApp.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
-            when (key){
+            when (key) {
                 "speech_preferences_max_num" -> {
                     intMax = sharedPreferences.getString(key, "100")?.toInt() ?: 100
                 }

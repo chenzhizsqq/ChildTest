@@ -1,12 +1,10 @@
 package com.example.childtest
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Toast
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityDigitalBinding
 import java.util.*
 
@@ -64,33 +62,33 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_1 -> {
                 if (binding.answer1.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast ("✔", this)
+                    Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
                 } else {
-                    Toast(this).showCustomToast ("✖", this)
+                    Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
                 }
             }
             R.id.answer_2 -> {
 
                 if (binding.answer2.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast ("✔", this)
+                    Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
                 } else {
-                    Toast(this).showCustomToast ("✖", this)
+                    Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
                 }
             }
             R.id.answer_3 -> {
 
                 if (binding.answer3.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast ("✔", this)
+                    Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
                 } else {
-                    Toast(this).showCustomToast ("✖", this)
+                    Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
                 }
             }

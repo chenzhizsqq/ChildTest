@@ -2,7 +2,6 @@ package com.example.childtest
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -10,14 +9,13 @@ import android.view.Gravity
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 
 open class BaseActivity : AppCompatActivity() {
     val TAG_BaseActivity = "BaseActivity"
 
 
     private val bTimeAble: Boolean by lazy {
-        ThisApp.sharedPreferences.getBoolean("time_limit",false)
+        ThisApp.sharedPreferences.getBoolean("time_limit", false)
     }
 
     open val bClickedRead: Boolean? by lazy {
@@ -29,9 +27,8 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
-    fun Toast.showCustomToast(message: String, activity: Activity)
-    {
-        val layout = activity.layoutInflater.inflate (
+    fun Toast.showCustomToast(message: String, activity: Activity) {
+        val layout = activity.layoutInflater.inflate(
             R.layout.custom_toast_layout,
             activity.findViewById(R.id.toast_container)
         )
@@ -56,10 +53,11 @@ open class BaseActivity : AppCompatActivity() {
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
 
-            val timeSetting_ss = ThisApp.sharedPreferences.getInt("lock_use_time",30) * 60
+            val timeSetting_ss = ThisApp.sharedPreferences.getInt("lock_use_time", 30) * 60
             //Log.e(TAG_BaseActivity, "onCreate: timeSetting_ss:$timeSetting_ss")
 
-            val remainingTime_ss = ThisApp.sharedPreferences.getInt(Config.remaining_time_ss,30 * 60)
+            val remainingTime_ss =
+                ThisApp.sharedPreferences.getInt(Config.remaining_time_ss, 30 * 60)
             //Log.e(TAG_BaseActivity, "onCreate: remainingTime_ss:$remainingTime_ss")
 
             if (timeSetting_ss < remainingTime_ss) {

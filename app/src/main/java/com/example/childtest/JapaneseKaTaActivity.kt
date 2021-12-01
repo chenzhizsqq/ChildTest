@@ -1,9 +1,7 @@
 package com.example.childtest
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import androidx.preference.PreferenceManager
 import com.example.childtest.databinding.ActivityJapaneseKataBinding
 import java.util.*
 
