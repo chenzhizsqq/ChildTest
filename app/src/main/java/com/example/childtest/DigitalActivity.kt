@@ -65,6 +65,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
+                    binding.llAnswer.visibility = View.GONE
                 } else {
                     Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
@@ -76,6 +77,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
+                    binding.llAnswer.visibility = View.GONE
                 } else {
                     Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
@@ -87,6 +89,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     Toast(this).showCustomToast("✔", this)
                     speakMsg("答对了")
                     binding.nextTest.visibility = View.VISIBLE
+                    binding.llAnswer.visibility = View.GONE
                 } else {
                     Toast(this).showCustomToast("✖", this)
                     speakMsg("答错了")
@@ -96,6 +99,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun initNumber() {
+        //app:key="digital_preferences_max_num"的处理  数字的最大数
         val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
         var randomNum1 = Tools.randomNum(1, randomMax)
         var randomNum2 = Tools.randomNum(1, randomMax)
@@ -148,7 +152,19 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             )
         }
 
+
+        //app:key="digital_preferences_tips_is_show"的处理  是否显示提示
+        val tips_is_show = ThisApp.sharedPreferences.getBoolean("digital_preferences_tips_is_show", true)
+        if (tips_is_show){
+            binding.llTips.visibility = View.VISIBLE
+        }else{
+            binding.llTips.visibility = View.GONE
+        }
+
         binding.nextTest.visibility = View.GONE
+        binding.llAnswer.visibility = View.VISIBLE
+
+
     }
 
     private fun speakMsg(s: String) {

@@ -1,13 +1,17 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!--数学测试-->
     <SeekBarPreference
         app:key="digital_preferences_max_num"
-        app:title="最大数"
+        app:title="数字的最大数"
         app:defaultValue="5"
         app:showSeekBarValue="true"
         app:min="3"
         android:max="10"
         />
+
+    <SwitchPreferenceCompat
+        app:key="digital_preferences_tips_is_show"
+        app:title="是否显示提示"/>
 
 </PreferenceScreen>
