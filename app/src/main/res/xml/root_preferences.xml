@@ -23,7 +23,7 @@
         app:key="random_select"
         app:title="随机显示"
         app:summary="练习时，练习题时随机显示"
-        app:defaultValue="true"/>
+        app:defaultValue="false"/>
 
     <CheckBoxPreference
         app:key="welcome_password"

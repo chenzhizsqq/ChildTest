@@ -51,7 +51,7 @@ open class BaseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         bClickedRead = ThisApp.sharedPreferences.getBoolean("clicked_read", false)
-        bRandomSelect = ThisApp.sharedPreferences.getBoolean("random_select", true)
+        bRandomSelect = ThisApp.sharedPreferences.getBoolean("random_select", false)
 
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
@@ -80,14 +80,14 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.clicked_read ->{
+        when (item.itemId) {
+            R.id.clicked_read -> {
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("clicked_read", item.isChecked)
                 bClickedRead = item.isChecked
                 return true
             }
-            R.id.random_select ->{
+            R.id.random_select -> {
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("random_select", item.isChecked)
                 bRandomSelect = item.isChecked
