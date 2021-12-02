@@ -48,7 +48,10 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.number.text = randomInt.toString()
 
         binding.number.setOnClickListener { // 执行朗读
+            this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        }
 
+        binding.nextTest.setOnClickListener {
             if (bRandomSelect == true) {
                 randomInt = Tools.randomNum(0, intMax)
             } else {
@@ -68,10 +71,6 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
                     "utteranceId"
                 )
             }
-        }
-
-        binding.numberSpeak.setOnClickListener {
-            this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
     }
 
