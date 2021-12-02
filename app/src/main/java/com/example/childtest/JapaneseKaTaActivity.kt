@@ -6,7 +6,7 @@ import com.example.childtest.databinding.ActivityJapaneseKataBinding
 import java.util.*
 
 class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
-    private var tts: TextToSpeech? = null
+    //private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityJapaneseKataBinding
 
@@ -35,24 +35,16 @@ class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding = ActivityJapaneseKataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TextToSpeechの生成
-        this.tts = TextToSpeech(this, this)
-
-
-
-
-        if (bRandomSelect) {
-            numberText = testStrArray.random()
+        numberText = if (bRandomSelect) {
+            testStrArray.random()
         } else {
-            numberText = testStrArray[0]
+            testStrArray[0]
         }
         binding.number.text = numberText
 
         binding.number.setOnClickListener {
-            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
-
+            this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
-
 
         binding.nextTest.setOnClickListener {
             if (bRandomSelect) {
@@ -66,33 +58,25 @@ class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = numberText
             if (bClickedRead) {
-                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
         }
 
 
     }
 
-/*    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        finish()
-        return true
-    }*/
-
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
             val locale = Locale.JAPAN
-            if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                tts!!.language = Locale.JAPAN
-
+            if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+                tts.language = Locale.JAPAN
             }
 
-
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 // 音声合成の実行
-                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
 
         }

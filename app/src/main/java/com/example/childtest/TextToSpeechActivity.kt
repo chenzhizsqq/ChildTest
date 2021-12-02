@@ -9,8 +9,6 @@ import java.util.*
 class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
     private val TAG = "TextToSpeechActivity"
 
-    private var tts: TextToSpeech? = null
-
     private lateinit var binding: ActivityTextToSpeechBinding
 
     private var randomInt = 0
@@ -42,13 +40,10 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
             }
         }
 
-        // TextToSpeechの生成
-        this.tts = TextToSpeech(this, this)
-
         binding.number.text = randomInt.toString()
 
         binding.number.setOnClickListener { // 执行朗读
-            this.tts!!.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            this.tts.speak(randomInt.toString(), TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
 
         binding.nextTest.setOnClickListener {
@@ -63,8 +58,8 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = randomInt.toString()
 
-            if (bClickedRead == true) {
-                this.tts!!.speak(
+            if (bClickedRead) {
+                this.tts.speak(
                     randomInt.toString(),
                     TextToSpeech.QUEUE_FLUSH,
                     null,
@@ -79,18 +74,18 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
             val locale = Locale.CHINA
-            if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+            if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
                 //tts!!.language = Locale.CHINA
 
                 val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
-                tts!!.language = Locale("zh", chineseSpeak)
+                tts.language = Locale("zh", chineseSpeak)
             }
 
             binding.number.text = randomInt.toString()
 
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 // 音声合成の実行
-                this.tts!!.speak(
+                this.tts.speak(
                     randomInt.toString(),
                     TextToSpeech.QUEUE_FLUSH,
                     null,

@@ -10,7 +10,6 @@ import java.util.*
 
 
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClickListener {
-    private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityDigitalBinding
 
@@ -18,7 +17,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private var how_much = "多少"
     private var currentAnswer = 0
 
-    // 起動時に呼ばれる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,10 +30,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 .replace(R.id.digital_settings, DigitalSettingsFragment())
                 .commit()
         }
-
-        // TextToSpeechの生成
-        this.tts = TextToSpeech(this, this)
-
 
         binding.llText.setOnClickListener(this)
         binding.nextTest.setOnClickListener(this)
@@ -53,7 +47,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 initNumber()
             }
             R.id.ll_text -> {
-                this.tts!!.speak(
+                this.tts.speak(
                     addTestFun(),
                     TextToSpeech.QUEUE_FLUSH,
                     null,
@@ -143,8 +137,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.answer2.text = answers_random2.toString()
         binding.answer3.text = answers_random3.toString()
 
-        if (bClickedRead == true) {
-            this.tts!!.speak(
+        if (bClickedRead) {
+            this.tts.speak(
                 addTestFun(),
                 TextToSpeech.QUEUE_FLUSH,
                 null,
@@ -169,7 +163,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun speakMsg(s: String) {
-        this.tts!!.speak(
+        this.tts.speak(
             s,
             TextToSpeech.QUEUE_FLUSH,
             null,
@@ -196,11 +190,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
             val locale = Locale.CHINA
-            if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                //tts!!.language = Locale.CHINA
+            if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
 
                 val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
-                tts!!.language = Locale("zh", chineseSpeak)
+                tts.language = Locale("zh", chineseSpeak)
 
                 if (chineseSpeak == "HK") {
                     how_much = "几多"
@@ -208,7 +201,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
 
 
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 initNumber()
             }
         }

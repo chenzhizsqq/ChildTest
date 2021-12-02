@@ -6,7 +6,7 @@ import com.example.childtest.databinding.ActivityJapaneseBinding
 import java.util.*
 
 class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
-    private var tts: TextToSpeech? = null
+    //private var tts: TextToSpeech? = null
 
     private lateinit var binding: ActivityJapaneseBinding
 
@@ -35,11 +35,6 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding = ActivityJapaneseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TextToSpeechの生成
-        this.tts = TextToSpeech(this, this)
-
-
-
 
         if (bRandomSelect) {
             numberText = testStrArray.random()
@@ -49,7 +44,7 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.number.text = numberText
 
         binding.number.setOnClickListener {
-            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+            this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
 
         }
 
@@ -66,7 +61,7 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = numberText
             if (bClickedRead) {
-                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
         }
 
@@ -78,15 +73,13 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
             val locale = Locale.JAPAN
-            if (this.tts!!.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                tts!!.language = Locale.JAPAN
-
+            if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+                tts.language = Locale.JAPAN
             }
 
-
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 // 音声合成の実行
-                this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+                this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
 
         }

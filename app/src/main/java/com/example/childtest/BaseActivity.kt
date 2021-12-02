@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.Gravity
 import android.view.Menu
@@ -15,9 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
 open class BaseActivity : AppCompatActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener //共享属性的，属性变更的监听
+    SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
+    , TextToSpeech.OnInitListener                           //系统文字阅读的工具
 {
-    val TAG_BaseActivity = "BaseActivity"
+    private val TAG = "BaseActivity"
+
+    open val tts: TextToSpeech by lazy {
+        TextToSpeech(this, this)
+    }
 
     //倒数器
     private lateinit var countDownTimer: CountDownTimer
@@ -119,7 +125,7 @@ open class BaseActivity : AppCompatActivity(),
             //倒数完的处理
             override fun onFinish() {
                 if (bTimeAble) {
-                    Log.e(TAG_BaseActivity, "countDownTimerSS onFinish(): ")
+                    Log.e(TAG, "countDownTimerSS onFinish(): ")
 
                     ThisApp.sharedPrePut(Config.remaining_time_ss, 0)
 
@@ -154,7 +160,7 @@ open class BaseActivity : AppCompatActivity(),
             countDownTimer.cancel()
             ThisApp.sharedPrePut(Config.remaining_time_ss, lastRemainingTime_ss)
             Log.d(
-                TAG_BaseActivity,
+                TAG,
                 "onDestroy: remaining_time" + ThisApp.sharedPreGetInt(Config.remaining_time_ss)
             )
         }
@@ -186,6 +192,15 @@ open class BaseActivity : AppCompatActivity(),
             }
 
         }
+    }
+
+    /**
+     * Called to signal the completion of the TextToSpeech engine initialization.
+     *
+     * @param status [TextToSpeech.SUCCESS] or [TextToSpeech.ERROR].
+     */
+    override fun onInit(status: Int) {
+        TODO("Not yet implemented")
     }
 
 }
