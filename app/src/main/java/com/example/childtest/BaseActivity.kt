@@ -19,7 +19,10 @@ open class BaseActivity : AppCompatActivity(),
 {
     val TAG_BaseActivity = "BaseActivity"
 
+    //倒数器
+    private lateinit var countDownTimer: CountDownTimer
 
+    //是否有，时间限制
     private val bTimeAble: Boolean by lazy {
         ThisApp.sharedPreferences.getBoolean("time_limit", false)
     }
@@ -31,6 +34,7 @@ open class BaseActivity : AppCompatActivity(),
     open var bRandomSelect: Boolean = false
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
+    //创建自定义的提示框
     fun Toast.showCustomToast(message: String, activity: Activity) {
         val layout = activity.layoutInflater.inflate(
             R.layout.custom_toast_layout,
@@ -88,6 +92,7 @@ open class BaseActivity : AppCompatActivity(),
         return true
     }
 
+    //右上角选择器，选择后的处理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.clicked_read -> {
@@ -104,13 +109,14 @@ open class BaseActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    private lateinit var countDownTimer: CountDownTimer
-
     //最后剩余时间 秒
     private var lastRemainingTime_ss: Int = 0
 
+    //倒数时间的设定
     fun countDownTimerMM(ss: Long) {
         countDownTimer = object : CountDownTimer(ss * 1000, 300) {
+
+            //倒数完的处理
             override fun onFinish() {
                 if (bTimeAble) {
                     Log.e(TAG_BaseActivity, "countDownTimerSS onFinish(): ")
@@ -125,6 +131,7 @@ open class BaseActivity : AppCompatActivity(),
                 }
             }
 
+            //倒数中的状况
             override fun onTick(millisUntilFinished: Long) {
                 if (bTimeAble) {
 
@@ -157,6 +164,7 @@ open class BaseActivity : AppCompatActivity(),
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
+    //返回到主目录上
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         finish()
