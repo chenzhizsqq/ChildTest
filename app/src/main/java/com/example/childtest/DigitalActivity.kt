@@ -154,10 +154,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
 
         //app:key="digital_preferences_tips_is_show"的处理  是否显示提示
-        val tips_is_show = ThisApp.sharedPreferences.getBoolean("digital_preferences_tips_is_show", true)
-        if (tips_is_show){
+        val tips_is_show =
+            ThisApp.sharedPreferences.getBoolean("digital_preferences_tips_is_show", true)
+        if (tips_is_show) {
             binding.llTips.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.llTips.visibility = View.GONE
         }
 

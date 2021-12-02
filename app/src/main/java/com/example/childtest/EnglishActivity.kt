@@ -37,7 +37,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
 
 
-        numberText = if (bRandomSelect == true) {
+        numberText = if (bRandomSelect) {
             testStrArray.random()
         } else {
             testStrArray[0]

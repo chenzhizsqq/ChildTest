@@ -41,7 +41,7 @@ class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
 
 
-        if (bRandomSelect == true) {
+        if (bRandomSelect) {
             numberText = testStrArray.random()
         } else {
             numberText = testStrArray[0]

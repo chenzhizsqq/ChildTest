@@ -52,7 +52,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         }
 
         binding.nextTest.setOnClickListener {
-            if (bRandomSelect == true) {
+            if (bRandomSelect) {
                 randomInt = Tools.randomNum(0, intMax)
             } else {
                 randomInt++
