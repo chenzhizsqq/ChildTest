@@ -48,8 +48,14 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
         }
         binding.number.text = numberText
 
-        binding.number.setOnClickListener { // 执行朗读
-            if (bRandomSelect == true) {
+        binding.number.setOnClickListener {
+            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+
+        }
+
+
+        binding.nextTest.setOnClickListener {
+            if (bRandomSelect) {
                 numberText = testStrArray.random()
             } else {
                 arrayIndex += 1
@@ -59,15 +65,9 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
             }
 
             binding.number.text = numberText
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
-
-        }
-
-
-        binding.numberSpeak.setOnClickListener {
-            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
 
 

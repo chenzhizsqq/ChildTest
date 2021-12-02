@@ -45,8 +45,12 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding.number.text = numberText
 
         binding.number.setOnClickListener {
+            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        }
 
-            if (bRandomSelect == true) {
+
+        binding.nextTest.setOnClickListener {
+            if (bRandomSelect) {
                 numberText = testStrArray.random()
             } else {
                 arrayIndex += 1
@@ -56,14 +60,9 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
             }
 
             binding.number.text = numberText
-            if (bClickedRead == true) {
+            if (bClickedRead) {
                 this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
-        }
-
-
-        binding.numberSpeak.setOnClickListener {
-            this.tts!!.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
         }
 
 
