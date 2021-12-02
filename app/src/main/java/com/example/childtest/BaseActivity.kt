@@ -2,6 +2,7 @@ package com.example.childtest
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -11,8 +12,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity : AppCompatActivity(),
+    SharedPreferences.OnSharedPreferenceChangeListener //共享属性的，属性变更的监听
+{
     val TAG_BaseActivity = "BaseActivity"
 
 
@@ -69,6 +73,11 @@ open class BaseActivity : AppCompatActivity() {
                 countDownTimerMM(remainingTime_ss.toLong())
             }
         }
+
+        //共享属性，追加属性变化的监听
+        val sharedPreferences: SharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
     }
 
     //引用右上角的功能选择器
@@ -84,13 +93,11 @@ open class BaseActivity : AppCompatActivity() {
             R.id.clicked_read -> {
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("clicked_read", item.isChecked)
-                bClickedRead = item.isChecked
                 return true
             }
             R.id.random_select -> {
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("random_select", item.isChecked)
-                bRandomSelect = item.isChecked
                 return true
             }
         }
@@ -144,6 +151,10 @@ open class BaseActivity : AppCompatActivity() {
                 "onDestroy: remaining_time" + ThisApp.sharedPreGetInt(Config.remaining_time_ss)
             )
         }
+
+        //共享属性，去除属性变化的监听
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -151,4 +162,22 @@ open class BaseActivity : AppCompatActivity() {
         finish()
         return true
     }
+
+    //共享属性，监听时的监听数据变化函数
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            "clicked_read" -> {
+                if (sharedPreferences != null) {
+                    bClickedRead = sharedPreferences.getBoolean("clicked_read", false)
+                }
+            }
+            "bRandomSelect" -> {
+                if (sharedPreferences != null) {
+                    bRandomSelect = sharedPreferences.getBoolean("random_select", false)
+                }
+            }
+
+        }
+    }
+
 }
