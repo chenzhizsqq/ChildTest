@@ -103,15 +103,15 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun answerWrong() {
         Toast(this).showCustomToast("✖", this)
         speakMsg("答错了")
-        if (digitalViewModel.mFenShu.value!! > 0) {
-            digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! - 1
+        if (digitalViewModel.getFenShu() > 0) {
+            digitalViewModel.fenShuAdd(-1)
         }
     }
 
     private fun answerRight() {
         Toast(this).showCustomToast("✔", this)
         speakMsg("答对了")
-        digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! + 1
+        digitalViewModel.fenShuAdd(1)
         binding.nextTest.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.GONE
     }
