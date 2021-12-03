@@ -19,7 +19,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private var how_much = "多少"
     private var currentAnswer = 0
 
-    private val  digitalViewModel: DigitalViewModel by lazy {
+    private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this).get(DigitalViewModel::class.java)
     }
 
@@ -51,8 +51,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             binding.test1.text = it.toString()
         })
 
-        //是否监视添加监视
-        digitalViewModel.liveTipsIsShow.observe(this,{
+        //是否提示添加监视
+        digitalViewModel.liveTipsIsShow.observe(this, {
             if (it) {
                 binding.llTips.visibility = View.VISIBLE
             } else {
@@ -103,8 +103,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun answerWrong() {
         Toast(this).showCustomToast("✖", this)
         speakMsg("答错了")
-        if (digitalViewModel.mFenShu.value!! >0){
-            digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! -1
+        if (digitalViewModel.mFenShu.value!! > 0) {
+            digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! - 1
         }
     }
 
