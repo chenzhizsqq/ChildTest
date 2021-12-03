@@ -1,9 +1,11 @@
 package com.example.childtest
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import com.example.childtest.databinding.ActivityDigitalBinding
 import java.util.*
@@ -16,6 +18,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private val TAG = "TextToSpeechActivity"
     private var how_much = "多少"
     private var currentAnswer = 0
+
+    private val  digitalViewModel: DigitalViewModel by lazy {
+        ViewModelProvider(this).get(DigitalViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,20 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.answer3.setOnClickListener(this)
 
         initNumber()
+
+        //让分数添加监视
+        digitalViewModel.liveFenShu.observe(this, {
+            binding.test1.text = it.toString()
+        })
+
+        //是否监视添加监视
+        digitalViewModel.liveTipsIsShow.observe(this,{
+            if (it) {
+                binding.llTips.visibility = View.VISIBLE
+            } else {
+                binding.llTips.visibility = View.GONE
+            }
+        })
     }
 
     override fun onClick(v: View?) {
@@ -56,40 +76,44 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_1 -> {
                 if (binding.answer1.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast("✔", this)
-                    speakMsg("答对了")
-                    binding.nextTest.visibility = View.VISIBLE
-                    binding.llAnswer.visibility = View.GONE
+                    answerRight()
                 } else {
-                    Toast(this).showCustomToast("✖", this)
-                    speakMsg("答错了")
+                    answerWrong()
                 }
             }
             R.id.answer_2 -> {
 
                 if (binding.answer2.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast("✔", this)
-                    speakMsg("答对了")
-                    binding.nextTest.visibility = View.VISIBLE
-                    binding.llAnswer.visibility = View.GONE
+                    answerRight()
                 } else {
-                    Toast(this).showCustomToast("✖", this)
-                    speakMsg("答错了")
+                    answerWrong()
                 }
             }
             R.id.answer_3 -> {
 
                 if (binding.answer3.text.toString() == currentAnswer.toString()) {
-                    Toast(this).showCustomToast("✔", this)
-                    speakMsg("答对了")
-                    binding.nextTest.visibility = View.VISIBLE
-                    binding.llAnswer.visibility = View.GONE
+                    answerRight()
                 } else {
-                    Toast(this).showCustomToast("✖", this)
-                    speakMsg("答错了")
+                    answerWrong()
                 }
             }
         }
+    }
+
+    private fun answerWrong() {
+        Toast(this).showCustomToast("✖", this)
+        speakMsg("答错了")
+        if (digitalViewModel.mFenShu.value!! >0){
+            digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! -1
+        }
+    }
+
+    private fun answerRight() {
+        Toast(this).showCustomToast("✔", this)
+        speakMsg("答对了")
+        digitalViewModel.mFenShu.value = digitalViewModel.mFenShu.value!! + 1
+        binding.nextTest.visibility = View.VISIBLE
+        binding.llAnswer.visibility = View.GONE
     }
 
     private fun initNumber() {
@@ -146,20 +170,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             )
         }
 
-
-        //app:key="digital_preferences_tips_is_show"的处理  是否显示提示
-        val tips_is_show =
-            ThisApp.sharedPreferences.getBoolean("digital_preferences_tips_is_show", true)
-        if (tips_is_show) {
-            binding.llTips.visibility = View.VISIBLE
-        } else {
-            binding.llTips.visibility = View.GONE
-        }
-
         binding.nextTest.visibility = View.GONE
         binding.llAnswer.visibility = View.VISIBLE
-
-
     }
 
     private fun speakMsg(s: String) {
@@ -204,6 +216,20 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             if (bClickedRead) {
                 initNumber()
             }
+        }
+    }
+
+    //共享属性，监听时的监听数据变化函数
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            //app:key="digital_preferences_tips_is_show"的处理  是否显示提示
+            "digital_preferences_tips_is_show" -> {
+                if (sharedPreferences != null) {
+                    digitalViewModel.mTipsIsShow.value =
+                        sharedPreferences.getBoolean("digital_preferences_tips_is_show", false)
+                }
+            }
+
         }
     }
 
