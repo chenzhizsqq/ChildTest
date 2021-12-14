@@ -118,6 +118,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun initNumber() {
         //app:key="digital_preferences_max_num"的处理  数字的最大数
+        //测试数字
         val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
         var randomNum1 = Tools.randomNum(1, randomMax)
         var randomNum2 = Tools.randomNum(1, randomMax)
@@ -135,6 +136,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.tvNum1.text = addViewText(randomNum1)
         binding.tvNum2.text = addViewText(randomNum2)
 
+        //选择答案设置
         currentAnswer = randomNum1 + randomNum2
 
         var answer2 = currentAnswer + Tools.randomNum(-2, 2)
