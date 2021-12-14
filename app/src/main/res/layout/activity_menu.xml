@@ -15,51 +15,57 @@ tools:context=".MenuActivity">
         android:orientation="vertical">
         <TextView
             android:id="@+id/number_test"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="数字测试" />
         <TextView
             android:id="@+id/digital_test"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="数学测试" />
         <TextView
             android:id="@+id/japanese_test"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="日语ひらがな测试" />
         <TextView
             android:id="@+id/japaneseKata_test"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="日语カタカナ测试" />
         <TextView
             android:id="@+id/english_test"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="英语测试" />
         <TextView
             android:id="@+id/setting"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="20dp"
             app:fontFamily="@font/a"
+            android:background="@drawable/back"
             android:text="设定" />
     </LinearLayout>
 

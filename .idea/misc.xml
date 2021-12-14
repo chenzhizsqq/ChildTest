@@ -3,15 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/drawable/back.xml" value="0.1685185185185185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_digital.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_english.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_japanese.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_japanese_kata.xml" value="0.11041666666666666" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_menu.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_text_to_speech.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/custom_toast_layout.xml" value="0.16770833333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/menu/menu_scrolling.xml" value="0.16770833333333332" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/xml/digital_preferences.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/xml/root_preferences.xml" value="0.16770833333333332" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/xml/speech_preferences.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/SpeechTest/app/src/main/res/drawable/button_background.xml" value="0.16342592592592592" />
         <entry key="..\:/Users/user/AndroidStudioProjects/SpeechTest/app/src/main/res/layout/activity_digital.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/SpeechTest/app/src/main/res/layout/activity_text_to_speech.xml" value="0.1" />
