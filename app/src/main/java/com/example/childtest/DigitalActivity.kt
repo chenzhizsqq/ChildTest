@@ -49,12 +49,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         initNumber()
 
         //让分数添加监视
-        digitalViewModel.liveFenShu.observe(this, {
+        digitalViewModel.fenShu.observe(this, {
             binding.test1.text = it.toString()
         })
 
         //是否提示添加监视
-        digitalViewModel.liveTipsIsShow.observe(this, {
+        ThisApp.mAppViewModel.tips_is_show.observe(this, {
             if (it) {
                 binding.llTips.visibility = View.VISIBLE
             } else {
@@ -218,20 +218,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 }
             }
 
-
-        }
-    }
-
-    //共享属性，监听时的监听数据变化函数
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            //app:key="digital_preferences_tips_is_show"的处理  是否显示提示
-            "digital_preferences_tips_is_show" -> {
-                if (sharedPreferences != null) {
-                    digitalViewModel.mTipsIsShow.value =
-                        sharedPreferences.getBoolean("digital_preferences_tips_is_show", false)
-                }
-            }
 
         }
     }

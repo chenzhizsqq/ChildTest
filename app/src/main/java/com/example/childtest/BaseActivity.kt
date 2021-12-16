@@ -62,6 +62,9 @@ open class BaseActivity : AppCompatActivity()
         ThisApp.mAppViewModel.next_question_read.value = ThisApp.sharedPreferences.getBoolean("next_question_read", false)
         ThisApp.mAppViewModel.random_select.value = ThisApp.sharedPreferences.getBoolean("random_select", false)
 
+        //tips_is_show
+        ThisApp.mAppViewModel.tips_is_show.value = ThisApp.sharedPreferences.getBoolean("tips_is_show", false)
+
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
 
@@ -89,6 +92,7 @@ open class BaseActivity : AppCompatActivity()
         menuInflater.inflate(R.menu.menu_scrolling, menu)
         menu.findItem(R.id.next_question_read).isChecked = ThisApp.sharedPreGetBoolean("next_question_read")
         menu.findItem(R.id.random_select).isChecked = ThisApp.sharedPreGetBoolean("random_select")
+        menu.findItem(R.id.tips_is_show).isChecked = ThisApp.sharedPreGetBoolean("tips_is_show")
         return true
     }
 
@@ -122,6 +126,12 @@ open class BaseActivity : AppCompatActivity()
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("random_select", item.isChecked)
                 ThisApp.mAppViewModel.random_select.value = item.isChecked
+                return true
+            }
+            R.id.tips_is_show -> {
+                item.isChecked = !item.isChecked
+                ThisApp.sharedPrePut("tips_is_show", item.isChecked)
+                ThisApp.mAppViewModel.tips_is_show.value = item.isChecked
                 return true
             }
         }
