@@ -2,16 +2,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.childtest.ScrollingActivity">
+
     <item
-        android:id="@+id/clicked_read"
-        android:orderInCategory="100"
-        android:title="点击后阅读"
+        android:id="@+id/setting"
+        android:orderInCategory="1"
+        android:title="详细设置"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/next_question_read"
+        android:orderInCategory="2"
+        android:title="点击下一题后，马上读"
         android:checkable="true"
         app:showAsAction="never" />
     <item
         android:id="@+id/random_select"
-        android:orderInCategory="100"
+        android:orderInCategory="3"
         android:title="随机显示"
         android:checkable="true"
         app:showAsAction="never" />
+
+    <item android:id="@+id/submenu" android:title="子菜单使用演示~"
+        android:orderInCategory="4">
+        <menu>
+            <group android:checkableBehavior = "none">
+                <item android:id="@+id/one" android:title = "子菜单一"/>
+                <item android:id="@+id/two" android:title = "子菜单二"/>
+                <item android:id="@+id/three" android:title = "子菜单三"/>
+            </group>
+        </menu>
+    </item>
 </menu>

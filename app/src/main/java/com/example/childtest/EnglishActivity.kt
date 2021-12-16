@@ -30,7 +30,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
         binding = ActivityEnglishBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        numberText = if (bRandomSelect) {
+        numberText = if (ThisApp.mAppViewModel.random_select.value == true) {
             testStrArray.random()
         } else {
             testStrArray[0]
@@ -43,7 +43,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
 
         binding.nextTest.setOnClickListener {
-            if (bRandomSelect) {
+            if (ThisApp.mAppViewModel.random_select.value == true) {
                 numberText = testStrArray.random()
             } else {
                 arrayIndex += 1
@@ -53,7 +53,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
             }
 
             binding.number.text = numberText
-            if (bClickedRead) {
+            if (ThisApp.mAppViewModel.next_question_read.value == true) {
                 this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }
         }
@@ -72,7 +72,7 @@ class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
             }
 
 
-            if (bClickedRead) {
+            if (ThisApp.mAppViewModel.next_question_read.value == true) {
                 // 音声合成の実行
                 this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
             }

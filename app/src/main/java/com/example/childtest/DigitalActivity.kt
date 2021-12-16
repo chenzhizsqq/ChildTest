@@ -17,6 +17,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private val TAG = "TextToSpeechActivity"
     private var how_much = "多少"
+    private var plus = "加"
+    private var dengyu = "等于"
     private var currentAnswer = 0
 
     private val digitalViewModel: DigitalViewModel by lazy {
@@ -59,6 +61,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 binding.llTips.visibility = View.GONE
             }
         })
+
+        initNumber()
     }
 
     override fun onClick(v: View?) {
@@ -163,7 +167,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.answer2.text = answers_random2.toString()
         binding.answer3.text = answers_random3.toString()
 
-        if (bClickedRead) {
+        if (ThisApp.mAppViewModel.next_question_read.value == true) {
             this.tts.speak(
                 addTestFun(),
                 TextToSpeech.QUEUE_FLUSH,
@@ -196,7 +200,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun addTestFun(): String {
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
-        return number1Text + "加$number2Text=" + how_much
+        return number1Text + "$plus$number2Text$dengyu" + how_much
     }
 
     // TextToSpeechの初期化完了時に呼ばれる
@@ -215,9 +219,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
 
 
-            if (bClickedRead) {
-                initNumber()
-            }
         }
     }
 

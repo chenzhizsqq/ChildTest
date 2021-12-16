@@ -15,8 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
-open class BaseActivity : AppCompatActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
+open class BaseActivity : AppCompatActivity()
+    ,SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
     , TextToSpeech.OnInitListener                           //系统文字阅读的工具
 {
     private val TAG = "BaseActivity"
@@ -33,11 +33,6 @@ open class BaseActivity : AppCompatActivity(),
         ThisApp.sharedPreferences.getBoolean("time_limit", false)
     }
 
-    //点击后，马上读
-    open var bClickedRead: Boolean = false
-
-    //随机
-    open var bRandomSelect: Boolean = false
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
     //创建自定义的提示框
@@ -64,8 +59,8 @@ open class BaseActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        bClickedRead = ThisApp.sharedPreferences.getBoolean("clicked_read", false)
-        bRandomSelect = ThisApp.sharedPreferences.getBoolean("random_select", false)
+        ThisApp.mAppViewModel.next_question_read.value = ThisApp.sharedPreferences.getBoolean("next_question_read", false)
+        ThisApp.mAppViewModel.random_select.value = ThisApp.sharedPreferences.getBoolean("random_select", false)
 
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
@@ -85,15 +80,14 @@ open class BaseActivity : AppCompatActivity(),
         }
 
         //共享属性，追加属性变化的监听
-        val sharedPreferences: SharedPreferences =
-            PreferenceManager.getDefaultSharedPreferences(this)
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-    }
+     }
 
-    //引用右上角的功能选择器
+    //引用右上角的功能选择器 - 创建
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
-        menu.findItem(R.id.clicked_read).isChecked = ThisApp.sharedPreGetBoolean("clicked_read")
+        menu.findItem(R.id.next_question_read).isChecked = ThisApp.sharedPreGetBoolean("next_question_read")
         menu.findItem(R.id.random_select).isChecked = ThisApp.sharedPreGetBoolean("random_select")
         return true
     }
@@ -101,14 +95,33 @@ open class BaseActivity : AppCompatActivity(),
     //右上角选择器，选择后的处理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.clicked_read -> {
+            R.id.setting -> {val mSettingLogoDialog = SettingLogoDialog()
+                mSettingLogoDialog.apply {
+                    show(supportFragmentManager, "SettingLogoDialog")
+                }
+                mSettingLogoDialog.setOnDialogListener(object : SettingLogoDialog.OnDialogListener {
+                    override fun onClick(bOpen: Boolean) {
+                        if (bOpen) {
+                            val intent =
+                                Intent(this@BaseActivity, SettingsActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(applicationContext, "错了，请再输入一次", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+                })
+            }
+            R.id.next_question_read -> {
                 item.isChecked = !item.isChecked
-                ThisApp.sharedPrePut("clicked_read", item.isChecked)
+                ThisApp.sharedPrePut("next_question_read", item.isChecked)
+                ThisApp.mAppViewModel.next_question_read.value = item.isChecked
                 return true
             }
             R.id.random_select -> {
                 item.isChecked = !item.isChecked
                 ThisApp.sharedPrePut("random_select", item.isChecked)
+                ThisApp.mAppViewModel.random_select.value = item.isChecked
                 return true
             }
         }
@@ -179,10 +192,10 @@ open class BaseActivity : AppCompatActivity(),
 
     //共享属性，监听时的监听数据变化函数
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            "clicked_read" -> {
+        /*when (key) {
+            "next_question_read" -> {
                 if (sharedPreferences != null) {
-                    bClickedRead = sharedPreferences.getBoolean("clicked_read", false)
+                    bNextQuestionRead = sharedPreferences.getBoolean("next_question_read", false)
                 }
             }
             "bRandomSelect" -> {
@@ -191,7 +204,7 @@ open class BaseActivity : AppCompatActivity(),
                 }
             }
 
-        }
+        }*/
     }
 
     /**

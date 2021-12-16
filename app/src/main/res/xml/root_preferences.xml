@@ -15,7 +15,7 @@
     </PreferenceCategory>
 
     <CheckBoxPreference
-        app:key="clicked_read"
+        app:key="next_question_read"
         app:title="马上读"
         app:summary="点击下一题后，马上读"
         app:defaultValue="false"/>

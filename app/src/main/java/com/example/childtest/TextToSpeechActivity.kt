@@ -47,7 +47,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
         }
 
         binding.nextTest.setOnClickListener {
-            if (bRandomSelect) {
+            if (ThisApp.mAppViewModel.random_select.value == true) {
                 randomInt = Tools.randomNum(0, intMax)
             } else {
                 randomInt++
@@ -58,7 +58,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = randomInt.toString()
 
-            if (bClickedRead) {
+            if (ThisApp.mAppViewModel.next_question_read.value == true) {
                 this.tts.speak(
                     randomInt.toString(),
                     TextToSpeech.QUEUE_FLUSH,
@@ -83,7 +83,7 @@ class TextToSpeechActivity : BaseActivity(), TextToSpeech.OnInitListener {
 
             binding.number.text = randomInt.toString()
 
-            if (bClickedRead) {
+            if (ThisApp.mAppViewModel.next_question_read.value == true) {
                 // 音声合成の実行
                 this.tts.speak(
                     randomInt.toString(),
