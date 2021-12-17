@@ -1,10 +1,8 @@
 package com.example.childtest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.childtest.databinding.ActivityTestBinding
-import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
@@ -22,12 +20,12 @@ class TestActivity : BaseActivity() {
         setContentView(binding.root)
 
         binding.jsonTestButton.setOnClickListener {
-            githubJsonServiceGetMethod()
+            jsonGet()
         }
     }
 
 
-    fun githubJsonServiceGetMethod() {
+    private fun jsonGet() {
 
         val retrofit = Retrofit.Builder()
             .baseUrl("https://my-json-server.typicode.com/")
@@ -36,20 +34,24 @@ class TestActivity : BaseActivity() {
         val service = retrofit.create(GithubJsonService::class.java)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getTest()
+            val response = service.getResponse()
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     binding.jsonCodeTextview.text = response.code().toString()
                     val gson = GsonBuilder().setPrettyPrinting().create()
-                    val json = gson.toJson(
+
+                    //jsonOrg获取原来的json的样式
+                    val jsonOrg = gson.toJson(
                         JsonParser.parseString(
                             response.body()?.string()
                         )
                     )
-                    binding.jsonResultsTextview.text = json
 
-                    val jsonData : GithubJson_test = gson.fromJson(json,GithubJson_test::class.java)
+                    binding.jsonResultsTextview.text = jsonOrg
+
+                    //把Json通过gson，转成结构的数据
+                    val jsonData : JsonDataClass = gson.fromJson(jsonOrg,JsonDataClass::class.java)
                     Log.e(TAG, "getMethodTest: jsonData.id: "+jsonData.id )
                     Log.e(TAG, "getMethodTest: jsonData.title: "+jsonData.title )
 

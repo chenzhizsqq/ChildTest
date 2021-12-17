@@ -7,7 +7,7 @@ package com.example.childtest
     "title": "fdsafdsaf333"
 }
 */
-data class GithubJson_test(
+data class JsonDataClass(
     val id: String,
     val title: String
     )

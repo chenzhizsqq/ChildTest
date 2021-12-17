@@ -15,7 +15,7 @@ interface GithubJsonService {
 
     //https://raw.githubusercontent.com/chenzhizsqq/testJson/main/db.json
     @GET("/chenzhizsqq/testJson/test")
-    suspend fun getTest(): Response<ResponseBody>
+    suspend fun getResponse(): Response<ResponseBody>
 
 
 }
