@@ -24,6 +24,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
         binding.japaneseKataTest.setOnClickListener(this)
         binding.englishTest.setOnClickListener(this)
         binding.setting.setOnClickListener(this)
+        binding.testTextView.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -51,6 +52,11 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
             R.id.english_test -> {
                 val intent =
                     Intent(this@MenuActivity, EnglishActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.testTextView -> {
+                val intent =
+                    Intent(this@MenuActivity, TestActivity::class.java)
                 startActivity(intent)
             }
             R.id.setting -> {

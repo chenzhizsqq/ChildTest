@@ -67,6 +67,15 @@ tools:context=".MenuActivity">
             app:fontFamily="@font/a"
             android:background="@drawable/back"
             android:text="设定" />
+        <TextView
+            android:id="@+id/testTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:padding="20dp"
+            app:fontFamily="@font/a"
+            android:background="@drawable/back"
+            android:text="测试" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

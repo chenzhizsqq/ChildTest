@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".TestActivity">
+
+
+<ScrollView
+    android:id="@+id/json_results_scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="20dp"
+    android:background="#FFFFFA"
+    android:scrollbars="none">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <Button
+            android:id="@+id/json_test_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="json_test_button"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+        <TextView
+            android:id="@+id/json_code_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="json_code"
+            android:padding="10dp"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/json_results_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="json_results"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</ScrollView>
+
+
+</RelativeLayout>
