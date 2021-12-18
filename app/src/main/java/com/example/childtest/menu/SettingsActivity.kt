@@ -1,8 +1,11 @@
-package com.example.childtest
+package com.example.childtest.menu
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
+import com.example.childtest.appConfig.Config
+import com.example.childtest.R
+import com.example.childtest.appConfig.ThisApp
 
 class SettingsActivity : AppCompatActivity() {
 

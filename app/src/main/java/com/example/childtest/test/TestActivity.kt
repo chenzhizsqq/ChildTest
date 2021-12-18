@@ -1,7 +1,8 @@
-package com.example.childtest
+package com.example.childtest.test
 
 import android.os.Bundle
 import android.util.Log
+import com.example.childtest.app.BaseActivity
 import com.example.childtest.databinding.ActivityTestBinding
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser

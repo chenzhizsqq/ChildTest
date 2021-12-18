@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.app
 
 import android.app.Activity
 import android.content.Intent
@@ -14,6 +14,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import com.example.childtest.*
+import com.example.childtest.appConfig.Config
+import com.example.childtest.appConfig.ThisApp
+import com.example.childtest.menu.LoginActivity
+import com.example.childtest.menu.SettingLogoDialog
+import com.example.childtest.menu.SettingsActivity
 
 open class BaseActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听

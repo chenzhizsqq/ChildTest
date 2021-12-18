@@ -1,30 +1,31 @@
-package com.example.childtest
+package com.example.childtest.app
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import com.example.childtest.databinding.ActivityJapaneseBinding
+import com.example.childtest.appConfig.ThisApp
+import com.example.childtest.databinding.ActivityJapaneseKataBinding
 import java.util.*
 
-class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
+class JapaneseKaTaActivity : BaseActivity(), TextToSpeech.OnInitListener {
     //private var tts: TextToSpeech? = null
 
-    private lateinit var binding: ActivityJapaneseBinding
+    private lateinit var binding: ActivityJapaneseKataBinding
 
-    private val TAG = "JapaneseActivity"
+    private val TAG = "JapaneseKaTaActivity"
 
     var numberText = ""
 
     private val testStrArray = arrayOf(
-        "あ", "い", "う", "え", "お",
-        "か", "き", "く", "け", "こ",
-        "さ", "し", "す", "せ", "そ",
-        "た", "ち", "つ", "て", "と",
-        "な", "に", "ぬ", "ね", "の",
-        "は", "ひ", "ふ", "へ", "ほ",
-        "ま", "み", "む", "め", "も",
-        "や", "ゆ", "よ",
-        "ら", "り", "る", "れ", "ろ",
-        "わ", "を", "ん"
+        "ア", "イ", "ウ", "エ", "オ",
+        "カ", "キ", "ク", "ケ", "コ",
+        "サ", "シ", "ス", "セ", "ソ",
+        "タ", "チ", "ツ", "テ", "ト",
+        "ナ", "ニ", "ヌ", "ネ", "ノ",
+        "ハ", "ヒ", "フ", "ヘ", "ホ",
+        "マ", "ミ", "ム", "メ", "モ",
+        "ヤ", "ユ", "ヨ",
+        "ラ", "リ", "ル", "レ", "ロ",
+        "ワ", "オ", "ン"
     )
     var arrayIndex = 0
 
@@ -32,22 +33,19 @@ class JapaneseActivity : BaseActivity(), TextToSpeech.OnInitListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityJapaneseBinding.inflate(layoutInflater)
+        binding = ActivityJapaneseKataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        if (ThisApp.mAppViewModel.random_select.value == true) {
-            numberText = testStrArray.random()
+        numberText = if (ThisApp.mAppViewModel.random_select.value == true) {
+            testStrArray.random()
         } else {
-            numberText = testStrArray[0]
+            testStrArray[0]
         }
         binding.number.text = numberText
 
         binding.number.setOnClickListener {
             this.tts.speak(numberText, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
-
         }
-
 
         binding.nextTest.setOnClickListener {
             if (ThisApp.mAppViewModel.random_select.value == true) {

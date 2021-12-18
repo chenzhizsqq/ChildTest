@@ -1,8 +1,11 @@
-package com.example.childtest
+package com.example.childtest.app
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import androidx.preference.PreferenceFragmentCompat
+import com.example.childtest.R
+import com.example.childtest.appConfig.ThisApp
+import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.ActivityTextToSpeechBinding
 import java.util.*
 

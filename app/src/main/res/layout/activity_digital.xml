@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.childtest.DigitalViewModel" />
+            type="com.example.childtest.app.DigitalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DigitalActivity">
+        tools:context=".app.DigitalActivity">
 
         <FrameLayout
             android:background="#FFE57F"

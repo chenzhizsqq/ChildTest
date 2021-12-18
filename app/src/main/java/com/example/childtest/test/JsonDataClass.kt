@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.test
 
 //对应test数据的结构
 /*"test":

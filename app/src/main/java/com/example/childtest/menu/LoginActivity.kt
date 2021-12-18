@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.menu
 
 import android.app.KeyguardManager
 import android.content.Context
@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.example.childtest.appConfig.Config
+import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.databinding.ActivityLoginBinding
 import java.util.*
 

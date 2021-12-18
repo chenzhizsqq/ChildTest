@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.appConfig
 
 class Config {
     companion object {

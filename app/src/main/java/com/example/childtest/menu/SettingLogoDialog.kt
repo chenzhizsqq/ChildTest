@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.menu
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
+import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.DialogSettingLogoBinding
 
 class SettingLogoDialog : DialogFragment() {

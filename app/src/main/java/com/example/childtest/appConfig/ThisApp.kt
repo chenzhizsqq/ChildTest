@@ -1,4 +1,4 @@
-package com.example.childtest
+package com.example.childtest.appConfig
 
 import android.annotation.SuppressLint
 import android.app.Application

@@ -1,11 +1,14 @@
-package com.example.childtest
+package com.example.childtest.menu
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.childtest.R
+import com.example.childtest.app.*
 import com.example.childtest.databinding.ActivityMenuBinding
+import com.example.childtest.test.TestActivity
 import java.util.*
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
