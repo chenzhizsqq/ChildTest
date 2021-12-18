@@ -51,9 +51,9 @@ class TestActivity : BaseActivity() {
                     binding.jsonResultsTextview.text = jsonOrg
 
                     //把Json通过gson，转成结构的数据
-                    val jsonData : JsonDataClass = gson.fromJson(jsonOrg,JsonDataClass::class.java)
-                    Log.e(TAG, "getMethodTest: jsonData.id: "+jsonData.id )
-                    Log.e(TAG, "getMethodTest: jsonData.title: "+jsonData.title )
+                    val jsonData: JsonDataClass = gson.fromJson(jsonOrg, JsonDataClass::class.java)
+                    Log.e(TAG, "getMethodTest: jsonData.id: " + jsonData.id)
+                    Log.e(TAG, "getMethodTest: jsonData.title: " + jsonData.title)
 
                 }
             }

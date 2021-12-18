@@ -10,4 +10,4 @@ package com.example.childtest
 data class JsonDataClass(
     val id: String,
     val title: String
-    )
+)

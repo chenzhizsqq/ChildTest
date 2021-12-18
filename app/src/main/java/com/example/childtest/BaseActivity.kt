@@ -15,8 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
-open class BaseActivity : AppCompatActivity()
-    ,SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
+open class BaseActivity : AppCompatActivity(),
+    SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
     , TextToSpeech.OnInitListener                           //系统文字阅读的工具
 {
     private val TAG = "BaseActivity"
@@ -59,11 +59,14 @@ open class BaseActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        ThisApp.mAppViewModel.next_question_read.value = ThisApp.sharedPreferences.getBoolean("next_question_read", false)
-        ThisApp.mAppViewModel.random_select.value = ThisApp.sharedPreferences.getBoolean("random_select", false)
+        ThisApp.mAppViewModel.next_question_read.value =
+            ThisApp.sharedPreferences.getBoolean("next_question_read", false)
+        ThisApp.mAppViewModel.random_select.value =
+            ThisApp.sharedPreferences.getBoolean("random_select", false)
 
         //tips_is_show
-        ThisApp.mAppViewModel.tips_is_show.value = ThisApp.sharedPreferences.getBoolean("tips_is_show", false)
+        ThisApp.mAppViewModel.tips_is_show.value =
+            ThisApp.sharedPreferences.getBoolean("tips_is_show", false)
 
         //Log.e(TAG_BaseActivity, "onCreate: ")
         if (bTimeAble) {
@@ -83,14 +86,16 @@ open class BaseActivity : AppCompatActivity()
         }
 
         //共享属性，追加属性变化的监听
-        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val sharedPreferences: SharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(this)
         sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-     }
+    }
 
     //引用右上角的功能选择器 - 创建
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
-        menu.findItem(R.id.next_question_read).isChecked = ThisApp.sharedPreGetBoolean("next_question_read")
+        menu.findItem(R.id.next_question_read).isChecked =
+            ThisApp.sharedPreGetBoolean("next_question_read")
         menu.findItem(R.id.random_select).isChecked = ThisApp.sharedPreGetBoolean("random_select")
         menu.findItem(R.id.tips_is_show).isChecked = ThisApp.sharedPreGetBoolean("tips_is_show")
         return true
@@ -99,7 +104,8 @@ open class BaseActivity : AppCompatActivity()
     //右上角选择器，选择后的处理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.setting -> {val mSettingLogoDialog = SettingLogoDialog()
+            R.id.setting -> {
+                val mSettingLogoDialog = SettingLogoDialog()
                 mSettingLogoDialog.apply {
                     show(supportFragmentManager, "SettingLogoDialog")
                 }

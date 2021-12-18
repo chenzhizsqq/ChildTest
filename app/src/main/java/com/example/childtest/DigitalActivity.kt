@@ -1,6 +1,5 @@
 package com.example.childtest
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.View

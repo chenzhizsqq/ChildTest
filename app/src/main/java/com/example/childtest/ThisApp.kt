@@ -15,7 +15,7 @@ class ThisApp : Application() {
         lateinit var context: Context
         lateinit var sharedPreferences: SharedPreferences
 
-        val mAppViewModel= AppViewModel()
+        val mAppViewModel = AppViewModel()
 
         /**
          * 提交共享key的String

@@ -14,12 +14,10 @@
       "title": "Post 3"
     }
   ],
-  "test":
-  {
+  "test": {
     "id": 333,
     "title": "fdsafdsaf333"
-  }
-,
+  },
   "get": [
     {
       "id": 1321,
