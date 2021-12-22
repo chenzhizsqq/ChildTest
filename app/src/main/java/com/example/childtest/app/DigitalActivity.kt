@@ -145,16 +145,16 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         //选择答案设置
         currentAnswer = randomNum1 + randomNum2
 
-        var answer2 = currentAnswer + Tools.randomNum(-2, 2)
-        while (currentAnswer == answer2) {
-            answer2 = currentAnswer + Tools.randomNum(-2, 2)
+        val answer2: Int = if (Tools.getRandomBoolean()){
+            currentAnswer + 1
+        } else{
+            currentAnswer - 1
         }
 
-        var answer3 = currentAnswer + Tools.randomNum(1, 3)
-        while (currentAnswer == answer3
-            || answer2 == answer3
-        ) {
-            answer3 = currentAnswer + Tools.randomNum(1, 3)
+        val answer3: Int = if (Tools.getRandomBoolean()){
+            currentAnswer + 2
+        } else{
+            currentAnswer - 2
         }
 
         val answerList = listOf(answer2, currentAnswer, answer3)

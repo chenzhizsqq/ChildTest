@@ -8,5 +8,9 @@ object Tools {
         return Random().nextInt(max - min + 1) + min
     }
 
+    fun getRandomBoolean(): Boolean {
+        val random = Random()
+        return random.nextBoolean()
+    }
 
 }

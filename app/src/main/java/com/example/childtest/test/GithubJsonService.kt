@@ -13,7 +13,8 @@ interface GithubJsonService {
         "title": "fdsafdsaf333"
     }*/
 
-    //https://raw.githubusercontent.com/chenzhizsqq/testJson/main/db.json
+    //放在网络上，https://github.com/chenzhizsqq/testJson/blob/main/db.json
+    //app用的是，https://raw.githubusercontent.com/chenzhizsqq/testJson/main/db.json
     @GET("/chenzhizsqq/testJson/test")
     suspend fun getResponse(): Response<ResponseBody>
 
