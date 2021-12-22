@@ -1,53 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".test.TestActivity">
 
 
-<ScrollView
-    android:id="@+id/json_results_scrollview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_margin="20dp"
-    android:background="#FFFFFA"
-    android:scrollbars="none">
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/json_results_scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <Button
-            android:id="@+id/json_test_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="json_test_button"
-            android:padding="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
-        <TextView
-            android:id="@+id/json_code_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="json_code"
-            android:padding="10dp"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#FFFFFA"
+        android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/json_results_textview"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="json_results"
-            android:textColor="@android:color/black"
-            android:textSize="13sp" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-</ScrollView>
+            <Button
+                android:id="@+id/json_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="json_test_button"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/json_code_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="json_code"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/json_results_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="json_results"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/jsonGetPosts_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="观察从json接收的数据，并把数据添加到下面的数列中"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/adapter_test_posts"
+                tools:itemCount="5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </LinearLayout>
+
+
+
+    </ScrollView>
 
 
 </RelativeLayout>
