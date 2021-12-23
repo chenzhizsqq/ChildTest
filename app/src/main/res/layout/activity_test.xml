@@ -71,6 +71,12 @@ tools:context=".test.TestActivity">
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/is_loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="it is loading"/>
         </LinearLayout>
 
 

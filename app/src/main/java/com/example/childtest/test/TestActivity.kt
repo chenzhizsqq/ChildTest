@@ -2,7 +2,10 @@ package com.example.childtest.test
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.childtest.app.BaseActivity
 import com.example.childtest.databinding.ActivityTestBinding
 import com.google.gson.GsonBuilder
@@ -10,6 +13,7 @@ import com.google.gson.JsonParser
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class TestActivity : BaseActivity() {
     private val TAG = "TestActivity"
@@ -20,6 +24,9 @@ class TestActivity : BaseActivity() {
 
     //一个可以被改变数据的LiveData
     val postsLiveData = MutableLiveData<List<PostsData>>()
+
+    //观察是否正在读取数据
+    var isLoadingLiveData = MutableLiveData<Boolean>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,32 @@ class TestActivity : BaseActivity() {
         postsLiveData.observe(this, {
             testPostsAdapter.notifyDataAddData(it as ArrayList<PostsData>)
         })
+
+        //观察是否正在读取数据，做出不同的操作
+        isLoadingLiveData.observe(this, {
+            if (isLoadingLiveData.value == true) {
+                binding.isLoading.visibility = View.VISIBLE
+            } else {
+                binding.isLoading.visibility = View.GONE
+            }
+        })
+
+        //添加recyclerview行数的管理器
+        val linearLayoutManager = LinearLayoutManager(this)
+        binding.recyclerview.layoutManager = linearLayoutManager
+
+        //向上滚动，添加滚动监听，获取更多数据
+        binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val totalItemCount = recyclerView.layoutManager!!.itemCount
+                val lastVisibleItemPosition: Int = linearLayoutManager.findLastVisibleItemPosition()
+                if (!isLoadingLiveData.value!! && totalItemCount == lastVisibleItemPosition + 1) {
+                    jsonGetPosts()
+                }
+            }
+        })
+
     }
 
     //有意外发生时的对应线程
@@ -94,6 +127,7 @@ class TestActivity : BaseActivity() {
 
         val service = retrofit.create(GithubJsonService::class.java)
 
+        isLoadingLiveData.value = true
         CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = service.getResponsePosts()
             withContext(Dispatchers.Main) {
@@ -102,6 +136,7 @@ class TestActivity : BaseActivity() {
                     //因为上面用上了.addConverterFactory，才可以直接联系LiveData.postValue。发送数据给postsLiveData
                     postsLiveData.postValue(response.body())
 
+                    isLoadingLiveData.value = false
                 } else {
                     Log.e(TAG, "jsonGetPosts: error:" + response.message())
                 }
