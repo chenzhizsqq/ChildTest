@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.childtest.app.BaseActivity
 import com.example.childtest.databinding.ActivityTestBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.*
@@ -57,14 +58,44 @@ class TestActivity : BaseActivity() {
         val linearLayoutManager = LinearLayoutManager(this)
         binding.recyclerview.layoutManager = linearLayoutManager
 
-        //向上滚动，添加滚动监听，获取更多数据
+        //右下的一个浮动添加图标
+        val fab: ExtendedFloatingActionButton = binding.extendedFAB
+
+        //添加滚动监听，获取更多数据
         binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            //滚动完时
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                val totalItemCount = recyclerView.layoutManager!!.itemCount
-                val lastVisibleItemPosition: Int = linearLayoutManager.findLastVisibleItemPosition()
-                if (!viewModel.isLoading.value!! && totalItemCount == lastVisibleItemPosition + 1) {
+                //检测当前数据，做出对应的操作
+                if(viewModel.postsDataList.value?.isNotEmpty() == true){
+                    val totalItemCount = recyclerView.layoutManager?.itemCount
+                    val lastVisibleItemPosition: Int = linearLayoutManager.findLastVisibleItemPosition()
+                    //向上滚动，滚到最后一个后，添加发信
+                    if (!viewModel.isLoading.value!! && totalItemCount == lastVisibleItemPosition + 1) {
+                        jsonGetPosts()
+                    }
+                }else{
                     jsonGetPosts()
+                }
+            }
+
+            //滚动时候
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // 收缩
+                if (dy > 10 && fab.isExtended) {
+                    fab.shrink()
+                }
+
+                // 如果在上面，就扩张
+                if (dy < -10 && !fab.isExtended) {
+                    fab.extend()
+                }
+
+                // 如果时第一个，扩张
+                if (!recyclerView.canScrollVertically(-1)) {
+                    fab.extend()
                 }
             }
         })
