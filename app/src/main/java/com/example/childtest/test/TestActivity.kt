@@ -14,7 +14,6 @@ import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class TestActivity : BaseActivity() {
     private val TAG = "TestActivity"
     private lateinit var binding: ActivityTestBinding
@@ -38,6 +37,7 @@ class TestActivity : BaseActivity() {
         }
 
         binding.jsonGetPostsButton.setOnClickListener {
+            testPostsAdapter.notifyDatClearData()
             jsonGetPosts()
         }
 
@@ -74,6 +74,12 @@ class TestActivity : BaseActivity() {
             }
         })
 
+        //向下拉动，添加拉动监听，重新获取数据
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            testPostsAdapter.notifyDatClearData()
+            jsonGetPosts()
+        }
     }
 
     //有意外发生时的对应线程
