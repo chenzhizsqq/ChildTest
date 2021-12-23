@@ -24,6 +24,19 @@ class TestPostsAdapter :
         notifyDataSetChanged()
     }
 
+    //重新获取数据
+    fun notifyDatNewData(list: ArrayList<PostsData>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    //清除数据
+    fun notifyDatClearData() {
+        this.list.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             AdapterTestPostsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
