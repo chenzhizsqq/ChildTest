@@ -16,7 +16,7 @@ class TestActivity : BaseActivity() {
     private lateinit var binding: ActivityTestBinding
 
     //Adapter被绑定的对象，用作被recyclerview的绑定
-    private val testPostsAdapter = TestPostsAdapter(ArrayList())
+    private val testPostsAdapter = TestPostsAdapter()
 
     //一个可以被改变数据的LiveData
     val postsLiveData = MutableLiveData<List<PostsData>>()
@@ -38,7 +38,7 @@ class TestActivity : BaseActivity() {
         binding.recyclerview.adapter = testPostsAdapter
 
         //observe观察。这里意思就是movieLiveData被观察中，一旦postsLiveData接收数据，就会做出相对应的操作
-        postsLiveData.observe(this,{
+        postsLiveData.observe(this, {
             testPostsAdapter.notifyDataAddData(it as ArrayList<PostsData>)
         })
     }
@@ -56,7 +56,7 @@ class TestActivity : BaseActivity() {
 
         val service = retrofit.create(GithubJsonService::class.java)
 
-        CoroutineScope(Dispatchers.IO + exceptionHandler ).launch {
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = service.getResponse()
 
             withContext(Dispatchers.Main) {
@@ -94,7 +94,7 @@ class TestActivity : BaseActivity() {
 
         val service = retrofit.create(GithubJsonService::class.java)
 
-        CoroutineScope(Dispatchers.IO + exceptionHandler ).launch {
+        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = service.getResponsePosts()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
@@ -102,8 +102,8 @@ class TestActivity : BaseActivity() {
                     //因为上面用上了.addConverterFactory，才可以直接联系LiveData.postValue。发送数据给postsLiveData
                     postsLiveData.postValue(response.body())
 
-                }else{
-                    Log.e(TAG, "jsonGetPosts: error:"+response.message() )
+                } else {
+                    Log.e(TAG, "jsonGetPosts: error:" + response.message())
                 }
             }
         }

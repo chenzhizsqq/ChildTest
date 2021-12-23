@@ -6,10 +6,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.childtest.databinding.AdapterTestPostsBinding
 
-class TestPostsAdapter(var list: ArrayList<PostsData>) :
+class TestPostsAdapter :
     RecyclerView.Adapter<TestPostsAdapter.ViewHolder>() {
+    private val list: ArrayList<PostsData> by lazy {
+        ArrayList()
+    }
 
-    inner class ViewHolder(binding: AdapterTestPostsBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(binding: AdapterTestPostsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val tv_id: TextView = binding.id
         val tv_title: TextView = binding.title
     }
