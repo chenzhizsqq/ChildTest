@@ -82,40 +82,43 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_1 -> {
                 if (binding.answer1.text.toString() == currentAnswer.toString()) {
-                    answerRight()
+                    answerRight(binding.answer1.text.toString())
                 } else {
-                    answerWrong()
+                    answerWrong(binding.answer1.text.toString())
                 }
             }
             R.id.answer_2 -> {
 
                 if (binding.answer2.text.toString() == currentAnswer.toString()) {
-                    answerRight()
+                    answerRight(binding.answer2.text.toString())
                 } else {
-                    answerWrong()
+                    answerWrong(binding.answer2.text.toString())
                 }
             }
             R.id.answer_3 -> {
 
                 if (binding.answer3.text.toString() == currentAnswer.toString()) {
-                    answerRight()
+                    answerRight(binding.answer3.text.toString())
                 } else {
-                    answerWrong()
+                    answerWrong(binding.answer3.text.toString())
                 }
             }
         }
     }
 
-    private fun answerWrong() {
-        Toast(this).showCustomToast("✖", this)
+    private fun answerWrong(answer:String) {
+        Toast(this).showCustomToast("$answer:❌", this)
         speakMsg("答错了")
         if (digitalViewModel.getFenShu() > 0) {
             digitalViewModel.fenShuAdd(-1)
         }
+
+        binding.nextTest.visibility = View.VISIBLE
+        binding.llAnswer.visibility = View.GONE
     }
 
-    private fun answerRight() {
-        Toast(this).showCustomToast("✔", this)
+    private fun answerRight(answer:String) {
+        Toast(this).showCustomToast("$answer:◯", this)
         speakMsg("答对了")
         digitalViewModel.fenShuAdd(1)
         binding.nextTest.visibility = View.VISIBLE
