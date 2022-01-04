@@ -11,8 +11,14 @@
         />
     <SwitchPreferenceCompat
         android:key="digital_preferences_match_select"
-        android:title="加法 \ 减法  的选择"
-        android:summaryOn="+++ 现在是：加法 +++"
-        android:summaryOff="--- 现在是：减法 ---"
+        android:title="加法 或 减法  的选择"
+        android:summaryOn="现在是：加法"
+        android:summaryOff="现在是：减法"
+        android:defaultValue="true" />
+    <SwitchPreferenceCompat
+        android:key="digital_preferences_speak_chinese"
+        android:title="中文 或 日语 的选择"
+        android:summaryOn="现在是：中文"
+        android:summaryOff="现在是：日语"
         android:defaultValue="true" />
 </PreferenceScreen>

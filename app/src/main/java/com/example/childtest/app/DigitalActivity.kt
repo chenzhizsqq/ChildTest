@@ -22,6 +22,14 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private var dengyu = "等于"
     private var currentAnswer = 0
 
+    //是否加减
+    val is_add_match =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_match_select", true)
+
+    //是否中文
+    val is_speak_chinese =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
+
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this).get(DigitalViewModel::class.java)
     }
@@ -107,7 +115,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun answerWrong(answer: String) {
         Toast(this).showCustomToast("$answer:❌", this)
-        speakMsg("答错了")
+
+        if (is_speak_chinese){
+            speakMsg("答错了。")
+        }else{
+            speakMsg("間違えます。")
+        }
         if (digitalViewModel.getFenShu() > 0) {
             digitalViewModel.fenShuAdd(-1)
         }
@@ -118,18 +131,17 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun answerRight(answer: String) {
         Toast(this).showCustomToast("$answer:◯", this)
-        speakMsg("答对了")
+        if (is_speak_chinese){
+            speakMsg("答对了。")
+        }else{
+            speakMsg("正解です。")
+        }
         digitalViewModel.fenShuAdd(1)
         binding.nextTest.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.GONE
     }
 
     private fun initNumber() {
-
-        //是否加减
-        val is_add_match =
-            ThisApp.sharedPreferences.getBoolean("digital_preferences_match_select", true)
-
         if (is_add_match) {
             //加法
 
@@ -181,8 +193,15 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
         } else {
             //减法
-            plus = "减"
+
+            plus = if (is_speak_chinese){
+                "减"
+            }else{
+                "ひく"
+            }
             binding.matchStyle.text = "-"
+
+
 
             //app:key="digital_preferences_max_num"的处理  数字的最大数
             //测试数字
@@ -273,16 +292,26 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
-            val locale = Locale.CHINA
-            if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+            if (is_speak_chinese){
 
-                val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
-                tts.language = Locale("zh", chineseSpeak)
+                val locale = Locale.CHINA
+                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
 
-                if (chineseSpeak == "HK") {
-                    how_much = "几多"
+                    val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
+                    tts.language = Locale("zh", chineseSpeak)
                 }
+            }else{
+
+                val locale = Locale.JAPAN
+                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+                    tts.language = Locale.JAPAN
+                }
+
+                how_much = "何ですか？"
+                plus = "足り"
+                dengyu = "は"
             }
+
 
 
         }
