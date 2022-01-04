@@ -9,5 +9,9 @@
         app:min="3"
         android:max="10"
         />
-
+    <SwitchPreferenceCompat
+        android:key="digital_preferences_match_select"
+        android:title="加法 \ 减法  的选择"
+        android:summary="是否加法"
+        android:defaultValue="true" />
 </PreferenceScreen>

@@ -51,7 +51,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
         //让分数添加监视
         digitalViewModel.fenShu.observe(this, {
-            binding.test1.text = it.toString()
+            binding.test1.text = "分数：$it"
         })
 
         //是否提示添加监视
@@ -125,51 +125,113 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun initNumber() {
-        //app:key="digital_preferences_max_num"的处理  数字的最大数
-        //测试数字
-        val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
-        var randomNum1 = Tools.randomNum(1, randomMax)
-        var randomNum2 = Tools.randomNum(1, randomMax)
-        while (
-            binding.number1.text == randomNum1.toString() ||
-            binding.number2.text == randomNum2.toString()
-        ) {
-            randomNum1 = Tools.randomNum(1, randomMax)
-            randomNum2 = Tools.randomNum(1, randomMax)
-        }
-        binding.number1.text = randomNum1.toString()
-        binding.number2.text = randomNum2.toString()
+
+        //是否加减
+        val is_add_match =
+            ThisApp.sharedPreferences.getBoolean("digital_preferences_match_select", true)
+
+        if (is_add_match) {
+            //加法
+
+            //app:key="digital_preferences_max_num"的处理  数字的最大数
+            //测试数字
+            val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
+            var randomNum1 = Tools.randomNum(1, randomMax)
+            var randomNum2 = Tools.randomNum(1, randomMax)
+            while (
+                binding.number1.text == randomNum1.toString() ||
+                binding.number2.text == randomNum2.toString()
+            ) {
+                randomNum1 = Tools.randomNum(1, randomMax)
+                randomNum2 = Tools.randomNum(1, randomMax)
+            }
+            binding.number1.text = randomNum1.toString()
+            binding.number2.text = randomNum2.toString()
 
 
-        binding.tvNum1.text = addViewText(randomNum1)
-        binding.tvNum2.text = addViewText(randomNum2)
+            binding.tvNum1.text = addViewText(randomNum1)
+            binding.tvNum2.text = addViewText(randomNum2)
 
-        //选择答案设置
-        currentAnswer = randomNum1 + randomNum2
+            //选择答案设置
+            currentAnswer = randomNum1 + randomNum2
 
-        val answer2: Int = if (Tools.getRandomBoolean()) {
-            currentAnswer + 1
+            val answer2: Int = if (Tools.getRandomBoolean()) {
+                currentAnswer + 1
+            } else {
+                currentAnswer - 1
+            }
+
+            val answer3: Int = if (Tools.getRandomBoolean()) {
+                currentAnswer + 2
+            } else {
+                currentAnswer - 2
+            }
+
+            val answerList = listOf(answer2, currentAnswer, answer3)
+
+            val startInt = Tools.randomNum(0, 2)
+
+            val answers_random1 = answerList[startInt]
+            val answers_random2 = answerList[(startInt + 1) % 3]
+            val answers_random3 = answerList[(startInt + 2) % 3]
+
+            binding.answer1.text = answers_random1.toString()
+            binding.answer2.text = answers_random2.toString()
+            binding.answer3.text = answers_random3.toString()
+
         } else {
-            currentAnswer - 1
+            //减法
+            plus = "减"
+            binding.matchStyle.text = "-"
+
+            //app:key="digital_preferences_max_num"的处理  数字的最大数
+            //测试数字
+            val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3) + 3
+            var randomNum1 = Tools.randomNum(1, randomMax)
+            var randomNum2 = Tools.randomNum(1, randomMax)
+            while (
+                randomNum1 - 1 < randomNum2
+                || binding.number1.text == randomNum1.toString()
+                || binding.number2.text == randomNum2.toString()
+            ) {
+                randomNum1 = Tools.randomNum(1, randomMax)
+                randomNum2 = Tools.randomNum(1, randomMax)
+            }
+            binding.number1.text = randomNum1.toString()
+            binding.number2.text = randomNum2.toString()
+
+
+            binding.tvNum1.text = addViewText(randomNum1)
+            binding.tvNum2.text = addViewText(randomNum2)
+
+            //选择答案设置
+            currentAnswer = randomNum1 - randomNum2
+
+            val answer2: Int = if (Tools.getRandomBoolean()) {
+                currentAnswer + 1
+            } else {
+                currentAnswer - 1
+            }
+
+            val answer3: Int = if (Tools.getRandomBoolean()) {
+                currentAnswer + 2
+            } else {
+                currentAnswer - 2
+            }
+
+            val answerList = listOf(answer2, currentAnswer, answer3)
+
+            val startInt = Tools.randomNum(0, 2)
+
+            val answers_random1 = answerList[startInt]
+            val answers_random2 = answerList[(startInt + 1) % 3]
+            val answers_random3 = answerList[(startInt + 2) % 3]
+
+            binding.answer1.text = answers_random1.toString()
+            binding.answer2.text = answers_random2.toString()
+            binding.answer3.text = answers_random3.toString()
         }
 
-        val answer3: Int = if (Tools.getRandomBoolean()) {
-            currentAnswer + 2
-        } else {
-            currentAnswer - 2
-        }
-
-        val answerList = listOf(answer2, currentAnswer, answer3)
-
-        val startInt = Tools.randomNum(0, 2)
-
-        val answers_random1 = answerList[startInt]
-        val answers_random2 = answerList[(startInt + 1) % 3]
-        val answers_random3 = answerList[(startInt + 2) % 3]
-
-        binding.answer1.text = answers_random1.toString()
-        binding.answer2.text = answers_random2.toString()
-        binding.answer3.text = answers_random3.toString()
 
         if (ThisApp.mAppViewModel.next_question_read.value == true) {
             this.tts.speak(
