@@ -12,6 +12,7 @@
     <SwitchPreferenceCompat
         android:key="digital_preferences_match_select"
         android:title="加法 \ 减法  的选择"
-        android:summary="是否加法"
+        android:summaryOn="+++ 现在是：加法 +++"
+        android:summaryOff="--- 现在是：减法 ---"
         android:defaultValue="true" />
 </PreferenceScreen>
