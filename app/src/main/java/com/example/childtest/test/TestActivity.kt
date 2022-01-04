@@ -67,14 +67,15 @@ class TestActivity : BaseActivity() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 //检测当前数据，做出对应的操作
-                if(viewModel.postsDataList.value?.isNotEmpty() == true){
+                if (viewModel.postsDataList.value?.isNotEmpty() == true) {
                     val totalItemCount = recyclerView.layoutManager?.itemCount
-                    val lastVisibleItemPosition: Int = linearLayoutManager.findLastVisibleItemPosition()
+                    val lastVisibleItemPosition: Int =
+                        linearLayoutManager.findLastVisibleItemPosition()
                     //向上滚动，滚到最后一个后，添加发信
                     if (!viewModel.isLoading.value!! && totalItemCount == lastVisibleItemPosition + 1) {
                         jsonGetPosts()
                     }
-                }else{
+                } else {
                     jsonGetPosts()
                 }
             }

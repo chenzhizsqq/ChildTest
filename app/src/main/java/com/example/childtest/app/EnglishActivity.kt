@@ -7,7 +7,7 @@ import com.example.childtest.databinding.ActivityEnglishBinding
 import java.util.*
 
 class EnglishActivity : BaseActivity(), TextToSpeech.OnInitListener {
-    val TAG = "JapaneseActivity"
+    val TAG = "EnglishActivity"
 
     private lateinit var binding: ActivityEnglishBinding
 

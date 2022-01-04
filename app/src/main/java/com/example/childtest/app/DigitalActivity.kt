@@ -17,7 +17,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private lateinit var binding: ActivityDigitalBinding
 
-    private val TAG = "TextToSpeechActivity"
+    private val TAG = "DigitalActivity"
     private var how_much = "多少"
     private var plus = "加"
     private var dengyu = "等于"
@@ -106,7 +106,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         }
     }
 
-    private fun answerWrong(answer:String) {
+    private fun answerWrong(answer: String) {
         Toast(this).showCustomToast("$answer:❌", this)
         speakMsg("答错了")
         if (digitalViewModel.getFenShu() > 0) {
@@ -117,7 +117,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.llAnswer.visibility = View.GONE
     }
 
-    private fun answerRight(answer:String) {
+    private fun answerRight(answer: String) {
         Toast(this).showCustomToast("$answer:◯", this)
         speakMsg("答对了")
         digitalViewModel.fenShuAdd(1)
