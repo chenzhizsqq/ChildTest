@@ -43,6 +43,9 @@
             android:name=".app.DigitalActivity"
             android:exported="false" />
         <activity
+            android:name=".app.DigitalLoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".app.JapaneseActivity"
             android:exported="false" />
         <activity

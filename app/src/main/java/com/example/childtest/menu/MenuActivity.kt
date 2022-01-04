@@ -39,7 +39,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.digital_test -> {
                 val intent =
-                    Intent(this@MenuActivity, DigitalActivity::class.java)
+                    Intent(this@MenuActivity, DigitalLoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.japanese_test -> {

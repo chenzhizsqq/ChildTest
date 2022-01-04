@@ -5,7 +5,6 @@ import android.speech.tts.TextToSpeech
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceFragmentCompat
 import com.example.childtest.R
 import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.appConfig.Tools
@@ -34,12 +33,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         setContentView(binding.root)
 
 
-        if (savedInstanceState == null) {
+/*        if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.digital_settings, DigitalSettingsFragment())
                 .commit()
-        }
+        }*/
 
         binding.llText.setOnClickListener(this)
         binding.nextTest.setOnClickListener(this)
@@ -227,10 +226,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         }
     }
 
-    class DigitalSettingsFragment : PreferenceFragmentCompat() {
+/*    class DigitalSettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.digital_preferences, rootKey)
         }
-    }
+    }*/
 }
 
