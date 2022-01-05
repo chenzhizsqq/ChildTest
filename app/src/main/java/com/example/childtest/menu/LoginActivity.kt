@@ -32,17 +32,17 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences?.getBoolean("welcome_password", true)
     }
     private val bTimeAble: Boolean by lazy {
-        ThisApp.sharedPreGetBoolean("time_limit")
+        ThisApp.sharedPreferences.getBoolean("time_limit",false)
     }
 
     //剩余解锁的时间 秒
     private val remainingTime_ss: Int by lazy {
-        ThisApp.sharedPreGetInt(Config.remaining_time_ss)
+        ThisApp.sharedPreferences.getInt(Config.remaining_time_ss,0)
     }
 
     //锁屏需要的时间
     private val timeSetting_mm: Int by lazy {
-        ThisApp.sharedPreGetInt("lock_use_time")
+        ThisApp.sharedPreferences.getInt("lock_use_time",0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

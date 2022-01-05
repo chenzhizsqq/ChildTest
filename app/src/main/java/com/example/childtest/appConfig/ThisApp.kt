@@ -71,46 +71,6 @@ class ThisApp : Application() {
         }
 
         /**
-         * 获取共享key的Boolean
-         *
-         * @param key
-         */
-        fun sharedPreGetBoolean(key: String): Boolean {
-            return sharedPreferences.getBoolean(key, false)
-        }
-
-        fun sharedPreGetBoolean(key: String, defValue: Boolean): Boolean {
-            return sharedPreferences.getBoolean(key, defValue)
-        }
-
-        /**
-         * 获取共享key的String
-         *
-         * @param key
-         */
-        fun sharedPreGetString(key: String): String {
-            return sharedPreferences.getString(key, "")!!
-        }
-
-        /**
-         * 获取共享key的int
-         *
-         * @param key: String
-         */
-        fun sharedPreGetInt(key: String): Int {
-            return sharedPreferences.getInt(key, 0)
-        }
-
-        /**
-         * 获取共享key的Long
-         *
-         * @param key: String
-         */
-        fun sharedPreGetLong(key: String): Long {
-            return sharedPreferences.getLong(key, 0)
-        }
-
-        /**
          * 删除共享key
          *
          * @param key
