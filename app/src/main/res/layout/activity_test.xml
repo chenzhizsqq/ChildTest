@@ -57,7 +57,7 @@ tools:context=".test.TestActivity">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="观察从json接收的数据，并把数据添加到下面的数列中"
+                android:text="观察从json接收的数据，并把数据添加到下面的数列中。获取全部数据"
                 android:textColor="@android:color/black"
                 android:textSize="13sp" />
         </LinearLayout>
