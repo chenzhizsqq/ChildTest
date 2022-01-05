@@ -17,9 +17,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private lateinit var binding: ActivityDigitalBinding
 
     private val TAG = "DigitalActivity"
-    private var how_much = "多少"
     private var plus = "加"
-    private var dengyu = "等于"
     private var currentAnswer = 0
 
     //是否加减
@@ -144,6 +142,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun initNumber() {
         if (is_add_match) {
             //加法
+            plus = if (is_speak_chinese) {
+                "加"
+            } else {
+                "たす"
+            }
+            binding.matchStyle.text = "+"
 
             //app:key="digital_preferences_max_num"的处理  数字的最大数
             //测试数字
@@ -284,7 +288,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun addTestFun(): String {
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
-        return number1Text + "$plus$number2Text$dengyu" + how_much
+        return if (is_speak_chinese) {
+            "$number1Text $plus $number2Text 等于 几？"
+        } else {
+            "$number1Text $plus $number2Text は 何ですか？"
+        }
+        return ""
     }
 
     // TextToSpeechの初期化完了時に呼ばれる
@@ -306,9 +315,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     tts.language = Locale.JAPAN
                 }
 
-                how_much = "何ですか？"
-                plus = "足り"
-                dengyu = "は"
             }
 
 
