@@ -116,9 +116,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun answerWrong(answer: String) {
         Toast(this).showCustomToast("$answer:❌", this)
 
-        if (is_speak_chinese){
+        if (is_speak_chinese) {
             speakMsg("答错了。")
-        }else{
+        } else {
             speakMsg("間違えます。")
         }
         if (digitalViewModel.getFenShu() > 0) {
@@ -131,9 +131,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun answerRight(answer: String) {
         Toast(this).showCustomToast("$answer:◯", this)
-        if (is_speak_chinese){
+        if (is_speak_chinese) {
             speakMsg("答对了。")
-        }else{
+        } else {
             speakMsg("正解です。")
         }
         digitalViewModel.fenShuAdd(1)
@@ -194,13 +194,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         } else {
             //减法
 
-            plus = if (is_speak_chinese){
+            plus = if (is_speak_chinese) {
                 "减"
-            }else{
+            } else {
                 "ひく"
             }
             binding.matchStyle.text = "-"
-
 
 
             //app:key="digital_preferences_max_num"的处理  数字的最大数
@@ -292,7 +291,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             // ロケールの指定
-            if (is_speak_chinese){
+            if (is_speak_chinese) {
 
                 val locale = Locale.CHINA
                 if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
@@ -300,7 +299,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
                     tts.language = Locale("zh", chineseSpeak)
                 }
-            }else{
+            } else {
 
                 val locale = Locale.JAPAN
                 if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
@@ -311,7 +310,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 plus = "足り"
                 dengyu = "は"
             }
-
 
 
         }

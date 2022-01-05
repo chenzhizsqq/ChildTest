@@ -101,9 +101,11 @@ open class BaseActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_scrolling, menu)
         menu.findItem(R.id.next_question_read).isChecked =
-            ThisApp.sharedPreferences.getBoolean("next_question_read",false)
-        menu.findItem(R.id.random_select).isChecked = ThisApp.sharedPreferences.getBoolean("random_select",false)
-        menu.findItem(R.id.tips_is_show).isChecked = ThisApp.sharedPreferences.getBoolean("tips_is_show",false)
+            ThisApp.sharedPreferences.getBoolean("next_question_read", false)
+        menu.findItem(R.id.random_select).isChecked =
+            ThisApp.sharedPreferences.getBoolean("random_select", false)
+        menu.findItem(R.id.tips_is_show).isChecked =
+            ThisApp.sharedPreferences.getBoolean("tips_is_show", false)
         return true
     }
 
@@ -196,7 +198,10 @@ open class BaseActivity : AppCompatActivity(),
             ThisApp.sharedPrePut(Config.remaining_time_ss, lastRemainingTime_ss)
             Log.d(
                 TAG,
-                "onDestroy: remaining_time" + ThisApp.sharedPreferences.getInt(Config.remaining_time_ss,0)
+                "onDestroy: remaining_time" + ThisApp.sharedPreferences.getInt(
+                    Config.remaining_time_ss,
+                    0
+                )
             )
         }
 
