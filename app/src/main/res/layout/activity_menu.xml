@@ -59,6 +59,15 @@ tools:context=".menu.MenuActivity">
             android:background="@drawable/back"
             android:text="英语测试" />
         <TextView
+            android:id="@+id/clock_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:padding="20dp"
+            app:fontFamily="@font/a"
+            android:background="@drawable/back"
+            android:text="时间测试" />
+        <TextView
             android:id="@+id/setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -26,6 +26,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
         binding.japaneseTest.setOnClickListener(this)
         binding.japaneseKataTest.setOnClickListener(this)
         binding.englishTest.setOnClickListener(this)
+        binding.clockTest.setOnClickListener(this)
         binding.setting.setOnClickListener(this)
         binding.testTextView.setOnClickListener(this)
     }
@@ -55,6 +56,11 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
             R.id.english_test -> {
                 val intent =
                     Intent(this@MenuActivity, EnglishActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.clock_test -> {
+                val intent =
+                    Intent(this@MenuActivity, ClockActivity::class.java)
                 startActivity(intent)
             }
             R.id.testTextView -> {
