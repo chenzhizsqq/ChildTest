@@ -212,9 +212,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             var randomNum1 = Tools.randomNum(1, randomMax)
             var randomNum2 = Tools.randomNum(1, randomMax)
             while (
-                randomNum1 - 1 < randomNum2
+                randomNum1  < randomNum2
                 || binding.number1.text == randomNum1.toString()
                 || binding.number2.text == randomNum2.toString()
+                || randomNum1 - randomNum2 <1
             ) {
                 randomNum1 = Tools.randomNum(1, randomMax)
                 randomNum2 = Tools.randomNum(1, randomMax)
@@ -238,7 +239,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             val answer3: Int = if (Tools.getRandomBoolean()) {
                 currentAnswer + 2
             } else {
-                currentAnswer - 2
+                currentAnswer + 3
             }
 
             val answerList = listOf(answer2, currentAnswer, answer3)
