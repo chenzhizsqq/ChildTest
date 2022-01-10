@@ -21,4 +21,10 @@
         android:summaryOn="现在是：中文"
         android:summaryOff="现在是：日语"
         android:defaultValue="true" />
+    <SwitchPreferenceCompat
+        android:key="digital_preferences_after_wrong_is_next"
+        android:title="错了之后，是否马上下一题"
+        android:summaryOn="现在是：马上下一题"
+        android:summaryOff="现在是：继续留在本题"
+        android:defaultValue="true" />
 </PreferenceScreen>

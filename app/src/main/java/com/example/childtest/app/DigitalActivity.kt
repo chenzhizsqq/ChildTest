@@ -28,6 +28,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     val is_speak_chinese =
         ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
 
+    //错了之后，是否马上下一题
+    val is_after_wrong_is_next =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_after_wrong_is_next", true)
+
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this).get(DigitalViewModel::class.java)
     }
@@ -119,12 +123,16 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         } else {
             speakMsg("間違えます。")
         }
+
         if (digitalViewModel.getFenShu() > 0) {
             digitalViewModel.fenShuAdd(-1)
         }
 
-        binding.nextTest.visibility = View.VISIBLE
-        binding.llAnswer.visibility = View.GONE
+        //错了之后，是否马上下一题
+        if (is_after_wrong_is_next){
+            binding.nextTest.visibility = View.VISIBLE
+            binding.llAnswer.visibility = View.GONE
+        }
     }
 
     private fun answerRight(answer: String) {
