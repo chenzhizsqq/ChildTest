@@ -7,25 +7,6 @@
     android:gravity="center"
     >
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-
-        <Button
-            android:id="@+id/btAddTime"
-            android:layout_width="179dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:onClick="showTimePickerDialog"
-            android:text="选择时间"
-            android:textSize="30dp"/>
-
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,6 +20,20 @@
         android:gravity="center"
         android:text="当前时间"
         android:textSize="50dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center">
+        <TimePicker
+            android:id="@+id/timePicker1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+        </TimePicker>
 
     </LinearLayout>
 
