@@ -33,6 +33,14 @@ tools:context=".test.TestActivity">
                 android:text="json_test_button"
                 android:textColor="@android:color/black"
                 android:textSize="13sp" />
+            <Button
+                android:id="@+id/test_flow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="test_flow"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/json_code_textview"

@@ -12,11 +12,10 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
-
-
 
 
 class TestActivity : BaseActivity() {
@@ -41,6 +40,10 @@ class TestActivity : BaseActivity() {
             testPostsAdapter.notifyDatClearData()
             viewModel.isLoading.value = true
             jsonGetAllPosts()
+        }
+
+        binding.testFlow.setOnClickListener {
+            test()
         }
 
         //绑定recyclerview的adapter
@@ -169,6 +172,7 @@ class TestActivity : BaseActivity() {
         }
     }
 
+    var job: Job? = null
 
     //https://github.com/chenzhizsqq/testJson/blob/main/db.json，"posts"那组数
     private fun jsonGetAllPosts() {
@@ -181,7 +185,7 @@ class TestActivity : BaseActivity() {
         val service = retrofit.create(GithubJsonService::class.java)
 
         viewModel.isLoading.value = true
-        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
             val response = service.getResponsePosts()
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
@@ -276,4 +280,24 @@ class TestActivity : BaseActivity() {
             }
         }
     }
+
+
+    fun test() = runBlocking {
+
+        val result = arrayListOf<Int>()
+        for (index in 1..100){
+            result.add(index)
+        }
+
+        result.asFlow()
+            .flatMapMerge {
+                flow {
+                    emit(it)
+                }.flowOn(Dispatchers.IO)
+            }
+            .collect {
+                Log.e(TAG, "test: it : $it", )
+            }
+    }
+
 }
