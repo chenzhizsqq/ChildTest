@@ -6,6 +6,7 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/drawable/back.xml" value="0.1685185185185185" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/drawable/ic_add.xml" value="0.18385416666666668" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_clock.xml" value="0.1" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_digital.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_english.xml" value="0.11041666666666666" />
         <entry key="..\:/Users/user/AndroidStudioProjects/ChildTest/app/src/main/res/layout/activity_japanese.xml" value="0.11041666666666666" />
@@ -40,12 +41,10 @@
         <entry key="..\:/Users/user/AndroidStudioProjects/TextToSpeechTest/app/src/main/res/layout/content_scrolling.xml" value="0.10364583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/TextToSpeechTest/app/src/main/res/layout/settings_activity.xml" value="0.11770833333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/TextToSpeechTest/app/src/main/res/xml/root_preferences.xml" value="0.11770833333333333" />
-        <entry key="app/src/main/res/layout/activity_clock.xml" value="0.15172101449275363" />
         <entry key="app/src/main/res/layout/activity_digital.xml" value="0.11752786220871327" />
         <entry key="app/src/main/res/layout/activity_japanese_kata.xml" value="0.13903985507246377" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_menu.xml" value="0.13903985507246377" />
-        <entry key="app/src/main/res/xml/digital_preferences.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.13903985507246377" />
       </map>
     </option>
