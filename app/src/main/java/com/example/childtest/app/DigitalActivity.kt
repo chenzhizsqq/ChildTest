@@ -219,14 +219,22 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
             var randomNum1 = Tools.randomNum(1, randomMax)
             var randomNum2 = Tools.randomNum(0, randomMax)
+
+            //最后的答案
+            var lastAnswer = currentAnswer
+
+            //选择答案设置
+            currentAnswer = randomNum1 - randomNum2
             while (
-                randomNum1  < randomNum2
+                randomNum1  <= randomNum2
                 || binding.number1.text == randomNum1.toString()
                 || binding.number2.text == randomNum2.toString()
                 || randomNum1 - randomNum2 <0
+                || lastAnswer == currentAnswer
             ) {
                 randomNum1 = Tools.randomNum(1, randomMax)
                 randomNum2 = Tools.randomNum(0, randomMax)
+                currentAnswer = randomNum1 - randomNum2
             }
             binding.number1.text = randomNum1.toString()
             binding.number2.text = randomNum2.toString()
@@ -235,8 +243,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             binding.tvNum1.text = addViewText(randomNum1)
             binding.tvNum2.text = addViewText(randomNum2)
 
-            //选择答案设置
-            currentAnswer = randomNum1 - randomNum2
 
             var answer2: Int = 0
             answer2 = if (Tools.getRandomBoolean()) {
