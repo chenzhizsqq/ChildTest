@@ -216,17 +216,17 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
             //app:key="digital_preferences_max_num"的处理  数字的最大数
             //测试数字
-            val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3) + 3
+            val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
             var randomNum1 = Tools.randomNum(1, randomMax)
-            var randomNum2 = Tools.randomNum(1, randomMax)
+            var randomNum2 = Tools.randomNum(0, randomMax)
             while (
                 randomNum1  < randomNum2
                 || binding.number1.text == randomNum1.toString()
                 || binding.number2.text == randomNum2.toString()
-                || randomNum1 - randomNum2 <1
+                || randomNum1 - randomNum2 <0
             ) {
                 randomNum1 = Tools.randomNum(1, randomMax)
-                randomNum2 = Tools.randomNum(1, randomMax)
+                randomNum2 = Tools.randomNum(0, randomMax)
             }
             binding.number1.text = randomNum1.toString()
             binding.number2.text = randomNum2.toString()
@@ -238,13 +238,16 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             //选择答案设置
             currentAnswer = randomNum1 - randomNum2
 
-            val answer2: Int = if (Tools.getRandomBoolean()) {
+            var answer2: Int = 0
+            answer2 = if (Tools.getRandomBoolean()) {
                 currentAnswer + 1
             } else {
                 currentAnswer - 1
             }
+            if (answer2 <0 ) answer2 = currentAnswer + 4
 
-            val answer3: Int = if (Tools.getRandomBoolean()) {
+            var answer3: Int = 0
+            answer3 = if (Tools.getRandomBoolean()) {
                 currentAnswer + 2
             } else {
                 currentAnswer + 3
