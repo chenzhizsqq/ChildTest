@@ -234,6 +234,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             ) {
                 randomNum1 = Tools.randomNum(1, randomMax)
                 randomNum2 = Tools.randomNum(0, randomMax)
+
+                /* 为了少一点等于0 begin*/
+                if(randomNum2==0)randomNum2 = Tools.randomNum(0, randomMax)
+                if(randomNum2==0)randomNum2 = Tools.randomNum(0, randomMax)
+                /* 为了少一点等于0 end*/
+
                 currentAnswer = randomNum1 - randomNum2
             }
             binding.number1.text = randomNum1.toString()
