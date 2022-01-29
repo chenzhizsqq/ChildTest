@@ -57,7 +57,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.answer2.setOnClickListener(this)
         binding.answer3.setOnClickListener(this)
 
-        initNumber()
 
         //让分数添加监视
         digitalViewModel.fenShu.observe(this, {
@@ -73,7 +72,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
         })
 
-        initNumber()
+        // [初始化时隐藏 begin]
+        binding.llText.visibility = View.GONE
+        binding.llAnswer.visibility = View.GONE
+        // [初始化时隐藏 end]
     }
 
     override fun onClick(v: View?) {
@@ -148,6 +150,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun initNumber() {
+        binding.llText.visibility = View.VISIBLE
+        binding.llAnswer.visibility = View.VISIBLE
         if (is_add_match) {
             //加法
             plus = if (is_speak_chinese) {
@@ -322,27 +326,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {
-        if (status == TextToSpeech.SUCCESS) {
-            // ロケールの指定
-            if (is_speak_chinese) {
+        super.onInit(status)
 
-                val locale = Locale.CHINA
-                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-
-                    val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
-                    tts.language = Locale("zh", chineseSpeak)
-                }
-            } else {
-
-                val locale = Locale.JAPAN
-                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                    tts.language = Locale.JAPAN
-                }
-
-            }
-
-
-        }
+        // 音声合成の実行
+        this.tts.speak("hello", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
     }
 
 /*    class DigitalSettingsFragment : PreferenceFragmentCompat() {

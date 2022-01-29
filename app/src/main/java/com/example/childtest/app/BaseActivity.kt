@@ -20,6 +20,7 @@ import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.menu.LoginActivity
 import com.example.childtest.menu.SettingLogoDialog
 import com.example.childtest.menu.SettingsActivity
+import java.util.*
 
 open class BaseActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener    //共享属性的，属性变更的监听
@@ -27,9 +28,7 @@ open class BaseActivity : AppCompatActivity(),
 {
     private val TAG = "BaseActivity"
 
-    open val tts: TextToSpeech by lazy {
-        TextToSpeech(this, this)
-    }
+    lateinit var tts: TextToSpeech
 
     //倒数器
     private lateinit var countDownTimer: CountDownTimer
@@ -64,6 +63,9 @@ open class BaseActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // TextToSpeechの生成
+        this.tts = TextToSpeech(this, this)
 
         ThisApp.mAppViewModel.next_question_read.value =
             ThisApp.sharedPreferences.getBoolean("next_question_read", false)
@@ -240,7 +242,33 @@ open class BaseActivity : AppCompatActivity(),
      * @param status [TextToSpeech.SUCCESS] or [TextToSpeech.ERROR].
      */
     override fun onInit(status: Int) {
-        TODO("Not yet implemented")
+        if (status == TextToSpeech.SUCCESS) {
+
+            //是否中文
+            val is_speak_chinese =
+                ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
+
+            // ロケールの指定
+            if (is_speak_chinese) {
+
+                val locale = Locale.CHINA
+                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+
+                    val chineseSpeak = ThisApp.sharedPreferences.getString("chineseSpeak", "")
+                    tts.language = Locale("zh", chineseSpeak)
+                }
+            } else {
+
+                val locale = Locale.JAPAN
+                if (this.tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
+                    tts.language = Locale.JAPAN
+                }
+
+            }
+
+            // 音声合成の実行
+            this.tts.speak(" ", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        }
     }
 
 }
