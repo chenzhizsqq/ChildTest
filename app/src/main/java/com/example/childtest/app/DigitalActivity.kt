@@ -20,8 +20,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private var plus = "加"
     private var currentAnswer = 0
 
+    //是否不是加减法一起选择?
+    val is_match_two =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_match_two", true)
+
     //是否加减
-    val is_add_match =
+    var is_add_match =
         ThisApp.sharedPreferences.getBoolean("digital_preferences_match_select", true)
 
     //是否中文
@@ -152,6 +156,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun initNumber() {
         binding.llText.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.VISIBLE
+        if(!is_match_two){
+            is_add_match = Tools.getRandomBoolean()
+        }
         if (is_add_match) {
             //加法
             plus = if (is_speak_chinese) {

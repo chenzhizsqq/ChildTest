@@ -10,6 +10,13 @@
         android:max="10"
         />
     <SwitchPreferenceCompat
+        android:key="digital_preferences_match_two"
+        android:title="是否不是加减法一起选择？"
+        android:summaryOn="现在只有单独算法"
+        android:summaryOff="现在是加减法都有"
+        android:defaultValue="false" />
+    <SwitchPreferenceCompat
+        app:dependency="digital_preferences_match_two"
         android:key="digital_preferences_match_select"
         android:title="加法 或 减法  的选择"
         android:summaryOn="现在是：加法"
