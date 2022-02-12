@@ -11,13 +11,26 @@
         />
     <SwitchPreferenceCompat
         android:key="digital_preferences_match_two"
-        android:title="是否不是加减法一起选择？"
+        android:title="是否单独算法？"
         android:summaryOn="现在只有单独算法"
         android:summaryOff="现在是加减法都有"
         android:defaultValue="false" />
     <SwitchPreferenceCompat
         app:dependency="digital_preferences_match_two"
         android:key="digital_preferences_match_select"
+        android:title="加法 或 减法  的选择"
+        android:summaryOn="现在是：加法"
+        android:summaryOff="现在是：减法"
+        android:defaultValue="true" />
+    <SeekBarPreference
+        android:key="digital_preferences_deduct_points_for_mistakes"
+        app:title="错了后，扣多少分？"
+        app:defaultValue="1"
+        app:showSeekBarValue="true"
+        app:min="1"
+        android:max="10"
+        />
+    <SwitchPreferenceCompat
         android:title="加法 或 减法  的选择"
         android:summaryOn="现在是：加法"
         android:summaryOff="现在是：减法"

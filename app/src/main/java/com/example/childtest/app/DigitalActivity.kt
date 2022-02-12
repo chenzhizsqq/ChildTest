@@ -36,6 +36,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     val is_after_wrong_is_next =
         ThisApp.sharedPreferences.getBoolean("digital_preferences_after_wrong_is_next", true)
 
+    //错了后，扣多少分？
+    val digital_preferences_deduct_points_for_mistakes =
+        ThisApp.sharedPreferences.getInt("digital_preferences_deduct_points_for_mistakes", 1)
+
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this).get(DigitalViewModel::class.java)
     }
@@ -130,12 +134,14 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             speakMsg("間違えます。")
         }
 
-        if (digitalViewModel.getFenShu() > 0) {
-            digitalViewModel.fenShuAdd(-1)
+        digitalViewModel.fenShuAdd(-digital_preferences_deduct_points_for_mistakes)
+        if (digitalViewModel.getFenShu() < 0) {
+            digitalViewModel.setFenShu(0)
         }
 
+
         //错了之后，是否马上下一题
-        if (is_after_wrong_is_next){
+        if (is_after_wrong_is_next) {
             binding.nextTest.visibility = View.VISIBLE
             binding.llAnswer.visibility = View.GONE
         }
@@ -156,7 +162,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun initNumber() {
         binding.llText.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.VISIBLE
-        if(!is_match_two){
+        if (!is_match_two) {
             is_add_match = Tools.getRandomBoolean()
         }
         if (is_add_match) {
@@ -237,18 +243,18 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             //选择答案设置
             currentAnswer = randomNum1 - randomNum2
             while (
-                randomNum1  <= randomNum2
+                randomNum1 <= randomNum2
                 || binding.number1.text == randomNum1.toString()
                 || binding.number2.text == randomNum2.toString()
-                || randomNum1 - randomNum2 <0
+                || randomNum1 - randomNum2 < 0
                 || lastAnswer == currentAnswer
             ) {
                 randomNum1 = Tools.randomNum(1, randomMax)
                 randomNum2 = Tools.randomNum(0, randomMax)
 
                 /* 为了少一点等于0 begin*/
-                if(randomNum2==0)randomNum2 = Tools.randomNum(0, randomMax)
-                if(randomNum2==0)randomNum2 = Tools.randomNum(0, randomMax)
+                if (randomNum2 == 0) randomNum2 = Tools.randomNum(0, randomMax)
+                if (randomNum2 == 0) randomNum2 = Tools.randomNum(0, randomMax)
                 /* 为了少一点等于0 end*/
 
                 currentAnswer = randomNum1 - randomNum2
@@ -267,7 +273,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             } else {
                 currentAnswer - 1
             }
-            if (answer2 <0 ) answer2 = currentAnswer + 4
+            if (answer2 < 0) answer2 = currentAnswer + 4
 
             var answer3: Int = 0
             answer3 = if (Tools.getRandomBoolean()) {

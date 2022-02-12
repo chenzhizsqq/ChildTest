@@ -16,5 +16,9 @@ class DigitalViewModel : ViewModel() {
         return fenShu.value!!
     }
 
+    fun setFenShu(fenshu: Int) {
+        fenShu.value = fenshu
+    }
+
 }
 
