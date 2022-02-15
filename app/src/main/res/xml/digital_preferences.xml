@@ -9,6 +9,16 @@
         app:min="3"
         android:max="10"
         />
+
+    <ListPreference
+        app:key="multiple_of_Mathematics"
+        app:title="数学的倍数"
+        app:entries="@array/digital_preferences_Multiple_of_Mathematics"
+        app:entryValues="@array/digital_preferences_Multiple_of_Mathematics"
+        app:useSimpleSummaryProvider="true"
+        android:defaultValue="1"
+        />
+
     <SwitchPreferenceCompat
         android:key="digital_preferences_match_two"
         android:title="是否单独算法？"

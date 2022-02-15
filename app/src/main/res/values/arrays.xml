@@ -21,4 +21,10 @@
         <item>100</item>
         <item>1000</item>
     </string-array>
+
+    <string-array name="digital_preferences_Multiple_of_Mathematics">
+        <item>1</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
 </resources>

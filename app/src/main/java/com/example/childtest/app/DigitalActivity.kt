@@ -40,6 +40,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     val digital_preferences_deduct_points_for_mistakes =
         ThisApp.sharedPreferences.getInt("digital_preferences_deduct_points_for_mistakes", 1)
 
+    //数学的倍数
+    val multiple_of_Mathematics =
+        ThisApp.sharedPreferences.getInt("multiple_of_Mathematics", 1)
+
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this).get(DigitalViewModel::class.java)
     }
