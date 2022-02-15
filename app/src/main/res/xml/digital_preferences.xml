@@ -12,7 +12,7 @@
 
     <ListPreference
         app:key="multiple_of_Mathematics"
-        app:title="数学的倍数"
+        app:title="数字的倍数"
         app:entries="@array/digital_preferences_Multiple_of_Mathematics"
         app:entryValues="@array/digital_preferences_Multiple_of_Mathematics"
         app:useSimpleSummaryProvider="true"
@@ -40,11 +40,6 @@
         app:min="1"
         android:max="10"
         />
-    <SwitchPreferenceCompat
-        android:title="加法 或 减法  的选择"
-        android:summaryOn="现在是：加法"
-        android:summaryOff="现在是：减法"
-        android:defaultValue="true" />
     <SwitchPreferenceCompat
         android:key="digital_preferences_speak_chinese"
         android:title="中文 或 日语 的选择"

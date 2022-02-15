@@ -11,10 +11,9 @@ import com.example.childtest.databinding.ActivityClockBinding
 import java.util.*
 
 
-class ClockActivity : BaseActivity() , View.OnClickListener , TimePicker.OnTimeChangedListener {
+class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeChangedListener {
     private lateinit var binding: ActivityClockBinding
     val TAG = "ClockActivity"
-
 
 
     var thisRandomTime = ""
@@ -33,8 +32,8 @@ class ClockActivity : BaseActivity() , View.OnClickListener , TimePicker.OnTimeC
 
         binding.timePicker1.setIs24HourView(false)
         binding.timePicker1.setOnTimeChangedListener(this)
-        binding.next.setOnClickListener (this)
-        binding.check.setOnClickListener (this)
+        binding.next.setOnClickListener(this)
+        binding.check.setOnClickListener(this)
 
         //让分数添加监视
         digitalViewModel.fenShu.observe(this, {
@@ -55,9 +54,9 @@ class ClockActivity : BaseActivity() , View.OnClickListener , TimePicker.OnTimeC
                 makeNewTest()
             }
             R.id.check -> {
-                if (thisRandomTime == thisTouchTime){
+                if (thisRandomTime == thisTouchTime) {
                     answerRight()
-                }else{
+                } else {
                     answerWrong()
                 }
             }
@@ -87,19 +86,19 @@ class ClockActivity : BaseActivity() , View.OnClickListener , TimePicker.OnTimeC
 
         var mMinute = ""
 
-        if (minute>9){
+        if (minute > 9) {
             mMinute = minute.toString()
-        }else{
+        } else {
             mMinute = "0$minute"
         }
 
         val str = String.format(Locale.US, "%d:%s", mHourOfDay, mMinute)
 
-        Log.e("TAG", "setOnTimeChangedListener: "+str )
+        Log.e("TAG", "setOnTimeChangedListener: " + str)
 
         thisTouchTime = str
 
-        if (thisRandomTime == thisTouchTime){
+        if (thisRandomTime == thisTouchTime) {
             answerRight()
         }
     }

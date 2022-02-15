@@ -2,6 +2,7 @@ package com.example.childtest.app
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -9,7 +10,6 @@ import com.example.childtest.R
 import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.ActivityDigitalBinding
-import java.util.*
 
 
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClickListener {
@@ -42,11 +42,13 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     //数学的倍数
     val multiple_of_Mathematics =
-        ThisApp.sharedPreferences.getInt("multiple_of_Mathematics", 1)
+        ThisApp.sharedPreferences.getString("multiple_of_Mathematics", "1")
 
     private val digitalViewModel: DigitalViewModel by lazy {
-        ViewModelProvider(this).get(DigitalViewModel::class.java)
+        ViewModelProvider(this)[DigitalViewModel::class.java]
     }
+
+    private lateinit var toast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.answer2.setOnClickListener(this)
         binding.answer3.setOnClickListener(this)
 
+        toast = Toast(this)
+
 
         //让分数添加监视
         digitalViewModel.fenShu.observe(this, {
@@ -88,6 +92,58 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         binding.llText.visibility = View.GONE
         binding.llAnswer.visibility = View.GONE
         // [初始化时隐藏 end]
+
+        //倍数
+        if (multiple_of_Mathematics != null) {
+            digitalViewModel.setBeiShu(multiple_of_Mathematics.toInt())
+        }
+
+        //前数的对应
+        digitalViewModel.theFirstNumber.observe(this, {
+            val number = it * digitalViewModel.getBeiShu()
+            binding.number1.text = "$number"
+        })
+
+        //后数的对应
+        digitalViewModel.theLastNumber.observe(this, {
+            val number = it * digitalViewModel.getBeiShu()
+            binding.number2.text = "$number"
+        })
+
+        //倍数的对应
+        digitalViewModel.beiShu.observe(this, {
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+        })
+
+        //答案的对应
+        digitalViewModel.theAnswer.observe(this, {
+            var list = listOf<Int>(0,0,0)
+
+            while (list[0] == list[1] || list[0] == list[2] || list[1] == list[2]
+                ||list[0]<0 ||list[1]<0 ||list[2]<0) {
+                list = listOf<Int>(
+                    it * digitalViewModel.getBeiShu(),
+                    (it + Tools.randomNum(-2, 4)) * digitalViewModel.getBeiShu(),
+                    (it + Tools.randomNum(-1, 1)) * digitalViewModel.getBeiShu()
+                )
+            }
+
+
+            val startInt = Tools.randomNum(0, 2)
+
+            binding.answer1.text = list[startInt % 3].toString()
+            binding.answer2.text = list[(startInt + 1) % 3].toString()
+            binding.answer3.text = list[(startInt + 2) % 3].toString()
+
+        })
+    }
+
+    private fun checkAnswer(selectAnswer: Int): Boolean {
+        val beiShu: Int = digitalViewModel.getBeiShu()
+        if (selectAnswer == digitalViewModel.theAnswer.value!! * beiShu) {
+            return true
+        }
+        return false
     }
 
     override fun onClick(v: View?) {
@@ -97,14 +153,14 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.ll_text -> {
                 this.tts.speak(
-                    addTestFun(),
+                    speakContent(),
                     TextToSpeech.QUEUE_FLUSH,
                     null,
                     "utteranceId"
                 )
             }
             R.id.answer_1 -> {
-                if (binding.answer1.text.toString() == currentAnswer.toString()) {
+                if (checkAnswer(binding.answer1.text.toString().toInt())) {
                     answerRight(binding.answer1.text.toString())
                 } else {
                     answerWrong(binding.answer1.text.toString())
@@ -112,7 +168,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_2 -> {
 
-                if (binding.answer2.text.toString() == currentAnswer.toString()) {
+                if (checkAnswer(binding.answer2.text.toString().toInt())) {
                     answerRight(binding.answer2.text.toString())
                 } else {
                     answerWrong(binding.answer2.text.toString())
@@ -120,7 +176,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
             R.id.answer_3 -> {
 
-                if (binding.answer3.text.toString() == currentAnswer.toString()) {
+                if (checkAnswer(binding.answer3.text.toString().toInt())) {
                     answerRight(binding.answer3.text.toString())
                 } else {
                     answerWrong(binding.answer3.text.toString())
@@ -130,7 +186,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun answerWrong(answer: String) {
-        Toast(this).showCustomToast("$answer:❌", this)
+        toast.showCustomToast("$answer:❌", this)
 
         if (is_speak_chinese) {
             speakMsg("答错了。")
@@ -151,8 +207,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         }
     }
 
+
     private fun answerRight(answer: String) {
-        Toast(this).showCustomToast("$answer:◯", this)
+        toast.showCustomToast("$answer:◯", this)
         if (is_speak_chinese) {
             speakMsg("答对了。")
         } else {
@@ -164,6 +221,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun initNumber() {
+        toast.cancel()
+
         binding.llText.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.VISIBLE
         if (!is_match_two) {
@@ -190,39 +249,18 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 randomNum1 = Tools.randomNum(1, randomMax)
                 randomNum2 = Tools.randomNum(1, randomMax)
             }
-            binding.number1.text = randomNum1.toString()
-            binding.number2.text = randomNum2.toString()
+            digitalViewModel.setFirstNumber(
+                randomNum1
+            )
+            digitalViewModel.setLastNumber(
+                randomNum2
+            )
+            digitalViewModel.setAnswer(randomNum1 + randomNum2)
 
 
             binding.tvNum1.text = addViewText(randomNum1)
             binding.tvNum2.text = addViewText(randomNum2)
 
-            //选择答案设置
-            currentAnswer = randomNum1 + randomNum2
-
-            val answer2: Int = if (Tools.getRandomBoolean()) {
-                currentAnswer + 1
-            } else {
-                currentAnswer - 1
-            }
-
-            val answer3: Int = if (Tools.getRandomBoolean()) {
-                currentAnswer + 2
-            } else {
-                currentAnswer - 2
-            }
-
-            val answerList = listOf(answer2, currentAnswer, answer3)
-
-            val startInt = Tools.randomNum(0, 2)
-
-            val answers_random1 = answerList[startInt]
-            val answers_random2 = answerList[(startInt + 1) % 3]
-            val answers_random3 = answerList[(startInt + 2) % 3]
-
-            binding.answer1.text = answers_random1.toString()
-            binding.answer2.text = answers_random2.toString()
-            binding.answer3.text = answers_random3.toString()
 
         } else {
             //减法
@@ -263,46 +301,25 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
                 currentAnswer = randomNum1 - randomNum2
             }
-            binding.number1.text = randomNum1.toString()
-            binding.number2.text = randomNum2.toString()
+
+            digitalViewModel.setFirstNumber(
+                randomNum1
+            )
+            digitalViewModel.setLastNumber(
+                randomNum2
+            )
+            digitalViewModel.setAnswer(randomNum1 - randomNum2)
 
 
             binding.tvNum1.text = addViewText(randomNum1)
             binding.tvNum2.text = addViewText(randomNum2)
 
-
-            var answer2: Int = 0
-            answer2 = if (Tools.getRandomBoolean()) {
-                currentAnswer + 1
-            } else {
-                currentAnswer - 1
-            }
-            if (answer2 < 0) answer2 = currentAnswer + 4
-
-            var answer3: Int = 0
-            answer3 = if (Tools.getRandomBoolean()) {
-                currentAnswer + 2
-            } else {
-                currentAnswer + 3
-            }
-
-            val answerList = listOf(answer2, currentAnswer, answer3)
-
-            val startInt = Tools.randomNum(0, 2)
-
-            val answers_random1 = answerList[startInt]
-            val answers_random2 = answerList[(startInt + 1) % 3]
-            val answers_random3 = answerList[(startInt + 2) % 3]
-
-            binding.answer1.text = answers_random1.toString()
-            binding.answer2.text = answers_random2.toString()
-            binding.answer3.text = answers_random3.toString()
         }
 
 
         if (ThisApp.mAppViewModel.next_question_read.value == true) {
             this.tts.speak(
-                addTestFun(),
+                speakContent(),
                 TextToSpeech.QUEUE_FLUSH,
                 null,
                 "utteranceId"
@@ -330,7 +347,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         return r
     }
 
-    private fun addTestFun(): String {
+    private fun speakContent(): String {
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
         return if (is_speak_chinese) {
