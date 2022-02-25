@@ -8,14 +8,18 @@
         android:layout_height="match_parent"
         tools:context=".app.DigitalActivity">
 
-        <FrameLayout
-            android:background="#FFE57F"
-            android:id="@+id/digital_settings"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="550dp"
+            android:layout_height="500dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+            <FrameLayout
+                android:background="#FFE57F"
+                android:id="@+id/digital_settings"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
+        </androidx.core.widget.NestedScrollView>
 
 
 

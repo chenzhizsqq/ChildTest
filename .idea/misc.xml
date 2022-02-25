@@ -45,6 +45,7 @@
         <entry key="app/src/main/res/layout/activity_digital.xml" value="0.11752786220871327" />
         <entry key="app/src/main/res/layout/activity_japanese_kata.xml" value="0.13903985507246377" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login_digital.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/activity_menu.xml" value="0.13903985507246377" />
         <entry key="app/src/main/res/xml/digital_preferences.xml" value="0.11803444782168186" />
         <entry key="app/src/main/res/xml/root_preferences.xml" value="0.13903985507246377" />

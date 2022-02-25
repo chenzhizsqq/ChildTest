@@ -1,6 +1,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!--数学测试-->
+
     <SeekBarPreference
         app:key="digital_preferences_max_num"
         app:title="数字的最大数"
@@ -32,6 +33,23 @@
         android:summaryOn="现在是：加法"
         android:summaryOff="现在是：减法"
         android:defaultValue="true" />
+
+    <SwitchPreferenceCompat
+        android:key="digital_preferences_is_set_first_num"
+        android:title="要固定第一个数吗？"
+        android:summaryOn="要"
+        android:summaryOff="不要"
+        android:defaultValue="false" />
+    <SeekBarPreference
+        app:dependency="digital_preferences_is_set_first_num"
+        android:key="digital_preferences_first_num_value"
+        app:title="请选择第一个数的值"
+        app:defaultValue="3"
+        app:showSeekBarValue="true"
+        app:min="3"
+        android:max="10"
+        />
+
     <SeekBarPreference
         android:key="digital_preferences_deduct_points_for_mistakes"
         app:title="错了后，扣多少分？"
