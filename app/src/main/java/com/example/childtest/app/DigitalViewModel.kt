@@ -21,7 +21,7 @@ class DigitalViewModel : ViewModel() {
         fenShu.value = fenshu
     }
 
-    //考试的倍数
+    //考试的数字倍数
     private val _beiShu = MutableLiveData(1)
     val beiShu: LiveData<Int> = _beiShu
 

@@ -2,7 +2,6 @@ package com.example.childtest.app
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -43,6 +42,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     //数学的倍数
     val multiple_of_Mathematics =
         ThisApp.sharedPreferences.getString("multiple_of_Mathematics", "1")
+
+    //要固定第一个数为最大值吗？
+    val is_set_first_num =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_is_set_first_num", true)
 
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this)[DigitalViewModel::class.java]
@@ -240,13 +243,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             //app:key="digital_preferences_max_num"的处理  数字的最大数
             //测试数字
             val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
-            var randomNum1 = Tools.randomNum(1, randomMax)
+            var randomNum1 = getRandomNum1(randomMax)
             var randomNum2 = Tools.randomNum(1, randomMax)
             while (
-                binding.number1.text == randomNum1.toString() ||
                 binding.number2.text == randomNum2.toString()
             ) {
-                randomNum1 = Tools.randomNum(1, randomMax)
+                randomNum1 = getRandomNum1(randomMax)
                 randomNum2 = Tools.randomNum(1, randomMax)
             }
             digitalViewModel.setFirstNumber(
@@ -276,7 +278,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             //app:key="digital_preferences_max_num"的处理  数字的最大数
             //测试数字
             val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
-            var randomNum1 = Tools.randomNum(1, randomMax)
+            var randomNum1 = getRandomNum1(randomMax)
             var randomNum2 = Tools.randomNum(0, randomMax)
 
             //最后的答案
@@ -286,12 +288,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             currentAnswer = randomNum1 - randomNum2
             while (
                 randomNum1 <= randomNum2
-                || binding.number1.text == randomNum1.toString()
                 || binding.number2.text == randomNum2.toString()
                 || randomNum1 - randomNum2 < 0
                 || lastAnswer == currentAnswer
             ) {
-                randomNum1 = Tools.randomNum(1, randomMax)
+                randomNum1 = getRandomNum1(randomMax)
                 randomNum2 = Tools.randomNum(0, randomMax)
 
                 /* 为了少一点等于0 begin*/
@@ -328,6 +329,13 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
         binding.nextTest.visibility = View.GONE
         binding.llAnswer.visibility = View.VISIBLE
+    }
+
+    //获取第一个数
+    private fun getRandomNum1(randomMax: Int) = if (is_set_first_num) {
+        randomMax
+    } else {
+        Tools.randomNum(1, randomMax)
     }
 
     private fun speakMsg(s: String) {

@@ -36,19 +36,10 @@
 
     <SwitchPreferenceCompat
         android:key="digital_preferences_is_set_first_num"
-        android:title="要固定第一个数吗？"
+        android:title="要固定第一个数为最大值吗？"
         android:summaryOn="要"
         android:summaryOff="不要"
         android:defaultValue="false" />
-    <SeekBarPreference
-        app:dependency="digital_preferences_is_set_first_num"
-        android:key="digital_preferences_first_num_value"
-        app:title="请选择第一个数的值"
-        app:defaultValue="3"
-        app:showSeekBarValue="true"
-        app:min="3"
-        android:max="10"
-        />
 
     <SeekBarPreference
         android:key="digital_preferences_deduct_points_for_mistakes"
