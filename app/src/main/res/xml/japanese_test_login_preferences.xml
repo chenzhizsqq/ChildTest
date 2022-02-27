@@ -1,0 +1,10 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="after_wrong_is_next"
+        android:title="错了之后，是否马上下一题"
+        android:summaryOn="现在是：马上下一题"
+        android:summaryOff="现在是：继续留在本题"
+        android:defaultValue="true" />
+</PreferenceScreen>

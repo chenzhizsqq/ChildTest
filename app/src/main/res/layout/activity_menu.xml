@@ -32,6 +32,15 @@ tools:context=".menu.MenuActivity">
             android:background="@drawable/back"
             android:text="数学测试" />
         <TextView
+            android:id="@+id/japanese_test_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:padding="20dp"
+            app:fontFamily="@font/a"
+            android:background="@drawable/back"
+            android:text="japanese_test_test" />
+        <TextView
             android:id="@+id/japanese_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

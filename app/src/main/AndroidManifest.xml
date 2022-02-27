@@ -18,7 +18,7 @@
             android:exported="true" />
         <activity
             android:name=".menu.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".menu.MenuActivity"
             android:exported="true">
@@ -37,6 +37,14 @@
         <activity
             android:name=".app.DigitalLoginActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".app.JapaneseTestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".app.JapaneseTestLoginActivity"
+            android:exported="false" />
+
         <activity
             android:name=".app.JapaneseActivity"
             android:exported="false" />

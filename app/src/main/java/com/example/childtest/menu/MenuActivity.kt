@@ -23,6 +23,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.numberTest.setOnClickListener(this)
         binding.digitalTest.setOnClickListener(this)
+        binding.japaneseTestTest.setOnClickListener(this)
         binding.japaneseTest.setOnClickListener(this)
         binding.japaneseKataTest.setOnClickListener(this)
         binding.englishTest.setOnClickListener(this)
@@ -41,6 +42,11 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
             R.id.digital_test -> {
                 val intent =
                     Intent(this@MenuActivity, DigitalLoginActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.japanese_test_test -> {
+                val intent =
+                    Intent(this@MenuActivity, JapaneseTestLoginActivity::class.java)
                 startActivity(intent)
             }
             R.id.japanese_test -> {
