@@ -115,15 +115,16 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
         //倍数的对应
         digitalViewModel.beiShu.observe(this, {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "当前数学的倍数是：$it", Toast.LENGTH_SHORT).show()
         })
 
-        //答案的对应
+        //各答案的对应
         digitalViewModel.theAnswer.observe(this, {
-            var list = listOf<Int>(0,0,0)
+            var list = listOf<Int>(0, 0, 0)
 
             while (list[0] == list[1] || list[0] == list[2] || list[1] == list[2]
-                ||list[0]<0 ||list[1]<0 ||list[2]<0) {
+                || list[0] < 0 || list[1] < 0 || list[2] < 0
+            ) {
                 list = listOf<Int>(
                     it * digitalViewModel.getBeiShu(),
                     (it + Tools.randomNum(-2, 4)) * digitalViewModel.getBeiShu(),
@@ -155,12 +156,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 initNumber()
             }
             R.id.ll_text -> {
-                this.tts.speak(
-                    speakContent(),
-                    TextToSpeech.QUEUE_FLUSH,
-                    null,
-                    "utteranceId"
-                )
+                speakMsg(speakContent(), speakContent())
             }
             R.id.answer_1 -> {
                 if (checkAnswer(binding.answer1.text.toString().toInt())) {
@@ -191,11 +187,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun answerWrong(answer: String) {
         toast.showCustomToast("$answer:❌", this)
 
-        if (is_speak_chinese) {
-            speakMsg("答错了。")
-        } else {
-            speakMsg("間違えます。")
-        }
+        speakMsg("答错了。", "間違えます。")
 
         digitalViewModel.fenShuAdd(-digital_preferences_deduct_points_for_mistakes)
         if (digitalViewModel.getFenShu() < 0) {
@@ -213,11 +205,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun answerRight(answer: String) {
         toast.showCustomToast("$answer:◯", this)
-        if (is_speak_chinese) {
-            speakMsg("答对了。")
-        } else {
-            speakMsg("正解です。")
-        }
+
+        speakMsg("答对了。", "正解です。")
+
         digitalViewModel.fenShuAdd(1)
         binding.nextTest.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.GONE
@@ -319,12 +309,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
 
         if (ThisApp.mAppViewModel.next_question_read.value == true) {
-            this.tts.speak(
-                speakContent(),
-                TextToSpeech.QUEUE_FLUSH,
-                null,
-                "utteranceId"
-            )
+            speakMsg(speakContent(), speakContent())
         }
 
         binding.nextTest.visibility = View.GONE
@@ -338,14 +323,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         Tools.randomNum(1, randomMax)
     }
 
-    private fun speakMsg(s: String) {
-        this.tts.speak(
-            s,
-            TextToSpeech.QUEUE_FLUSH,
-            null,
-            "utteranceId"
-        )
-    }
 
     private fun addViewText(randomNum: Int): String {
         var r = ""
@@ -359,7 +336,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
         return if (is_speak_chinese) {
-            "$number1Text $plus $number2Text 等于 几？"
+            "$number1Text $plus $number2Text 等于 多少？"
         } else {
             "$number1Text $plus $number2Text は 何ですか？"
         }
@@ -371,7 +348,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         super.onInit(status)
 
         // 音声合成の実行
-        this.tts.speak("hello", TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+        speakMsg("开始", "始めます")
     }
 
 /*    class DigitalSettingsFragment : PreferenceFragmentCompat() {

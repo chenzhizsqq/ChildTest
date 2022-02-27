@@ -38,6 +38,57 @@ open class BaseActivity : AppCompatActivity(),
         ThisApp.sharedPreferences.getBoolean("time_limit", false)
     }
 
+    /**
+     * 读取内容 中文
+     */
+    fun speakMsgCn(chinese: String) {
+        //是否中文
+        val is_speak_chinese =
+            ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
+
+        if (!is_speak_chinese) {
+            Toast.makeText(this, "暂时是日语读取", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        this.tts.speak(chinese, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+    }
+
+    /**
+     * 读取内容 日文
+     */
+    fun speakMsgJp(japanese: String) {
+        //是否中文
+        val is_speak_chinese =
+            ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
+
+        if (is_speak_chinese) {
+            Toast.makeText(this, "暂时是中文读取", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        this.tts.speak(japanese, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+    }
+
+    /**
+     * 读取内容 中文 和 日文
+     * chinese 中文
+     * japanese 日文
+     */
+    fun speakMsg(chinese: String, japanese: String) {
+        //是否中文
+        val is_speak_chinese =
+            ThisApp.sharedPreferences.getBoolean("digital_preferences_speak_chinese", true)
+
+        val speakMsg = if (is_speak_chinese) {
+            chinese
+        } else {
+            japanese
+        }
+
+        this.tts.speak(speakMsg, TextToSpeech.QUEUE_FLUSH, null, "utteranceId")
+    }
+
 
     //https://www.geeksforgeeks.org/how-to-add-a-custom-styled-toast-in-android-using-kotlin/
     //创建自定义的提示框
