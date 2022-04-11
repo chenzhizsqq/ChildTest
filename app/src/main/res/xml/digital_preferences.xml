@@ -61,4 +61,11 @@
         android:summaryOn="现在是：马上下一题"
         android:summaryOff="现在是：继续留在本题"
         android:defaultValue="true" />
+
+    <SwitchPreferenceCompat
+        android:key="digital_preferences_is_set_count_down"
+        android:title="要设定倒数时间吗？"
+        android:summaryOn="要"
+        android:summaryOff="不要"
+        android:defaultValue="false" />
 </PreferenceScreen>

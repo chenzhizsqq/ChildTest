@@ -3,13 +3,14 @@ package com.example.childtest.app
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Insets
+import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -322,4 +323,51 @@ open class BaseActivity : AppCompatActivity(),
         }
     }
 
+
+    fun getScreenWidth(): Int {
+        var ScreenWidth = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = this.windowManager.currentWindowMetrics
+            val insets: Insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+
+            ScreenWidth = windowMetrics.bounds.width()
+            val StatusBar: Int = insets.top
+            val NavigationBar: Int = insets.bottom
+        } else {
+            val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+            val disp = wm.defaultDisplay
+
+            val realSize = Point()
+            disp.getRealSize(realSize)
+
+            ScreenWidth = realSize.x
+        }
+
+        return ScreenWidth
+    }
+
+    fun getScreenHeight(): Int {
+        var ScreenHeight = 0
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = this.windowManager.currentWindowMetrics
+            val insets: Insets = windowMetrics.windowInsets
+                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+
+            ScreenHeight = windowMetrics.bounds.height()
+            val StatusBar: Int = insets.top
+            val NavigationBar: Int = insets.bottom
+        } else {
+            val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+            val disp = wm.defaultDisplay
+
+            val realSize = Point()
+            disp.getRealSize(realSize)
+            ScreenHeight = realSize.y
+        }
+
+        return ScreenHeight
+    }
 }

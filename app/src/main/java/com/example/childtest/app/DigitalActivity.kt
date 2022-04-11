@@ -1,7 +1,9 @@
 package com.example.childtest.app
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -13,10 +15,19 @@ import com.example.childtest.databinding.ActivityDigitalBinding
 
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClickListener {
 
+    companion object {
+        //考试倒计时初始值：10秒
+        private const val COUNT_DOWN_MILLISECOND: Long = 10000
+    }
+
     private lateinit var binding: ActivityDigitalBinding
 
     private val TAG = "DigitalActivity"
     private var plus = "加"
+
+    //考试倒计时
+    private lateinit var examCountdown: CountDownTimer
+
 
     //当前算法的答案
     private var currentAnswer = 0
@@ -48,6 +59,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     //要固定第一个数为最大值吗？
     val is_set_first_num =
         ThisApp.sharedPreferences.getBoolean("digital_preferences_is_set_first_num", true)
+
+    //digital_preferences_is_set_count_down 要设定倒数时间吗
+    val is_set_count_down =
+        ThisApp.sharedPreferences.getBoolean("digital_preferences_is_set_count_down", false)
 
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this)[DigitalViewModel::class.java]
@@ -142,6 +157,39 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             binding.answer3.text = list[(startInt + 2) % 3].toString()
 
         })
+
+        //countdownTime = 10
+        examCountdown = object : CountDownTimer(COUNT_DOWN_MILLISECOND, 10) {
+            //android:id="@+id/ll_test_time"
+            override fun onTick(millisUntilFinished: Long) {
+
+                //val second = ceil(millisUntilFinished / 1000.0).toInt()
+
+                val persen = millisUntilFinished / 10000.0
+                val width = (getScreenWidth() * persen).toInt()
+                Log.e(TAG, "onTick: width:" + width)
+
+                binding.llTestTime.width = width
+            }
+
+            override fun onFinish() {
+                answerWrong("时间到了")
+            }
+
+        }
+
+
+    }
+
+    override fun finish() {
+        super.finish()
+        examCountdown.cancel()
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        examCountdown.cancel()
     }
 
     private fun checkAnswer(selectAnswer: Int): Boolean {
@@ -153,6 +201,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     override fun onClick(v: View?) {
+        examCountdown.cancel()
         when (v?.id) {
             R.id.nextTest -> {
                 initNumber()
@@ -201,7 +250,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         if (is_after_wrong_is_next) {
             binding.nextTest.visibility = View.VISIBLE
             binding.llAnswer.visibility = View.GONE
-        }else{
+        } else {
             //如果打错了，不想要马上做下一题，再换选择新的答案列
             digitalViewModel.setAnswer(currentAnswer)
         }
@@ -329,6 +378,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
         binding.nextTest.visibility = View.GONE
         binding.llAnswer.visibility = View.VISIBLE
+
+
+        examCountdown.cancel()
+        if (is_set_count_down) {
+            examCountdown.start()
+        }
     }
 
     //获取第一个数
