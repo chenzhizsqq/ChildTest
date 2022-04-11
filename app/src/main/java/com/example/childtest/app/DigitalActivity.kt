@@ -17,6 +17,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private val TAG = "DigitalActivity"
     private var plus = "加"
+
+    //当前算法的答案
     private var currentAnswer = 0
 
     //是否不是加减法一起选择?
@@ -199,6 +201,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         if (is_after_wrong_is_next) {
             binding.nextTest.visibility = View.VISIBLE
             binding.llAnswer.visibility = View.GONE
+        }else{
+            //如果打错了，不想要马上做下一题，再换选择新的答案列
+            digitalViewModel.setAnswer(currentAnswer)
         }
     }
 
@@ -235,11 +240,21 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
             var randomNum1 = getRandomNum1(randomMax)
             var randomNum2 = Tools.randomNum(1, randomMax)
+
+            //最后的答案
+            val lastAnswer = currentAnswer
+
+            //选择答案设置
+            currentAnswer = randomNum1 + randomNum2
+
             while (
                 binding.number2.text == randomNum2.toString()
+                || lastAnswer == currentAnswer
             ) {
                 randomNum1 = getRandomNum1(randomMax)
                 randomNum2 = Tools.randomNum(1, randomMax)
+
+                currentAnswer = randomNum1 + randomNum2
             }
             digitalViewModel.setFirstNumber(
                 randomNum1
@@ -247,7 +262,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             digitalViewModel.setLastNumber(
                 randomNum2
             )
-            digitalViewModel.setAnswer(randomNum1 + randomNum2)
+            digitalViewModel.setAnswer(currentAnswer)
 
 
             binding.tvNum1.text = addViewText(randomNum1)
@@ -272,7 +287,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             var randomNum2 = Tools.randomNum(0, randomMax)
 
             //最后的答案
-            var lastAnswer = currentAnswer
+            val lastAnswer = currentAnswer
 
             //选择答案设置
             currentAnswer = randomNum1 - randomNum2
@@ -299,7 +314,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             digitalViewModel.setLastNumber(
                 randomNum2
             )
-            digitalViewModel.setAnswer(randomNum1 - randomNum2)
+            digitalViewModel.setAnswer(currentAnswer)
 
 
             binding.tvNum1.text = addViewText(randomNum1)

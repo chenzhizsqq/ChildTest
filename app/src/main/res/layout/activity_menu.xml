@@ -39,7 +39,7 @@ tools:context=".menu.MenuActivity">
             android:padding="20dp"
             app:fontFamily="@font/a"
             android:background="@drawable/back"
-            android:text="japanese_test_test" />
+            android:text="日语听写测试" />
         <TextView
             android:id="@+id/japanese_test"
             android:layout_width="match_parent"
