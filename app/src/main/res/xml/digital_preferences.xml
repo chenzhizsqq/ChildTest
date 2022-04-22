@@ -68,4 +68,15 @@
         android:summaryOn="要"
         android:summaryOff="不要"
         android:defaultValue="false" />
+
+
+    <SeekBarPreference
+        app:dependency="digital_preferences_is_set_count_down"
+        android:key="digital_preferences_is_set_count_down_second"
+        app:title="倒数时间"
+        app:defaultValue="10"
+        app:showSeekBarValue="true"
+        app:min="5"
+        android:max="60"
+        />
 </PreferenceScreen>

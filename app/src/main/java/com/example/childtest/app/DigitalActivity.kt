@@ -16,13 +16,11 @@ import com.example.childtest.databinding.ActivityDigitalBinding
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClickListener {
 
     companion object {
-        //考试倒计时初始值：10秒
-        private const val COUNT_DOWN_MILLISECOND: Long = 10000
+        private const val TAG = "DigitalActivity"
     }
 
     private lateinit var binding: ActivityDigitalBinding
 
-    private val TAG = "DigitalActivity"
     private var plus = "加"
 
     //考试倒计时
@@ -63,6 +61,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     //digital_preferences_is_set_count_down 要设定倒数时间吗
     val is_set_count_down =
         ThisApp.sharedPreferences.getBoolean("digital_preferences_is_set_count_down", false)
+
+    //digital_preferences_is_set_count_down_second  倒数时间
+    val digital_preferences_is_set_count_down_second =
+        ThisApp.sharedPreferences.getInt("digital_preferences_is_set_count_down_second", 10)
 
     private val digitalViewModel: DigitalViewModel by lazy {
         ViewModelProvider(this)[DigitalViewModel::class.java]
@@ -159,13 +161,15 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         })
 
         //countdownTime = 10
-        examCountdown = object : CountDownTimer(COUNT_DOWN_MILLISECOND, 10) {
+        examCountdown = object : CountDownTimer((digital_preferences_is_set_count_down_second * 1000).toLong(),
+            digital_preferences_is_set_count_down_second.toLong()
+        ) {
             //android:id="@+id/ll_test_time"
             override fun onTick(millisUntilFinished: Long) {
 
                 //val second = ceil(millisUntilFinished / 1000.0).toInt()
 
-                val persen = millisUntilFinished / 10000.0
+                val persen = millisUntilFinished / (1000.0 * digital_preferences_is_set_count_down_second)
                 val width = (getScreenWidth() * persen).toInt()
                 Log.e(TAG, "onTick: width:" + width)
 
