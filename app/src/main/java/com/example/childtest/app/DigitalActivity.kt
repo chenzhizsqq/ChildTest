@@ -118,6 +118,14 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             }
         })
 
+
+        //今天最高分是。
+        lifecycleScope.launch(Dispatchers.IO) {
+            Log.e(TAG, "onCreate: 今天最高分是：" + getMaxScore(Tools.getDate(), TAG))
+            //getMaxScore(Tools.getDate(),TAG)
+            binding.maxScore.text = "今天最高分：" + getMaxScore(Tools.getDate(), TAG)
+        }
+
         //是否提示添加监视
         ThisApp.mAppViewModel.tips_is_show.observe(this, {
             if (it) {
@@ -188,7 +196,6 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
                 val persen = millisUntilFinished / (1000.0 * digital_preferences_is_set_count_down_second)
                 val width = (getScreenWidth() * persen).toInt()
-                Log.e(TAG, "onTick: width:" + width)
 
                 binding.llTestTime.width = width
             }
@@ -205,6 +212,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private suspend fun insertScore(score : Int) {
         val mathScore = MathScore(0,TAG,score,Tools.getDate(), Tools.getDateTime())
         mMathScoreDbViewModel.insert(mathScore)
+    }
+
+    private fun getMaxScore(date:String,id:String):Int {
+        return  mMathScoreDbViewModel.getMaxScore(date,id)
     }
 
     override fun finish() {

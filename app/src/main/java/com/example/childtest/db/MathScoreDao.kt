@@ -15,6 +15,9 @@ interface MathScoreDao {
     @Query("SELECT * FROM MathScore where date = :date order by dateTime desc")
     fun getAllByDate(date:String): List<MathScore>
 
+    @Query("SELECT MAX(score) FROM MathScore where date = :date and id = :id order by dateTime desc")
+    fun getMaxScore(date:String,id:String): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(vararg post: MathScore)
 

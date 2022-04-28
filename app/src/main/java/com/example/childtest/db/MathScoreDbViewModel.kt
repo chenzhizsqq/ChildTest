@@ -19,5 +19,9 @@ class MathScoreDbViewModel(context: Context) : ViewModel() {
         return  mMathScoreDao.getAll()
     }
 
+    fun getMaxScore(date:String,id:String) : Int{
+        return  mMathScoreDao.getMaxScore(date,id)
+    }
+
 
 }
