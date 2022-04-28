@@ -7,10 +7,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.childtest.R
 import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.ActivityDigitalBinding
+import com.example.childtest.db.MathScore
+import com.example.childtest.db.MathScoreDbViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClickListener {
@@ -70,6 +75,10 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         ViewModelProvider(this)[DigitalViewModel::class.java]
     }
 
+
+    private lateinit var mMathScoreDbViewModel: MathScoreDbViewModel
+
+
     private lateinit var toast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +95,9 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 .commit()
         }*/
 
+
+        mMathScoreDbViewModel = MathScoreDbViewModel(this)
+
         binding.llText.setOnClickListener(this)
         binding.nextTest.setOnClickListener(this)
 
@@ -99,6 +111,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         //让分数添加监视
         digitalViewModel.fenShu.observe(this, {
             binding.test1.text = "分数：$it"
+
+            //最后分数记录到数据库中。
+            lifecycleScope.launch(Dispatchers.IO) {
+                insertScore(it)
+            }
         })
 
         //是否提示添加监视
@@ -183,6 +200,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         }
 
 
+    }
+
+    private suspend fun insertScore(score : Int) {
+        val mathScore = MathScore(0,TAG,score,Tools.getDate(), Tools.getDateTime())
+        mMathScoreDbViewModel.insert(mathScore)
     }
 
     override fun finish() {

@@ -75,4 +75,5 @@ dependencies {
     implementation 'androidx.room:room-common:2.4.2'
     //room Database 数据库
     implementation 'androidx.room:room-ktx:2.4.2'
+    kapt "androidx.room:room-compiler:2.4.2"
 }
