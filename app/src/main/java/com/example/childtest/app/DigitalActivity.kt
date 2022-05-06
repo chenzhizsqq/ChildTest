@@ -325,7 +325,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             //测试数字
             val randomMax = ThisApp.sharedPreferences.getInt("digital_preferences_max_num", 3)
             var randomNum1 = getRandomNum1(randomMax)
-            var randomNum2 = Tools.randomNum(1, randomMax)
+            var randomNum2 = Tools.randomNum(0, randomMax)
 
             //最后的答案
             val lastAnswer = currentAnswer
@@ -338,7 +338,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 || lastAnswer == currentAnswer
             ) {
                 randomNum1 = getRandomNum1(randomMax)
-                randomNum2 = Tools.randomNum(1, randomMax)
+                randomNum2 = Tools.randomNum(0, randomMax)
 
                 currentAnswer = randomNum1 + randomNum2
             }
