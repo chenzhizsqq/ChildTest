@@ -1,10 +1,13 @@
 package com.example.childtest.app
 
+import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -247,29 +250,37 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 speakMsg(speakContent(), speakContent())
             }
             R.id.answer_1 -> {
-                if (checkAnswer(binding.answer1.text.toString().toInt())) {
-                    answerRight(binding.answer1.text.toString())
-                } else {
-                    answerWrong(binding.answer1.text.toString())
-                }
+                binding.answer1.setTextColor(Color.RED)
+                answerAction(binding.answer1.text.toString())
             }
             R.id.answer_2 -> {
-
-                if (checkAnswer(binding.answer2.text.toString().toInt())) {
-                    answerRight(binding.answer2.text.toString())
-                } else {
-                    answerWrong(binding.answer2.text.toString())
-                }
+                binding.answer2.setTextColor(Color.RED)
+                //binding.answer2.setTextColor(Color.RED)
+                answerAction(binding.answer2.text.toString())
             }
             R.id.answer_3 -> {
-
-                if (checkAnswer(binding.answer3.text.toString().toInt())) {
-                    answerRight(binding.answer3.text.toString())
-                } else {
-                    answerWrong(binding.answer3.text.toString())
-                }
+                binding.answer3.setTextColor(Color.RED)
+                answerAction(binding.answer3.text.toString())
             }
         }
+    }
+
+    private fun answerAction(answer: String) {
+        val myView =  TextView(this)
+        myView.textSize = 50.0f
+        myView.text = srcAnswer()
+
+        speakMsg(speakContentAnswer(),speakContentAnswer())
+        AlertDialog.Builder(this)
+            .setCustomTitle(myView)
+            .setPositiveButton("OK") { _, _ ->
+                if (checkAnswer(answer.toInt())) {
+                    answerRight(answer)
+                } else {
+                    answerWrong(answer)
+                }
+            }
+            .show()
     }
 
     private fun answerWrong(answer: String) {
@@ -306,6 +317,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     private fun initNumber() {
         toast.cancel()
+
+
+        binding.answer1.setTextColor(Color.WHITE)
+        binding.answer2.setTextColor(Color.WHITE)
+        binding.answer3.setTextColor(Color.WHITE)
 
         binding.llText.visibility = View.VISIBLE
         binding.llAnswer.visibility = View.VISIBLE
@@ -450,6 +466,32 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         return ""
     }
 
+    //显示答案用的阅读文本
+    private fun speakContentAnswer(): String {
+        val number1Text: String = binding.number1.text.toString()
+        val number2Text: String = binding.number2.text.toString()
+        var match = "加"
+        var answer = binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
+        if (!is_add_match ){
+            match = "减"
+            answer = binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
+        }
+        return "$number1Text $match $number2Text = $answer"
+    }
+
+    //显示答案用的文本
+    private fun srcAnswer(): String {
+        val number1Text: String = binding.number1.text.toString()
+        val number2Text: String = binding.number2.text.toString()
+        var answer = binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
+        var match = "+"
+        if (!is_add_match) {
+            match = "-"
+            answer = binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
+        }
+        return "$number1Text $match $number2Text = $answer"
+    }
+
     // TextToSpeechの初期化完了時に呼ばれる
     override fun onInit(status: Int) {
         super.onInit(status)
@@ -457,11 +499,5 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         // 音声合成の実行
         speakMsg("开始", "始めます")
     }
-
-/*    class DigitalSettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.digital_preferences, rootKey)
-        }
-    }*/
 }
 
