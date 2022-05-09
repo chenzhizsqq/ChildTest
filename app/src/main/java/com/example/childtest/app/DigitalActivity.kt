@@ -280,6 +280,20 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                     answerWrong(answer)
                 }
             }
+            .setOnDismissListener {
+                if (checkAnswer(answer.toInt())) {
+                    answerRight(answer)
+                } else {
+                    answerWrong(answer)
+                }
+            }
+            .setOnCancelListener {
+                if (checkAnswer(answer.toInt())) {
+                    answerRight(answer)
+                } else {
+                    answerWrong(answer)
+                }
+            }
             .show()
     }
 
