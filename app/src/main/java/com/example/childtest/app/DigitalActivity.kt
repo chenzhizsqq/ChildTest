@@ -5,10 +5,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.childtest.R
@@ -78,8 +78,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         ViewModelProvider(this)[DigitalViewModel::class.java]
     }
 
-
-    private lateinit var mMathScoreDbViewModel: MathScoreDbViewModel
+    val mMathScoreDbViewModel: MathScoreDbViewModel by viewModels()
 
 
     private lateinit var toast: Toast
@@ -98,8 +97,7 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
                 .commit()
         }*/
 
-
-        mMathScoreDbViewModel = MathScoreDbViewModel(this)
+        //mMathScoreDbViewModel = MathScoreDbViewModel(this)
 
         binding.llText.setOnClickListener(this)
         binding.nextTest.setOnClickListener(this)
@@ -116,18 +114,17 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
             binding.test1.text = "分数：$it"
 
             //最后分数记录到数据库中。
-            lifecycleScope.launch(Dispatchers.IO) {
-                insertScore(it)
-            }
+            insertScore(it)
         })
 
 
         //今天最高分是。
-        lifecycleScope.launch(Dispatchers.IO) {
-            Log.e(TAG, "onCreate: 今天最高分是：" + getMaxScore(Tools.getDate(), TAG))
-            //getMaxScore(Tools.getDate(),TAG)
-            binding.maxScore.text = "今天最高分：" + getMaxScore(Tools.getDate(), TAG)
-        }
+        // Roomの変更を検知し、変更時にtextViewの内容を変更する
+        mMathScoreDbViewModel.getMaxScoreLive(Tools.getDate(), TAG).observe(this, { value ->
+            value?.let {
+                binding.maxScore.text = "今天最高分：" + it.toString()
+            }
+        })
 
         //是否提示添加监视
         ThisApp.mAppViewModel.tips_is_show.observe(this, {
@@ -189,7 +186,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         })
 
         //countdownTime = 10
-        examCountdown = object : CountDownTimer((digital_preferences_is_set_count_down_second * 1000).toLong(),
+        examCountdown = object : CountDownTimer(
+            (digital_preferences_is_set_count_down_second * 1000).toLong(),
             digital_preferences_is_set_count_down_second.toLong()
         ) {
             //android:id="@+id/ll_test_time"
@@ -197,7 +195,8 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
                 //val second = ceil(millisUntilFinished / 1000.0).toInt()
 
-                val persen = millisUntilFinished / (1000.0 * digital_preferences_is_set_count_down_second)
+                val persen =
+                    millisUntilFinished / (1000.0 * digital_preferences_is_set_count_down_second)
                 val width = (getScreenWidth() * persen).toInt()
 
                 binding.llTestTime.width = width
@@ -212,13 +211,13 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
 
     }
 
-    private suspend fun insertScore(score : Int) {
-        val mathScore = MathScore(0,TAG,score,Tools.getDate(), Tools.getDateTime())
+    private fun insertScore(score: Int) {
+        val mathScore = MathScore(0, TAG, score, Tools.getDate(), Tools.getDateTime())
         mMathScoreDbViewModel.insert(mathScore)
     }
 
-    private fun getMaxScore(date:String,id:String):Int {
-        return  mMathScoreDbViewModel.getMaxScore(date,id)
+    private fun getMaxScore(date: String, id: String): Int {
+        return mMathScoreDbViewModel.getMaxScore(date, id)
     }
 
     override fun finish() {
@@ -245,6 +244,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         when (v?.id) {
             R.id.nextTest -> {
                 initNumber()
+                mMathScoreDbViewModel.getMaxScoreLive(Tools.getDate(), TAG).observe(this, { value ->
+                    value?.let {
+
+                        binding.maxScore.text = "今天最高分：" + it.toString()
+                    }
+                })
             }
             R.id.ll_text -> {
                 speakMsg(speakContent(), speakContent())
@@ -266,11 +271,11 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     }
 
     private fun answerAction(answer: String) {
-        val myView =  TextView(this)
+        val myView = TextView(this)
         myView.textSize = 50.0f
         myView.text = srcAnswer()
 
-        speakMsg(speakContentAnswer(),speakContentAnswer())
+        speakMsg(speakContentAnswer(), speakContentAnswer())
         AlertDialog.Builder(this)
             .setCustomTitle(myView)
             .setPositiveButton("OK") { _, _ ->
@@ -485,10 +490,12 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
         var match = "加"
-        var answer = binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
-        if (!is_add_match ){
+        var answer =
+            binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
+        if (!is_add_match) {
             match = "减"
-            answer = binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
+            answer =
+                binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
         }
         return "$number1Text $match $number2Text = $answer"
     }
@@ -497,11 +504,13 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
     private fun srcAnswer(): String {
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
-        var answer = binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
+        var answer =
+            binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
         var match = "+"
         if (!is_add_match) {
             match = "-"
-            answer = binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
+            answer =
+                binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
         }
         return "$number1Text $match $number2Text = $answer"
     }
