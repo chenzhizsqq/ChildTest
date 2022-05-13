@@ -1,23 +1,35 @@
 package com.example.childtest.menu
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.example.childtest.R
 import com.example.childtest.appConfig.Config
 import com.example.childtest.appConfig.ThisApp
+import com.example.childtest.databinding.SettingsActivityBinding
+import com.example.childtest.db.MathScoreDbViewModel
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var binding: SettingsActivityBinding
+
+    val mathScoreDbViewModel: MathScoreDbViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
+        binding = SettingsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
+        }
+
+        binding.cleanData.setOnClickListener {
+            mathScoreDbViewModel.deleteAll()
         }
     }
 

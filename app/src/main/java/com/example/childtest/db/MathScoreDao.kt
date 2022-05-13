@@ -33,4 +33,7 @@ interface MathScoreDao {
 
     @Delete
     suspend fun delete(post: MathScore)
+
+    @Query("delete FROM MathScore")
+    suspend fun deleteAll()
 }

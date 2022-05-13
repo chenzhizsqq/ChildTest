@@ -36,5 +36,11 @@ class MathScoreDbViewModel(application: Application) : AndroidViewModel(applicat
         return dao.getMaxScoreLive(date, id)
     }
 
+    fun deleteAll(){
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.deleteAll()
+        }
+    }
+
 
 }
