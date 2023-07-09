@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.childtest.app.ClockActivity">
+
+    <item
+        android:id="@+id/clock_setting_five_about"
+        android:orderInCategory="1"
+        android:title="分钟是否以5的倍数显示"
+        android:checkable="true"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/clock_setting_right_now_check"
+        android:orderInCategory="1"
+        android:title="边转边检查答案是否正确"
+        android:checkable="true"
+        app:showAsAction="never"
+        />
+</menu>

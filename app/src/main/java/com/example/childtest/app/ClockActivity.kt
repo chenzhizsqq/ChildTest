@@ -2,11 +2,14 @@ package com.example.childtest.app
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.childtest.R
+import com.example.childtest.appConfig.ThisApp
 import com.example.childtest.databinding.ActivityClockBinding
 import java.util.*
 
@@ -21,7 +24,44 @@ class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeCha
     var bCheakRight = false
 
     private val digitalViewModel: DigitalViewModel by lazy {
-        ViewModelProvider(this).get(DigitalViewModel::class.java)
+        ViewModelProvider(this)[DigitalViewModel::class.java]
+    }
+
+    //分钟是否以5的倍数显示
+    private var is_clock_setting_five_about = ThisApp.sharedPreferences.getBoolean("clock_setting_five_about", false)
+
+    //边转边检查答案是否正确
+    private var is_clock_setting_right_now_check = ThisApp.sharedPreferences.getBoolean("clock_setting_right_now_check", true)
+
+
+    //引用右上角的功能选择器 - 创建
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_time_setting, menu)
+        menu.findItem(R.id.clock_setting_five_about).isChecked =
+            ThisApp.sharedPreferences.getBoolean("clock_setting_five_about", false)
+        menu.findItem(R.id.clock_setting_right_now_check).isChecked =
+            ThisApp.sharedPreferences.getBoolean("clock_setting_right_now_check", true)
+        return true
+    }
+
+
+    //右上角选择器，选择后的处理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.clock_setting_five_about -> {
+                item.isChecked = !item.isChecked
+                ThisApp.sharedPrePut("clock_setting_five_about", item.isChecked)
+                is_clock_setting_five_about = item.isChecked
+                return true
+            }
+            R.id.clock_setting_right_now_check -> {
+                item.isChecked = !item.isChecked
+                ThisApp.sharedPrePut("clock_setting_right_now_check", item.isChecked)
+                is_clock_setting_right_now_check = item.isChecked
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,9 +76,9 @@ class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeCha
         binding.check.setOnClickListener(this)
 
         //让分数添加监视
-        digitalViewModel.fenShu.observe(this, {
+        digitalViewModel.fenShu.observe(this) {
             binding.tvFenShu.text = "分数：$it"
-        })
+        }
         digitalViewModel.fenShu.postValue(0)
 
         makeNewTest()
@@ -86,10 +126,10 @@ class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeCha
 
         var mMinute = ""
 
-        if (minute > 9) {
-            mMinute = minute.toString()
+        mMinute = if (minute > 9) {
+            minute.toString()
         } else {
-            mMinute = "0$minute"
+            "0$minute"
         }
 
         val str = String.format(Locale.US, "%d:%s", mHourOfDay, mMinute)
@@ -98,8 +138,11 @@ class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeCha
 
         thisTouchTime = str
 
-        if (thisRandomTime == thisTouchTime) {
-            answerRight()
+        //边转边检查答案是否正确
+        if (is_clock_setting_right_now_check){
+            if (thisRandomTime == thisTouchTime) {
+                answerRight()
+            }
         }
     }
 
@@ -117,7 +160,10 @@ class ClockActivity : BaseActivity(), View.OnClickListener, TimePicker.OnTimeCha
     private fun randomTime(): String {
 
         val hourOfDay: Int = (Math.random() * 12).toInt()
-        val minute: Int = (Math.random() * 60).toInt()
+        var minute: Int = (Math.random() * 60).toInt()
+        if (is_clock_setting_five_about){
+            minute = (Math.random() * 12).toInt() * 5
+        }
 
         val mHourOfDay = hourOfDay % 12
 
