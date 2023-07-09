@@ -22,15 +22,33 @@ tools:context=".menu.MenuActivity">
             app:fontFamily="@font/a"
             android:background="@drawable/back"
             android:text="数字测试" />
-        <TextView
-            android:id="@+id/digital_test"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:padding="20dp"
-            app:fontFamily="@font/a"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:background="@drawable/back"
-            android:text="数学测试" />
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/digital_test"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="30sp"
+                android:padding="20dp"
+                app:fontFamily="@font/a"
+                android:text="数学测试" />
+            <TextView
+                android:id="@+id/maxScore"
+                android:layout_width="1dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"
+                android:textSize="20sp"
+                android:padding="20dp"
+                app:fontFamily="@font/a"
+                android:text="今天最高分" />
+        </LinearLayout>
         <TextView
             android:id="@+id/japanese_test_test"
             android:layout_width="match_parent"

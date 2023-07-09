@@ -4,16 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.childtest.R
 import com.example.childtest.app.*
+import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.ActivityMenuBinding
+import com.example.childtest.db.MathScoreDbViewModel
 import com.example.childtest.test.TestActivity
 import java.util.*
 
 class MenuActivity : AppCompatActivity(), View.OnClickListener {
     val TAG = "MenuActivity"
     private lateinit var binding: ActivityMenuBinding
+    val mMathScoreDbViewModel: MathScoreDbViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
@@ -30,6 +34,17 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
         binding.clockTest.setOnClickListener(this)
         binding.setting.setOnClickListener(this)
         binding.testTextView.setOnClickListener(this)
+        binding.maxScore.setOnClickListener(this)
+
+
+        mMathScoreDbViewModel.getMaxScoreLive(
+            Tools.getDate(),
+            "DigitalActivity"
+        ).observe(this) { value ->
+            value?.let {
+                binding.maxScore.text = "今天最高分：$it"
+            }
+        }
     }
 
     override fun onClick(v: View?) {

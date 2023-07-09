@@ -490,10 +490,20 @@ class DigitalActivity : BaseActivity(), TextToSpeech.OnInitListener, View.OnClic
         val number1Text: String = binding.number1.text.toString()
         val number2Text: String = binding.number2.text.toString()
         var match = "加"
+        match = if (is_speak_chinese) {
+            "加"
+        } else {
+            "たす"
+        }
         var answer =
             binding.number1.text.toString().toInt() + binding.number2.text.toString().toInt()
         if (!is_add_match) {
             match = "减"
+            match = if (is_speak_chinese) {
+                "减"
+            } else {
+                "ひく"
+            }
             answer =
                 binding.number1.text.toString().toInt() - binding.number2.text.toString().toInt()
         }
