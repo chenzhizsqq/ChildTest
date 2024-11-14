@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.fragment.app.DialogFragment
 import com.example.childtest.appConfig.Tools
 import com.example.childtest.databinding.DialogSettingLogoBinding
@@ -19,7 +17,7 @@ class SettingLogoDialog : DialogFragment() {
         }
     }
 
-    var listener: OnDialogListener? = null
+    private var listener: OnDialogListener? = null
 
     interface OnDialogListener {
         fun onClick(bOpen: Boolean)
@@ -30,9 +28,9 @@ class SettingLogoDialog : DialogFragment() {
     }
 
     override fun onCreateView(
-        @NonNull inflater: LayoutInflater,
-        @Nullable container: ViewGroup?,
-        @Nullable savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = DialogSettingLogoBinding.inflate(inflater, container, false)
 
@@ -45,11 +43,11 @@ class SettingLogoDialog : DialogFragment() {
         //严重密码如何
         binding.btnOk.setOnClickListener {
 
-            val dengyuS = binding.SUM.text as String
+            val dengue = binding.SUM.text as String
 
-            val SUM_number1 = binding.SUMNumber1.text as String
-            val SUM_number2 = binding.SUMNumber2.text as String
-            if (dengyuS.toInt() == SUM_number1.toInt() * SUM_number2.toInt()) {
+            val sumNumber1 = binding.SUMNumber1.text as String
+            val sumNumber2 = binding.SUMNumber2.text as String
+            if (dengue.toInt() == sumNumber1.toInt() * sumNumber2.toInt()) {
                 listener?.onClick(true)
             } else {
                 listener?.onClick(false)
@@ -102,7 +100,7 @@ class SettingLogoDialog : DialogFragment() {
     }
 
     private fun addTextFun(addText: String): String {
-        var sumText = ""
+        var sumText: String
         sumText = binding.SUM.text as String
         if (sumText.toInt() < 10) {
             if (sumText == "0") sumText = ""
